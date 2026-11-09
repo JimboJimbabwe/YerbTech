@@ -1,0 +1,21 @@
+{
+  "Client_Side": [
+    { "category": "11_Client-side", "wstg_id": "WSTG-CLNT-01", "name": "DOM-Based Cross Site Scripting" },
+    { "category": "11_Client-side", "wstg_id": "WSTG-CLNT-02", "name": "JavaScript Execution" },
+    { "category": "11_Client-side", "wstg_id": "WSTG-CLNT-03", "name": "HTML Injection" },
+    { "category": "07_Injection",   "wstg_id": "WSTG-INJT-01", "name": "Reflected Cross Site Scripting" },
+    { "category": "07_Injection",   "wstg_id": "WSTG-INJT-02", "name": "Stored Cross Site Scripting" },
+    { "category": "07_Injection",   "wstg_id": "WSTG-INJT-08", "name": "SSI Injection" }
+  ],
+  "Server_Side": [
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-05", "name": "SQL Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-06", "name": "LDAP Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-07", "name": "XML Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-11", "name": "Code Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-12", "name": "Command Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-13", "name": "Format String Injection" },
+    { "category": "07_Injection", "wstg_id": "WSTG-INJT-19", "name": "Server-Side Request Forgery" },
+    { "category": "08_Error_Handling", "wstg_id": "WSTG-ERRH-01", "name": "Improper Error Handling" },
+    { "category": "08_Error_Handling", "wstg_id": "WSTG-ERRH-02", "name": "Stack Traces" }
+  ]
+}

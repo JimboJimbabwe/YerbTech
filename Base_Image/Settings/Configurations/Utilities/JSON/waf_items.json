@@ -1,0 +1,88 @@
+{
+  "sql_injection": [
+    "'", "\"", ";", "--", "#", "/*", "*/", "=", "(", ")", "%27", "%22",
+    "UNION", "SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "ALTER",
+    "OR 1=1", "AND 1=1", "SLEEP(", "BENCHMARK(", "WAITFOR DELAY",
+    "information_schema", "xp_cmdshell", "LOAD_FILE(", "INTO OUTFILE",
+    "CONCAT(", "CHAR(", "HAVING", "ORDER BY", "@@version"
+  ],
+  "xss": [
+    "<", ">", "\"", "'", "`", "&#", "%3C", "%3E",
+    "<script", "</script", "javascript:", "vbscript:", "data:text/html",
+    "onerror=", "onload=", "onclick=", "onmouseover=", "onfocus=",
+    "<svg", "<img", "<iframe", "<object", "<embed", "<body",
+    "document.cookie", "document.write", "eval(", "alert(", "innerHTML"
+  ],
+  "path_traversal_lfi": [
+    "../", "..\\", "%2e%2e", "%2e%2e%2f", "..%5c", "%00",
+    "/etc/passwd", "/etc/shadow", "/proc/self/environ",
+    "boot.ini", "win.ini", "web.config", ".htaccess", ".git/", ".env",
+    "php://", "file://", "expect://", "zip://"
+  ],
+  "remote_file_inclusion": [
+    "http://", "https://", "ftp://", "data://", "php://input"
+  ],
+  "command_injection": [
+    ";", "|", "||", "&", "&&", "`", "$(", "${", ">", "<", "%0a", "%0d",
+    "cat ", "ls ", "id", "whoami", "uname", "wget", "curl", "nc ", "netcat",
+    "/bin/sh", "/bin/bash", "cmd.exe", "powershell", "chmod", "base64 -d"
+  ],
+  "crlf_header_injection": [
+    "%0d%0a", "\\r\\n", "%0a", "%0d", "Set-Cookie:", "Location:"
+  ],
+  "ssti": [
+    "{{", "}}", "{%", "%}", "${", "#{", "<%", "%>", "__class__", "__globals__"
+  ],
+  "xxe_xml": [
+    "<!DOCTYPE", "<!ENTITY", "SYSTEM \"", "<![CDATA[", "xmlns:xi", "xi:include"
+  ],
+  "ldap_injection": [
+    "*", "(", ")", "\\", "&", "|", "!", "objectClass=*", "(|(", "(&("
+  ],
+  "xpath_injection": [
+    "'", "\"", " or ", " and ", "1=1", "'='", "count(", "substring(",
+    "string-length(", "translate(", "name()", "node()", "position()",
+    "//", "../", "*[1]"
+  ],
+  "code_injection": [
+    "eval(", "exec(", "system(", "`", "${", "#{", ";", "||", "&&",
+    "require(", "import ", "__import__", "Function(", "compile("
+  ],
+  "format_string_injection": [
+    "%s", "%x", "%n", "%p", "%d", "%08x", "%.1000d", "AAAA%n", "\\x41\\x41"
+  ],
+  "nosql_injection": [
+    "$ne", "$gt", "$lt", "$regex", "$where", "$or", "$and", "$nin", "{\"$"
+  ],
+  "ssrf": [
+    "localhost", "127.0.0.1", "0.0.0.0", "169.254.169.254", "metadata.google.internal",
+    "[::1]", "gopher://", "dict://", "file://"
+  ],
+  "log4shell_jndi_and_deserialization": [
+    "${jndi:", "ldap://", "rmi://", "java.lang.Runtime", "ObjectInputStream",
+    "O:8:\"", "rO0AB", "ysoserial"
+  ],
+  "php_injection": [
+    "<?php", "<?=", "eval(", "assert(", "system(", "exec(", "passthru(",
+    "shell_exec(", "base64_decode(", "$_GET", "$_POST", "$_REQUEST", "allow_url_include"
+  ],
+  "server_side_includes": [
+    "<!--#exec", "<!--#include", "<!--#echo", "<!--#config"
+  ],
+  "protocol_violations": [
+    "invalid URL encoding", "duplicate Content-Length", "Transfer-Encoding + Content-Length",
+    "missing Host header", "oversized headers", "oversized body", "null bytes",
+    "non-printable characters", "invalid charset", "unusual HTTP version"
+  ],
+  "restricted_http_methods": [
+    "TRACE", "TRACK", "CONNECT", "DEBUG", "PROPFIND", "PUT", "DELETE"
+  ],
+  "restricted_file_extensions": [
+    ".bak", ".old", ".sql", ".log", ".ini", ".conf", ".config", ".pem", ".key",
+    ".swp", ".git", ".svn", ".DS_Store", ".asa", ".cer", ".pfx"
+  ],
+  "scanner_user_agents": [
+    "sqlmap", "nikto", "nmap", "acunetix", "nessus", "burp", "masscan",
+    "dirbuster", "gobuster", "wpscan", "havij", "zgrab", "nuclei"
+  ]
+}

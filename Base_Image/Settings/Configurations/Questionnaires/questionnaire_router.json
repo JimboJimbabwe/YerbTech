@@ -1,0 +1,62 @@
+[
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-02",
+    "Questionnaire_runner": "idnt02_q1.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-02",
+    "Questionnaire_runner": "idnt02_q2.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-03",
+    "Questionnaire_runner": "idnt03_q.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-03",
+    "Questionnaire_runner": "weak_lockout.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-07",
+    "Questionnaire_runner": "ATHN_07.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-09",
+    "Questionnaire_runner": "q1_ATHN09.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-11",
+    "Questionnaire_runner": "athn11_mfa.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-03",
+    "Questionnaire_runner": "sess03_fixation_checklist.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-06",
+    "Questionnaire_runner": "sess06_logout_checklist.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-09",
+    "Questionnaire_runner": "sess_09_checklist.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Business Logic Testing",
+    "WSTG_ID": "WSTG-BUSL-08",
+    "Questionnaire_runner": "busl_08_questionnaire.py"
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Business Logic Testing",
+    "WSTG_ID": "WSTG-BUSL-09",
+    "Questionnaire_runner": "busl_09_questionnaire.py"
+  }
+]

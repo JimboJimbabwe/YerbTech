@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WSTG-CLNT-04 – Open Redirect Callback</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --border:#30363d;
+  --fg:#c9d1d9; --muted:#8b949e; --blue:#58a6ff;
+  --red:#f85149; --green:#3fb950; --orange:#e3b341;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'SF Mono','Fira Mono',monospace;
+  background:var(--bg); color:var(--fg);
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; padding:2rem;
+}
+.box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; max-width:640px; width:100%; padding:2rem;
+}
+.icon { font-size:2.5rem; margin-bottom:1rem; text-align:center; }
+h1 { color:var(--red); font-size:1.1rem; text-align:center; margin-bottom:.5rem; }
+.badge {
+  text-align:center; margin-bottom:1.5rem;
+  font-size:.75rem; color:var(--muted);
+}
+.badge code { color:var(--orange); }
+hr { border:none; border-top:1px solid var(--border); margin:1.5rem 0; }
+.finding {
+  background:var(--bg); border:1px solid var(--border);
+  border-left:3px solid var(--red); border-radius:4px;
+  padding:1rem; margin-bottom:1rem;
+}
+.finding h2 { font-size:.9rem; color:var(--red); margin-bottom:.5rem; }
+.finding p  { font-size:.8rem; color:var(--muted); line-height:1.6; }
+.finding code { color:var(--blue); }
+.params {
+  background:var(--bg); border:1px solid var(--border); border-radius:4px;
+  padding:1rem; margin-bottom:1rem;
+}
+.params h2  { font-size:.85rem; color:var(--blue); margin-bottom:.6rem; }
+.param-row  { font-size:.78rem; color:var(--muted); line-height:1.8; }
+.param-key  { color:var(--orange); min-width:100px; display:inline-block; }
+.param-val  { color:var(--green); }
+.empty      { color:var(--muted); font-style:italic; }
+.nav        { text-align:center; margin-top:1.5rem; }
+.nav a {
+  color:var(--blue); font-size:.8rem; text-decoration:none;
+  border:1px solid var(--border); padding:.3rem .8rem; border-radius:3px;
+}
+.nav a:hover { border-color:var(--blue); }
+.ts { font-size:.7rem; color:var(--border); text-align:center; margin-top:.5rem; }
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="icon">⚠️</div>
+  <h1>Client-Side Open Redirect — Callback Received</h1>
+  <div class="badge">
+    <code>WSTG-CLNT-04</code> &nbsp;·&nbsp; This server should not have been visited
+  </div>
+
+  <div class="finding">
+    <h2>🔴 Potential Open Redirect Confirmed</h2>
+    <p>
+      If you were redirected here by the target application, it means the
+      application accepted an externally supplied URL and followed it without
+      validation. The target's client-side redirect logic should not navigate
+      to arbitrary, attacker-controlled destinations.
+    </p>
+  </div>
+
+  <div class="params" id="params-box">
+    <h2>Incoming Request Parameters</h2>
+    <div id="params-output" class="param-row">
+      <span class="empty">No query parameters detected.</span>
+    </div>
+  </div>
+
+  <div class="finding" style="border-left-color:var(--orange)">
+    <h2>📋 What to document</h2>
+    <p>
+      Note the parameter name the target used to supply the redirect URL
+      (e.g. <code>?redirect=</code>, <code>?next=</code>, <code>#url=</code>).
+      The full URL of this page (including the Referer header if set) provides
+      evidence of the redirect. Use the request shown in the dashboard log.
+    </p>
+  </div>
+
+  <hr>
+
+  <div class="params">
+    <h2>Page metadata</h2>
+    <div class="param-row">
+      <span class="param-key">Arrived via:</span>
+      <span class="param-val" id="meta-referrer">—</span>
+    </div>
+    <div class="param-row">
+      <span class="param-key">Current URL:</span>
+      <span class="param-val" id="meta-url">—</span>
+    </div>
+    <div class="param-row">
+      <span class="param-key">Hash fragment:</span>
+      <span class="param-val" id="meta-hash">—</span>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="/">← Back to suite dashboard</a>
+  </div>
+  <div class="ts" id="ts"></div>
+</div>
+
+<script>
+// Show query params
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var out = document.getElementById('params-output');
+  var rows = [];
+  params.forEach(function(val, key) {
+    rows.push(
+      '<div><span class="param-key">' + esc(key) + ':</span>' +
+      '<span class="param-val">' + esc(val) + '</span></div>'
+    );
+  });
+  if (rows.length > 0) out.innerHTML = rows.join('');
+
+  // Meta
+  document.getElementById('meta-referrer').textContent =
+    document.referrer || '(no Referer header / direct)';
+  document.getElementById('meta-url').textContent =
+    window.location.href;
+  document.getElementById('meta-hash').textContent =
+    window.location.hash || '(none)';
+  document.getElementById('ts').textContent =
+    'Loaded: ' + new Date().toISOString();
+})();
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

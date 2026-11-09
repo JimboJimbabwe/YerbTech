@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE items [
+<!ELEMENT items (item*)>
+<!ATTLIST items burpVersion CDATA "">
+<!ATTLIST items exportTime CDATA "">
+<!ELEMENT item (time, url, host, port, protocol, method, path, extension, request, status, responselength, mimetype, response, comment)>
+<!ELEMENT time (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT host (#PCDATA)>
+<!ATTLIST host ip CDATA "">
+<!ELEMENT port (#PCDATA)>
+<!ELEMENT protocol (#PCDATA)>
+<!ELEMENT method (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT request (#PCDATA)>
+<!ATTLIST request base64 (true|false) "false">
+<!ELEMENT status (#PCDATA)>
+<!ELEMENT responselength (#PCDATA)>
+<!ELEMENT mimetype (#PCDATA)>
+<!ELEMENT response (#PCDATA)>
+<!ATTLIST response base64 (true|false) "false">
+<!ELEMENT comment (#PCDATA)>
+]>
+<items burpVersion="2024.9" exportTime="Wed Oct 21 10:00:00 EDT 2026">
+  <item>
+    <time>Wed Oct 21 10:00:00 EDT 2026</time>
+    <url><![CDATA[https://app.example.com/api/users?id=1]]></url>
+    <host ip="10.0.0.5">app.example.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[POST]]></method>
+    <path><![CDATA[/api/users?id=1]]></path>
+    <extension>null</extension>
+    <request base64="true"><![CDATA[UE9TVCAvYXBpL3VzZXJzP2lkPTEgSFRUUC8xLjENCkhvc3Q6IGFwcC5leGFtcGxlLmNvbQ0KVXNlci1BZ2VudDogTW96aWxsYS81LjANCkNvb2tpZTogc2Vzc2lvbj1hYmMxDQpDb250ZW50LUxlbmd0aDogMTQNCg0KdXNlcj1hMSZwYXNzPXg=]]></request>
+    <status>500</status>
+    <responselength>257</responselength>
+    <mimetype>HTML</mimetype>
+    <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KDQo8aHRtbD54eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvaHRtbD4=]]></response>
+    <comment></comment>
+  </item>
+  <item>
+    <time>Wed Oct 21 10:00:00 EDT 2026</time>
+    <url><![CDATA[https://app.example.com/api/orders/2]]></url>
+    <host ip="10.0.0.5">app.example.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[GET]]></method>
+    <path><![CDATA[/api/orders/2]]></path>
+    <extension>null</extension>
+    <request base64="true"><![CDATA[R0VUIC9hcGkvb3JkZXJzLzIgSFRUUC8xLjENCkhvc3Q6IGFwcC5leGFtcGxlLmNvbQ0KVXNlci1BZ2VudDogTW96aWxsYS81LjANCkNvb2tpZTogc2Vzc2lvbj1hYmMyDQpDb250ZW50LUxlbmd0aDogMA0KDQo=]]></request>
+    <status>302</status>
+    <responselength>257</responselength>
+    <mimetype>HTML</mimetype>
+    <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KDQo8aHRtbD54eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvaHRtbD4=]]></response>
+    <comment></comment>
+  </item>
+  <item>
+    <time>Wed Oct 21 10:00:00 EDT 2026</time>
+    <url><![CDATA[https://app.example.com/admin/settings]]></url>
+    <host ip="10.0.0.5">app.example.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[PUT]]></method>
+    <path><![CDATA[/admin/settings]]></path>
+    <extension>null</extension>
+    <request base64="true"><![CDATA[UFVUIC9hZG1pbi9zZXR0aW5ncyBIVFRQLzEuMQ0KSG9zdDogYXBwLmV4YW1wbGUuY29tDQpVc2VyLUFnZW50OiBNb3ppbGxhLzUuMA0KQ29va2llOiBzZXNzaW9uPWFiYzMNCkNvbnRlbnQtTGVuZ3RoOiAxNA0KDQp1c2VyPWEzJnBhc3M9eA==]]></request>
+    <status>500</status>
+    <responselength>257</responselength>
+    <mimetype>HTML</mimetype>
+    <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KDQo8aHRtbD54eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvaHRtbD4=]]></response>
+    <comment></comment>
+  </item>
+  <item>
+    <time>Wed Oct 21 10:00:00 EDT 2026</time>
+    <url><![CDATA[https://app.example.com/static/app.js]]></url>
+    <host ip="10.0.0.5">app.example.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[GET]]></method>
+    <path><![CDATA[/static/app.js]]></path>
+    <extension>null</extension>
+    <request base64="true"><![CDATA[R0VUIC9zdGF0aWMvYXBwLmpzIEhUVFAvMS4xDQpIb3N0OiBhcHAuZXhhbXBsZS5jb20NClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wDQpDb29raWU6IHNlc3Npb249YWJjNA0KQ29udGVudC1MZW5ndGg6IDANCg0K]]></request>
+    <status>200</status>
+    <responselength>257</responselength>
+    <mimetype>HTML</mimetype>
+    <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KDQo8aHRtbD54eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvaHRtbD4=]]></response>
+    <comment></comment>
+  </item>
+  <item>
+    <time>Wed Oct 21 10:00:00 EDT 2026</time>
+    <url><![CDATA[https://app.example.com/api/profile]]></url>
+    <host ip="10.0.0.5">app.example.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[GET]]></method>
+    <path><![CDATA[/api/profile]]></path>
+    <extension>null</extension>
+    <request base64="true"><![CDATA[R0VUIC9hcGkvcHJvZmlsZSBIVFRQLzEuMQ0KSG9zdDogYXBwLmV4YW1wbGUuY29tDQpVc2VyLUFnZW50OiBNb3ppbGxhLzUuMA0KQ29va2llOiBzZXNzaW9uPWFiYzUNCkNvbnRlbnQtTGVuZ3RoOiAwDQoNCg==]]></request>
+    <status>500</status>
+    <responselength>257</responselength>
+    <mimetype>HTML</mimetype>
+    <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbA0KDQo8aHRtbD54eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eDwvaHRtbD4=]]></response>
+    <comment></comment>
+  </item>
+</items>

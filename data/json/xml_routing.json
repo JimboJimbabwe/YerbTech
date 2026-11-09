@@ -1,0 +1,81 @@
+{
+  "_meta": {
+    "description": "Which uploaded XML dataset is copied into which WSTG assessment folders. DRAFT schema: replace with your own when it is ready, the server only reads the fields below.",
+    "how_it_works": [
+      "A file added to a category is stored once at project_utilities/files/XML/<folder>/<category>/<file>.",
+      "It is then copied to every assessment whose ID falls in the category's include list (and is not in omit), but ONLY if wstg_io.json lists an xml_in title for that assessment whose type is in accepts_types.",
+      "The copy is renamed to that xml_in title (for example raw.xml becomes fingerprint_targets.xml) and placed in <assessment>/Inputs/XML/.",
+      "If the same title is fed by more than one category (INJT-04 under both authorization and authentication), each copy is saved as <name>__<category>.xml instead, so neither overwrites the other. The viewer toggles between them."
+    ],
+    "fields": {
+      "kinds.<key>.enabled": "false greys the type out in the sidebar and refuses uploads.",
+      "kinds.<key>.folder": "Folder name under project_utilities/files/XML/. Required when enabled.",
+      "kinds.<key>.accepts_types": "xml_in types (from wstg_io.json) this kind may fill.",
+      "kinds.<key>.root_element": "Optional. Uploads whose first 16 KB does not contain this root element (Burp uses items) are rejected.",
+      "kinds.<key>.include_untyped":"true also fills xml_in entries whose type is null. Left false, those are reported as skipped.",
+      "categories.<key>.file": "Fixed file name inside the category folder.",
+      "categories.<key>.include": "ID prefixes (WSTG-INFO) or full IDs (WSTG-INFO-01).",
+      "categories.<key>.omit": "Full IDs to leave out even though a prefix matches."
+    }
+  },
+  "kinds": {
+    "burp_proxy_xml": {
+      "title": "Burp Proxy XML",
+      "enabled": true,
+      "folder": "burp_proxy",
+      "accepts_types": ["burp_proxy_xml", "burp_session_walk_xml"],
+      "include_untyped": false,
+      "root_element": "items",
+      "categories": {
+        "raw": {
+          "label": "Raw",
+          "file": "raw.xml",
+          "include": ["WSTG-INFO", "WSTG-CONF"],
+          "omit": ["WSTG-INFO-07"]
+        },
+        "authorization": {
+          "label": "Authorization",
+          "file": "authorization.xml",
+          "include": ["WSTG-INJT", "WSTG-ERRH", "WSTG-BUSL", "WSTG-ATHZ"],
+          "omit": []
+        },
+        "authentication": {
+          "label": "Authentication",
+          "file": "authentication.xml",
+          "include": ["WSTG-IDNT", "WSTG-ATHN", "WSTG-SESS", "WSTG-INJT", "WSTG-CRYP"],
+          "omit": []
+        },
+        "input_surface": {
+          "label": "Input surface",
+          "file": "input_surface.xml",
+          "include": ["WSTG-CLNT"],
+          "omit": []
+        }
+      }
+    },
+    "nmap_scan_xml": {
+      "title": "Nmap Output XML",
+      "enabled": false,
+      "folder": "nmap",
+      "accepts_types": ["nmap_scan_xml"],
+      "categories": {
+        "raw": { "label": "Raw", "file": "raw.xml", "include": [], "omit": [] },
+        "authorization": { "label": "Authorization", "file": "authorization.xml", "include": [], "omit": [] },
+        "authentication": { "label": "Authentication", "file": "authentication.xml", "include": [], "omit": [] },
+        "input_surface": { "label": "Input surface", "file": "input_surface.xml", "include": [], "omit": [] }
+      }
+    },
+    "burp_intruder_xml": {
+      "title": "Intruder XML",
+      "enabled": false,
+      "folder": "intruder",
+      "accepts_types": ["burp_intruder_xml"],
+      "categories": {
+        "raw": { "label": "Raw", "file": "raw.xml", "include": [], "omit": [] },
+        "authorization": { "label": "Authorization", "file": "authorization.xml", "include": [], "omit": [] },
+        "authentication": { "label": "Authentication", "file": "authentication.xml", "include": [], "omit": [] },
+        "input_surface": { "label": "Input surface", "file": "input_surface.xml", "include": [], "omit": [] }
+      }
+    }
+  }
+}

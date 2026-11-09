@@ -1,0 +1,12 @@
+{
+  "_comment": "Static. Paths are relative to the project root; the server supplies the root at runtime. Only the client-side items the mouse tool applies to are listed.",
+  "Base_Path": "",
+  "Targets": {
+    "WSTG-CLNT-01": { "name": "DOM-Based Cross Site Scripting", "side": "client", "Category_Folder": "11_Client-side", "Input_Folder": "11_Client-side/WSTG-CLNT-01/Inputs/Data", "Output_Folder": "11_Client-side/WSTG-CLNT-01/Inputs/Data", "XML_Path": "11_Client-side/WSTG-CLNT-01/Inputs/XML", "Master_Folder": "11_Client-side/WSTG-CLNT-01/Outputs/test_outputs" },
+    "WSTG-CLNT-02": { "name": "JavaScript Execution", "side": "client", "Category_Folder": "11_Client-side", "Input_Folder": "11_Client-side/WSTG-CLNT-02/Inputs/Data", "Output_Folder": "11_Client-side/WSTG-CLNT-02/Inputs/Data", "XML_Path": "11_Client-side/WSTG-CLNT-02/Inputs/XML", "Master_Folder": "11_Client-side/WSTG-CLNT-02/Outputs/test_outputs" },
+    "WSTG-CLNT-03": { "name": "HTML Injection", "side": "client", "Category_Folder": "11_Client-side", "Input_Folder": "11_Client-side/WSTG-CLNT-03/Inputs/Data", "Output_Folder": "11_Client-side/WSTG-CLNT-03/Inputs/Data", "XML_Path": "11_Client-side/WSTG-CLNT-03/Inputs/XML", "Master_Folder": "11_Client-side/WSTG-CLNT-03/Outputs/test_outputs" },
+    "WSTG-INJT-01": { "name": "Reflected Cross Site Scripting", "side": "client", "Category_Folder": "07_Injection", "Input_Folder": "07_Injection/WSTG-INJT-01/Inputs/Data", "Output_Folder": "07_Injection/WSTG-INJT-01/Inputs/Data", "XML_Path": "07_Injection/WSTG-INJT-01/Inputs/XML", "Master_Folder": "07_Injection/WSTG-INJT-01/Outputs/test_outputs" },
+    "WSTG-INJT-02": { "name": "Stored Cross Site Scripting", "side": "client", "Category_Folder": "07_Injection", "Input_Folder": "07_Injection/WSTG-INJT-02/Inputs/Data", "Output_Folder": "07_Injection/WSTG-INJT-02/Inputs/Data", "XML_Path": "07_Injection/WSTG-INJT-02/Inputs/XML", "Master_Folder": "07_Injection/WSTG-INJT-02/Outputs/test_outputs" },
+    "WSTG-INJT-08": { "name": "SSI Injection", "side": "client", "Category_Folder": "07_Injection", "Input_Folder": "07_Injection/WSTG-INJT-08/Inputs/Data", "Output_Folder": "07_Injection/WSTG-INJT-08/Inputs/Data", "XML_Path": "07_Injection/WSTG-INJT-08/Inputs/XML", "Master_Folder": "07_Injection/WSTG-INJT-08/Outputs/test_outputs" }
+  }
+}

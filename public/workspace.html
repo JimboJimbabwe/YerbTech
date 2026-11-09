@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workspace | Red Team Audit Tool</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="page-ws">
+  <header class="topbar">
+    <button type="button" class="burger" id="burger" aria-controls="xml-side" aria-expanded="false" aria-label="Open the XML panel" title="XML panel">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+    <button type="button" class="toolbtn" id="mouse-toggle" aria-controls="mouse-side" aria-expanded="false" aria-label="Open the Mouse Tool panel" title="Mouse Tool">Mouse Tool</button>
+    <button type="button" class="toolbtn" id="rep-toggle" aria-controls="rep-side" aria-expanded="false" aria-label="Open the Reporting panel" title="Reporting">Reporting</button>
+    <button type="button" class="toolbtn" id="pp-toggle" aria-controls="pp-side" aria-expanded="false" aria-label="Open the Prototype Pollution panel" title="Prototype Pollution">Prototype Pollution</button>
+    <button type="button" class="toolbtn" id="qst-toggle" aria-controls="qst-side" aria-expanded="false" aria-label="Open the Questionnaires info card" title="Questionnaires">Questionnaires</button>
+    <button type="button" class="toolbtn" id="cb-toggle" aria-controls="cb-side" aria-expanded="false" aria-label="Open the Callback Suite panel" title="Callback Suite">Callback Suite</button>
+    <button type="button" class="toolbtn" id="il-toggle" aria-controls="il-side" aria-expanded="false" aria-label="Open the Intruder Loader panel" title="Intruder Loader">Intruder Loader</button>
+    <span class="toolgrp">
+      <button type="button" class="toolbtn" id="fe-toggle" aria-controls="fe-side" aria-expanded="false" aria-label="Open the Findings Entry panel" title="Findings Entry">Findings Entry</button>
+      <button type="button" class="toolbtn fe-plus" id="fe-add" aria-haspopup="true" aria-expanded="false" aria-controls="fe-popup" aria-label="New finding for the current WSTG item" title="New finding">+</button>
+    </span>
+    <a class="brand" href="/">Red Team Audit Tool</a>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Projects</a><span aria-hidden="true">/</span>
+      <a id="crumb-project" href="#"></a><span aria-hidden="true">/</span>
+      <span>Workspace</span>
+    </nav>
+    <span class="clock" id="clock"></span>
+  </header>
+
+  <div class="ws">
+    <!-- Left sidebar: add Burp / Nmap / Intruder XML. Opened by the burger button. -->
+    <aside class="xml-side" id="xml-side" aria-label="XML files" hidden>
+      <div class="xml-side__inner" id="xml-panel"></div>
+    </aside>
+
+    <!-- Mouse_Tool: active WSTG item, listener start/stop, and the injection test-data run. -->
+    <aside class="xml-side" id="mouse-side" aria-label="Mouse Tool" hidden>
+      <div class="xml-side__inner" id="mouse-panel"></div>
+    </aside>
+
+    <!-- Reporting: start/stop the screenshot-overlay process and show a capture-count summary.
+         The overlay itself (category/item picking, the capture rectangle, descriptions) runs as
+         its own desktop windows, not in this panel - see tools/reporting/reporting_overlay.py. -->
+    <aside class="xml-side" id="rep-side" aria-label="Reporting" hidden>
+      <div class="xml-side__inner" id="rep-panel"></div>
+    </aside>
+
+    <!-- Prototype Pollution (WSTG-INJT-22): start/stop the hash fragment opener (the "second
+         script" - tools/protopollution/hash_fragment_opener.py) and show its log. Wordlist/urls.txt
+         generation (the "first script") runs from that item's own checklist box, not here - see
+         protopollSection() in workspace.js. -->
+    <aside class="xml-side" id="pp-side" aria-label="Prototype Pollution" hidden>
+      <div class="xml-side__inner" id="pp-panel"></div>
+    </aside>
+
+    <!-- Injection Distributor GUI panel removed 2026-11-08 - see README. inj_distributor.py is
+         still a working CLI script, just no longer wired to this page. -->
+
+    <!-- Questionnaires: an info card only - counts and a description, with a button to the full
+         answering page. Checkbox/text answering needs more room than a sidebar strip gives. -->
+    <aside class="xml-side qst-side" id="qst-side" aria-label="Questionnaires" hidden>
+      <div class="xml-side__inner" id="qst-panel"></div>
+    </aside>
+
+    <!-- Callback Suite: start/stop the operator's callback catcher, open its dashboard in a new
+         tab (it runs on its own port, outside this app's origin), and export hits by WSTG ID. -->
+    <aside class="xml-side" id="cb-side" aria-label="Callback Suite" hidden>
+      <div class="xml-side__inner" id="cb-panel"></div>
+    </aside>
+
+    <!-- Intruder Loader: launch/stop a local Burp process and show the shared Intruder queue's
+         pending/sent counts. Items are pushed into that queue from the Threat-Model list in the
+         request viewer, not from here. -->
+    <aside class="xml-side" id="il-side" aria-label="Intruder Loader" hidden>
+      <div class="xml-side__inner" id="il-panel"></div>
+    </aside>
+
+    <!-- Findings Entry: left-pane data entry (CVSS calculator + CWE/Remediation/Affected-URLs
+         fields) for whichever WSTG item the "+" popup was confirmed against. -->
+    <aside class="xml-side fe-side" id="fe-side" aria-label="Findings Entry" hidden>
+      <div class="xml-side__inner" id="fe-panel"></div>
+    </aside>
+
+    <!-- Centre: the Burp request viewer (request side only for now). -->
+    <section class="ws__canvas" aria-label="Request viewer">
+      <div class="vw" id="viewer"></div>
+    </section>
+
+    <!-- Feature 3 and 4: what / why for the selected assessment, plus wordlist copy. -->
+    <aside class="ws__detail" id="detail" aria-live="polite" aria-label="Assessment details">
+      <div class="detail__empty">
+        <strong>No assessment selected</strong>
+        Choose one from the checklist to see what it tests and why.
+      </div>
+    </aside>
+
+    <!-- Feature 2: category -> assessment -> file checks. -->
+    <nav class="ws__list" id="checklist" aria-label="WSTG checklist"></nav>
+  </div>
+
+  <!-- Findings Entry's "+" mini-window: which WSTG item is this for, and did the test find
+       anything. Floats above the page rather than living in the aside, so a quick "No" doesn't
+       require opening/closing a whole sidebar. -->
+  <div class="fe-pop" id="fe-popup" hidden></div>
+
+  <script type="module" src="/js/workspace.js"></script>
+</body>
+</html>

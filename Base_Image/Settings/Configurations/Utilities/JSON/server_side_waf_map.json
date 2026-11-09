@@ -1,0 +1,11 @@
+{
+  "_comment": "Static. Routing key for the server-side wordlist orchestrator: which WAF_ITEMS.json category each WSTG ID's base payloads get smuggled with. Keyed by the WSTG ID as injection_router.json's Server_Side list spells it (that file supplies the category folder; server_side_inj.json supplies the base commands - both are joined on this same ID).",
+  "WSTG-INJT-08": "server_side_includes",
+  "WSTG-INJT-05": "sql_injection",
+  "WSTG-INJT-06": "ldap_injection",
+  "WSTG-INJT-12": "command_injection",
+  "WSTG-INJT-19": "ssrf",
+  "WSTG-INJT-07": "xpath_injection",
+  "WSTG-INJT-11": "code_injection",
+  "WSTG-INJT-13": "format_string_injection"
+}

@@ -1,0 +1,7 @@
+{
+  "_comment": "Filled in from the Intruder Loader panel's Save button, or by hand. javaBin and burpJarPath are specific to your machine, so these start empty. extraArgs and projectFile are optional.",
+  "javaBin": "java",
+  "burpJarPath": "",
+  "projectFile": "",
+  "extraArgs": []
+}

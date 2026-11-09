@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Red Team Audit Tool</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <main class="home">
+    <header class="masthead">
+      <h1 class="title">Red Team Audit Tool</h1>
+      <p class="clock" id="clock"></p>
+    </header>
+
+    <!-- Feature 1 (left): one folder per directory found in /Projects.
+         Feature 2 (right column): actions. Only "Add project" for now. -->
+    <section class="vault">
+      <div class="vault__main">
+        <div class="vault__bar">
+          <h2 id="projects-heading">Projects</h2>
+          <span id="project-count"></span>
+        </div>
+        <div class="folders" id="folders" aria-labelledby="projects-heading"></div>
+      </div>
+      <aside class="vault__side">
+        <button type="button" class="pill" id="add-project">Add project</button>
+      </aside>
+    </section>
+  </main>
+
+  <dialog class="dialog" id="add-dialog" aria-labelledby="add-title">
+    <form method="dialog" id="add-form" novalidate>
+      <h2 id="add-title">Add project</h2>
+      <div class="field">
+        <label for="project-name">Project name</label>
+        <input id="project-name" name="name" type="text" autocomplete="off" spellcheck="false" maxlength="64" required>
+        <span class="hint" id="name-hint">Letters, numbers, dots, dashes and underscores. Spaces become underscores.</span>
+      </div>
+      <p class="dialog__error" id="add-error" role="alert"></p>
+      <div class="dialog__actions">
+        <button type="button" class="pill pill--quiet" id="add-cancel">Cancel</button>
+        <button type="submit" class="pill" id="add-submit">Create project</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/js/home.js"></script>
+</body>
+</html>

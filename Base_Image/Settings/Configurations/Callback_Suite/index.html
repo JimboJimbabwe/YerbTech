@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WSTG-CLNT Callback Suite</title>
+<style>
+:root {
+  --bg:     #0d1117;
+  --bg2:    #161b22;
+  --bg3:    #21262d;
+  --border: #30363d;
+  --fg:     #c9d1d9;
+  --muted:  #8b949e;
+  --blue:   #58a6ff;
+  --green:  #3fb950;
+  --yellow: #d29922;
+  --red:    #f85149;
+  --purple: #bc8cff;
+  --orange: #e3b341;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'SF Mono', 'Fira Mono', 'Cascadia Code', monospace;
+  background: var(--bg); color: var(--fg);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: .75rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+header .logo { color: var(--blue); font-size: 1.05rem; font-weight: 700; }
+header .sub  { color: var(--muted); font-size: .8rem; }
+header .pill {
+  margin-left: auto; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: .2rem .75rem; font-size: .75rem; color: var(--muted);
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+       display: inline-block; margin-right: .4rem;
+       animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── Layout ── */
+main {
+  flex: 1; display: grid;
+  grid-template-columns: 1fr 380px;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+}
+
+/* ── Module grid ── */
+.modules {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  align-content: start;
+}
+
+/* ── Module card ── */
+.card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 6px;
+  display: flex; flex-direction: column; overflow: hidden;
+  transition: border-color .15s;
+}
+.card:hover { border-color: var(--blue); }
+.card-header {
+  padding: .8rem 1rem;
+  display: flex; align-items: center; gap: .6rem;
+  border-bottom: 1px solid var(--border);
+}
+.card-id {
+  font-size: .7rem; background: var(--bg3); color: var(--muted);
+  border: 1px solid var(--border); border-radius: 3px;
+  padding: .1rem .4rem; white-space: nowrap;
+}
+.card-title { font-size: .9rem; color: var(--blue); font-weight: 600; }
+.card-body  { padding: .8rem 1rem; flex: 1; }
+.card-desc  { font-size: .8rem; color: var(--muted); line-height: 1.5; margin-bottom: .75rem; }
+.card-footer {
+  padding: .6rem 1rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hit-badge {
+  font-size: .75rem; color: var(--muted);
+  display: flex; align-items: center; gap: .35rem;
+}
+.hit-badge strong { color: var(--green); }
+.btn {
+  background: var(--bg3); color: var(--blue);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: .3rem .8rem; font-family: monospace; font-size: .8rem;
+  cursor: pointer; text-decoration: none; display: inline-block;
+}
+.btn:hover { background: var(--blue); color: var(--bg); border-color: var(--blue); }
+.status-indicator {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block; margin-right: .4rem;
+  background: var(--border);
+}
+.status-indicator.hit { background: var(--green); }
+
+/* ── Log panel ── */
+.log-panel {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  min-height: 0;
+}
+.log-header {
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg2);
+}
+.log-title { font-size: .85rem; color: var(--blue); }
+.log-controls { display: flex; gap: .5rem; }
+.btn-sm {
+  background: var(--bg3); color: var(--muted);
+  border: 1px solid var(--border); border-radius: 3px;
+  padding: .15rem .5rem; font-size: .72rem; cursor: pointer;
+  font-family: monospace;
+}
+.btn-sm:hover { color: var(--fg); border-color: var(--muted); }
+#log-output {
+  flex: 1; overflow-y: auto; padding: .75rem 1rem;
+  font-size: .75rem; line-height: 1.6;
+  background: var(--bg);
+}
+#log-output .entry { color: var(--muted); white-space: pre; }
+#log-output .entry .ts  { color: var(--border); }
+#log-output .entry .ip  { color: var(--purple); }
+#log-output .entry .s200 { color: var(--green); }
+#log-output .entry .s3xx { color: var(--yellow); }
+#log-output .entry .s4xx { color: var(--red); }
+#log-output .entry .path { color: var(--blue); }
+#log-output .entry .note { color: var(--orange); }
+.conn-status {
+  padding: .5rem 1rem;
+  font-size: .72rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+}
+.conn-status.ok   { color: var(--green); }
+.conn-status.err  { color: var(--red); }
+
+/* ── Summary bar ── */
+.summary {
+  grid-column: 1;
+  padding: .6rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  font-size: .75rem; color: var(--muted);
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.summary span strong { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⚡ WSTG-CLNT Callback Suite</span>
+  <span class="sub">OWASP Client-Side Testing Payloads</span>
+  <span class="pill"><span class="dot"></span>Server live</span>
+</header>
+
+<main>
+  <!-- ── Module cards ── -->
+  <div class="modules" id="modules">
+
+    <!-- CLNT-04 -->
+    <div class="card" id="card-clnt04">
+      <div class="card-header">
+        <span class="status-indicator" id="si-clnt04"></span>
+        <span class="card-id">WSTG-CLNT-04</span>
+        <span class="card-title">Client-Side URL Redirect</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">
+          Callback landing page. If the target application follows an
+          attacker-supplied URL redirect (via query param, hash, or JS),
+          the victim browser loads this page — confirming open redirect.
+        </p>
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.6;">
+          <div><span style="color:var(--blue)">Payload URL:</span> <code style="color:var(--orange)">/payloads/clnt-04-url-redirect.html</code></div>
+          <div><span style="color:var(--blue)">What to watch:</span> Hit registers in the log when target redirects here</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="hit-badge">
+          Hits: <strong id="hits-clnt04">0</strong>
+        </span>
+        <a class="btn" href="/payloads/clnt-04-url-redirect.html" target="_blank">Open payload ↗</a>
+      </div>
+    </div>
+
+    <!-- CLNT-06 -->
+    <div class="card" id="card-clnt06">
+      <div class="card-header">
+        <span class="status-indicator" id="si-clnt06"></span>
+        <span class="card-id">WSTG-CLNT-06</span>
+        <span class="card-title">Client-Side Resource Manipulation</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">
+          Hosted as the attacker-controlled resource. If the target app
+          loads scripts/pages from an externally supplied URL (query param,
+          hash fragment, postMessage), this page fires
+          <code>alert(document.cookie)</code> in the victim's context.
+        </p>
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.6;">
+          <div><span style="color:var(--blue)">Payload URL:</span> <code style="color:var(--orange)">/payloads/clnt-06-resource-manip.html</code></div>
+          <div><span style="color:var(--blue)">Also test:</span> load as iframe src, script src, object src</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="hit-badge">
+          Hits: <strong id="hits-clnt06">0</strong>
+        </span>
+        <a class="btn" href="/payloads/clnt-06-resource-manip.html" target="_blank">Open payload ↗</a>
+      </div>
+    </div>
+
+    <!-- CLNT-07 -->
+    <div class="card" id="card-clnt07">
+      <div class="card-header">
+        <span class="status-indicator" id="si-clnt07"></span>
+        <span class="card-id">WSTG-CLNT-07</span>
+        <span class="card-title">Cross-Origin Resource Sharing</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">
+          Paste a Burp Suite proxy XML export. The tool parses the request,
+          fires an XHR with <code>withCredentials: true</code>, and inspects
+          the response for permissive <code>Access-Control-Allow-Origin</code>
+          headers. Flags reflected-origin misconfigurations.
+        </p>
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.6;">
+          <div><span style="color:var(--blue)">Input:</span> Burp XML export (one or more items)</div>
+          <div><span style="color:var(--blue)">Detects:</span> ACAO: *, ACAO: &lt;origin reflected&gt;, ACAC: true</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="hit-badge">
+          Hits: <strong id="hits-clnt07">0</strong>
+        </span>
+        <a class="btn" href="/payloads/clnt-07-cors.html" target="_blank">Open tester ↗</a>
+      </div>
+    </div>
+
+    <!-- CLNT-09 -->
+    <div class="card" id="card-clnt09">
+      <div class="card-header">
+        <span class="status-indicator" id="si-clnt09"></span>
+        <span class="card-id">WSTG-CLNT-09</span>
+        <span class="card-title">Clickjacking</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">
+          Enter a target URL to generate a clickjacking PoC HTML file.
+          The server writes the file to disk; visit it to see the invisible
+          iframe overlaid on a decoy. Generated files accumulate here.
+        </p>
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.6;">
+          <div><span style="color:var(--blue)">Generator:</span> takes target URL + label</div>
+          <div><span style="color:var(--blue)">Output:</span> self-contained PoC HTML per target</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="hit-badge">
+          Hits: <strong id="hits-clnt09">0</strong>
+        </span>
+        <a class="btn" href="/payloads/clnt-09-clickjacking/" target="_blank">Open generator ↗</a>
+      </div>
+    </div>
+
+    <!-- CLNT-13 -->
+    <div class="card" id="card-clnt13">
+      <div class="card-header">
+        <span class="status-indicator" id="si-clnt13"></span>
+        <span class="card-id">WSTG-CLNT-13</span>
+        <span class="card-title">Cross-Site Script Inclusion</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">
+          XSSI test harness. Supply a target script URL and a data key.
+          Four OWASP techniques run in-browser: global variable leak, global
+          function override, prototype chain interception, and
+          <code>Array.prototype.forEach</code> override.
+        </p>
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.6;">
+          <div><span style="color:var(--blue)">Ref:</span> WSTG-CLNT-13 / OWASP XSSI</div>
+          <div><span style="color:var(--blue)">Output:</span> div#result, per-technique findings</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="hit-badge">
+          Hits: <strong id="hits-clnt13">0</strong>
+        </span>
+        <a class="btn" href="/payloads/clnt-13-cssi.html" target="_blank">Open tester ↗</a>
+      </div>
+    </div>
+
+  </div><!-- /.modules -->
+
+  <!-- ── Live log panel ── -->
+  <div class="log-panel">
+    <div class="log-header">
+      <span class="log-title">📡 Live Server Log</span>
+      <div class="log-controls">
+        <button class="btn-sm" onclick="toggleScroll()">auto-scroll: <span id="scroll-lbl">ON</span></button>
+        <button class="btn-sm" onclick="clearLog()">clear</button>
+      </div>
+    </div>
+    <div id="log-output"></div>
+    <div class="conn-status err" id="conn-status">Connecting to SSE stream…</div>
+  </div>
+
+  <!-- ── Summary bar ── -->
+  <div class="summary" id="summary">
+    <span>Total hits: <strong id="total-hits">0</strong></span>
+    <span>Modules: <strong>5</strong></span>
+    <span>Log: <strong><a href="/server.log" target="_blank" style="color:var(--blue)">server.log</a></strong></span>
+    <span style="margin-left:auto;color:var(--border)">python3 server.py --port 8000</span>
+  </div>
+
+</main>
+
+<script>
+// ── Hit-count routing table ────────────────────────────────────────────────
+var pathMap = {
+  "/payloads/clnt-04-url-redirect.html": "hits-clnt04",
+  "/payloads/clnt-06-resource-manip.html": "hits-clnt06",
+  "/payloads/clnt-07-cors.html": "hits-clnt07",
+  "/payloads/clnt-09-clickjacking/": "hits-clnt09",
+  "/payloads/clnt-13-cssi.html": "hits-clnt13"
+};
+
+var siMap = {
+  "hits-clnt04": "si-clnt04",
+  "hits-clnt06": "si-clnt06",
+  "hits-clnt07": "si-clnt07",
+  "hits-clnt09": "si-clnt09",
+  "hits-clnt13": "si-clnt13"
+};
+
+function matchPath(path) {
+  // exact match first
+  if (pathMap[path]) return pathMap[path];
+  // prefix match for sub-paths (e.g. cj files)
+  for (var p in pathMap) {
+    if (path.startsWith(p.replace(/\/$/, ""))) return pathMap[p];
+  }
+  return null;
+}
+
+// ── Log rendering ─────────────────────────────────────────────────────────
+var autoScroll = true;
+var logEl = document.getElementById("log-output");
+
+function toggleScroll() {
+  autoScroll = !autoScroll;
+  document.getElementById("scroll-lbl").textContent = autoScroll ? "ON" : "OFF";
+}
+function clearLog() { logEl.innerHTML = ""; }
+
+function colorLine(raw) {
+  // [HH:MM:SS]  ip  METHOD  STATUS  /path  »  note
+  var div = document.createElement("div");
+  div.className = "entry";
+  // Parse components
+  var m = raw.match(/^(\[\d{2}:\d{2}:\d{2}\])\s+(\S+)\s+(\S+)\s+(\d+)\s+(\S+)(.*)?$/);
+  if (!m) { div.textContent = raw; return div; }
+  var ts     = m[1];
+  var ip     = m[2];
+  var method = m[3];
+  var status = m[4];
+  var path   = m[5];
+  var rest   = m[6] || "";
+
+  var sCls = status.startsWith("2") ? "s200"
+           : status.startsWith("3") ? "s3xx"
+           : status.startsWith("4") || status.startsWith("5") ? "s4xx"
+           : "";
+
+  div.innerHTML =
+    '<span class="ts">'  + ts     + '</span>  ' +
+    '<span class="ip">'  + ip.padEnd(18) + '</span>  ' +
+    method.padEnd(7) + '  ' +
+    '<span class="' + sCls + '">' + status + '</span>  ' +
+    '<span class="path">' + path + '</span>' +
+    (rest ? '<span class="note">' + rest + '</span>' : '');
+  return div;
+}
+
+function appendLog(line) {
+  var el = colorLine(line);
+  logEl.appendChild(el);
+  // cap log length
+  while (logEl.children.length > 500) {
+    logEl.removeChild(logEl.firstChild);
+  }
+  if (autoScroll) logEl.scrollTop = logEl.scrollHeight;
+}
+
+// ── Hit counts ─────────────────────────────────────────────────────────────
+function applyHits(hits) {
+  var total = 0;
+  for (var path in hits) {
+    total += hits[path];
+    var elId = matchPath(path);
+    if (elId) {
+      var el = document.getElementById(elId);
+      if (el) {
+        el.textContent = hits[path];
+        var si = document.getElementById(siMap[elId]);
+        if (si) si.classList.add("hit");
+      }
+    }
+  }
+  document.getElementById("total-hits").textContent = total;
+}
+
+// ── SSE connection ─────────────────────────────────────────────────────────
+var connEl = document.getElementById("conn-status");
+
+function connectSSE() {
+  var es = new EventSource("/events");
+
+  es.addEventListener("log", function(e) {
+    var data = JSON.parse(e.data);
+    appendLog(data.line);
+  });
+
+  es.addEventListener("hits", function(e) {
+    var hits = JSON.parse(e.data);
+    applyHits(hits);
+  });
+
+  es.onopen = function() {
+    connEl.className = "conn-status ok";
+    connEl.textContent = "✓ SSE connected – receiving live log";
+  };
+
+  es.onerror = function() {
+    connEl.className = "conn-status err";
+    connEl.textContent = "✗ SSE disconnected – retrying…";
+    es.close();
+    setTimeout(connectSSE, 3000);
+  };
+}
+
+connectSSE();
+</script>
+</body>
+</html>

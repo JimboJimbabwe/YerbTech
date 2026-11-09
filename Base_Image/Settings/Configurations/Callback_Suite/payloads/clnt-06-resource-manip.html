@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WSTG-CLNT-06 – Resource Manipulation Payload</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --border:#30363d;
+  --fg:#c9d1d9; --muted:#8b949e; --blue:#58a6ff;
+  --red:#f85149; --green:#3fb950; --orange:#e3b341; --purple:#bc8cff;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'SF Mono','Fira Mono',monospace;
+  background:var(--bg); color:var(--fg);
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; padding:2rem;
+}
+.box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; max-width:660px; width:100%; padding:2rem;
+}
+.icon { font-size:2.5rem; margin-bottom:1rem; text-align:center; }
+h1 { color:var(--red); font-size:1.1rem; text-align:center; margin-bottom:.5rem; }
+.badge { text-align:center; margin-bottom:1.5rem; font-size:.75rem; color:var(--muted); }
+.badge code { color:var(--orange); }
+.finding {
+  background:var(--bg); border:1px solid var(--border);
+  border-left:3px solid var(--red); border-radius:4px;
+  padding:1rem; margin-bottom:1rem;
+}
+.finding h2 { font-size:.9rem; color:var(--red); margin-bottom:.5rem; }
+.finding p  { font-size:.8rem; color:var(--muted); line-height:1.6; }
+.finding code { color:var(--blue); }
+.section {
+  background:var(--bg); border:1px solid var(--border); border-radius:4px;
+  padding:1rem; margin-bottom:1rem;
+}
+.section h2 { font-size:.85rem; color:var(--blue); margin-bottom:.6rem; }
+.cookie-box {
+  font-size:.8rem; word-break:break-all; line-height:1.6;
+  color:var(--purple); padding:.5rem; background:var(--bg2);
+  border-radius:3px; border:1px solid var(--border);
+}
+.cookie-box .empty { color:var(--muted); font-style:italic; }
+.info-row { font-size:.78rem; color:var(--muted); line-height:1.8; }
+.info-key { color:var(--orange); display:inline-block; min-width:120px; }
+.info-val { color:var(--green); }
+.note {
+  background:var(--bg); border:1px solid var(--border);
+  border-left:3px solid var(--orange); border-radius:4px;
+  padding:1rem; margin-bottom:1rem; font-size:.8rem; color:var(--muted); line-height:1.6;
+}
+hr { border:none; border-top:1px solid var(--border); margin:1.2rem 0; }
+.nav { text-align:center; margin-top:1rem; }
+.nav a {
+  color:var(--blue); font-size:.8rem; text-decoration:none;
+  border:1px solid var(--border); padding:.3rem .8rem; border-radius:3px;
+}
+.nav a:hover { border-color:var(--blue); }
+.alert-log {
+  margin-top:.5rem; font-size:.75rem; color:var(--green);
+  padding:.3rem; border:1px solid var(--border); border-radius:3px;
+  background:var(--bg2);
+}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="icon">🎯</div>
+  <h1>Client-Side Resource Manipulation — Payload Loaded</h1>
+  <div class="badge">
+    <code>WSTG-CLNT-06</code> &nbsp;·&nbsp;
+    If the target loaded this page, it accepted an attacker-controlled resource URL
+  </div>
+
+  <div class="finding">
+    <h2>🔴 Attacker-Controlled Resource Executed</h2>
+    <p>
+      This page was loaded as the result of the target application following
+      an externally supplied URL — either via a query parameter, a hash fragment
+      (<code>#url=…</code>), a <code>postMessage</code> payload, or a JavaScript
+      <code>src</code> / <code>href</code> assignment. The application should not
+      allow its resource loading to be influenced by attacker-controlled input.
+    </p>
+  </div>
+
+  <!-- Cookie capture section -->
+  <div class="section">
+    <h2>🍪 Cookies in This Context</h2>
+    <div class="cookie-box" id="cookie-display">
+      <span class="empty">Checking…</span>
+    </div>
+    <div class="alert-log" id="alert-result" style="display:none"></div>
+  </div>
+
+  <!-- Context info -->
+  <div class="section">
+    <h2>📍 Execution Context</h2>
+    <div class="info-row">
+      <span class="info-key">Current origin:</span>
+      <span class="info-val" id="ctx-origin">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">Loaded via:</span>
+      <span class="info-val" id="ctx-referrer">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">URL params:</span>
+      <span class="info-val" id="ctx-params">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">Hash fragment:</span>
+      <span class="info-val" id="ctx-hash">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">In iframe:</span>
+      <span class="info-val" id="ctx-iframe">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-key">Parent origin:</span>
+      <span class="info-val" id="ctx-parent">—</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong style="color:var(--orange)">📋 What to document:</strong><br>
+    The parameter or mechanism used to supply this URL to the target. Note whether
+    cookies are visible here — if the target loads this URL in an
+    <code>&lt;iframe&gt;</code>, the cookie context belongs to <em>this</em> server,
+    not the target. If the target includes this via <code>&lt;script src&gt;</code>,
+    the JS runs in the <em>target's</em> context and <code>document.cookie</code>
+    would show the target's cookies instead.
+  </div>
+
+  <hr>
+  <div class="nav">
+    <a href="/">← Back to suite dashboard</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ── Cookie display + alert ─────────────────────────────────────────────
+  var cookies = document.cookie;
+  var cookieEl = document.getElementById('cookie-display');
+  var alertEl  = document.getElementById('alert-result');
+
+  if (cookies) {
+    cookieEl.innerHTML = '<strong style="color:var(--red)">Cookies captured:</strong><br>' +
+      esc(cookies);
+    alertEl.style.display = 'block';
+    alertEl.textContent = '⚡ alert(document.cookie) fired — value: ' + cookies;
+    // Actual alert (comment out if noisy in automated testing)
+    try { alert('WSTG-CLNT-06 payload:\n\ndocument.cookie = ' + cookies); } catch(e) {}
+  } else {
+    cookieEl.innerHTML = '<span class="empty">document.cookie is empty — ' +
+      'either no cookies exist in this context or they are HttpOnly</span>';
+    alertEl.style.display = 'block';
+    alertEl.textContent = '⚡ alert(document.cookie) fired — result: (empty)';
+    try { alert('WSTG-CLNT-06 payload:\n\ndocument.cookie = (empty / HttpOnly)'); } catch(e) {}
+  }
+
+  // ── Context info ──────────────────────────────────────────────────────
+  document.getElementById('ctx-origin').textContent =
+    window.location.origin;
+  document.getElementById('ctx-referrer').textContent =
+    document.referrer || '(no Referer)';
+
+  var params = new URLSearchParams(window.location.search);
+  var pArr = [];
+  params.forEach(function(v, k) { pArr.push(k + '=' + v); });
+  document.getElementById('ctx-params').textContent =
+    pArr.length ? pArr.join(', ') : '(none)';
+
+  document.getElementById('ctx-hash').textContent =
+    window.location.hash || '(none)';
+
+  var inIframe = (window !== window.top);
+  document.getElementById('ctx-iframe').textContent = inIframe ? 'YES' : 'no';
+
+  if (inIframe) {
+    try {
+      document.getElementById('ctx-parent').textContent =
+        window.parent.location.origin;
+    } catch(e) {
+      document.getElementById('ctx-parent').textContent =
+        '(cross-origin – cannot read parent origin)';
+    }
+  } else {
+    document.getElementById('ctx-parent').textContent = 'N/A (not in iframe)';
+  }
+
+  // ── postMessage listener – log anything received ─────────────────────
+  window.addEventListener('message', function(e) {
+    var note = document.createElement('div');
+    note.style.cssText = 'margin-top:.5rem;font-size:.75rem;color:var(--purple);padding:.3rem;border:1px solid var(--border);border-radius:3px;background:var(--bg2)';
+    note.textContent = '📨 postMessage received from ' + e.origin + ': ' +
+      JSON.stringify(e.data).substring(0, 200);
+    document.querySelector('.box').appendChild(note);
+  });
+})();
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Questionnaires | Red Team Audit Tool</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="page-ws">
+  <header class="topbar">
+    <a class="brand" href="/">Red Team Audit Tool</a>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Projects</a><span aria-hidden="true">/</span>
+      <a id="crumb-project" href="#"></a><span aria-hidden="true">/</span>
+      <a id="crumb-workspace" href="#">Workspace</a><span aria-hidden="true">/</span>
+      <span>Questionnaires</span>
+    </nav>
+    <span class="clock" id="clock"></span>
+  </header>
+
+  <div class="qpage">
+    <nav class="qpage__nav" id="qnav" aria-label="Questionnaires by category"></nav>
+    <section class="qpage__form" id="qform" aria-live="polite">
+      <div class="qempty">
+        <strong>No questionnaire selected</strong>
+        Choose one from the list to answer it.
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="/js/questionnaires.js"></script>
+</body>
+</html>

@@ -1,0 +1,895 @@
+[
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-02",
+    "questionnaire_title": "Registration Process (Questionnaire 1 of 2)",
+    "polarity": "informational",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "IDNT02-Q1-01",
+        "question": "Can anyone register for access?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 1,
+        "id": "IDNT02-Q1-02",
+        "question": "Are registrations vetted by a human prior to provisioning, or are they automatically granted if the criteria are met?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 2,
+        "id": "IDNT02-Q1-03",
+        "question": "Can the same person or identity register multiple times?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 3,
+        "id": "IDNT02-Q1-04",
+        "question": "Can users register for different roles or permissions?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 4,
+        "id": "IDNT02-Q1-05",
+        "question": "What proof of identity is required for a registration to be successful?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 5,
+        "id": "IDNT02-Q1-06",
+        "question": "Are registered identities verified?",
+        "answer_type": "yn_unknown"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-02",
+    "questionnaire_title": "Identity Forgery & Manipulation (Questionnaire 2 of 2)",
+    "polarity": "yes_is_weakness",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "IDNT02-Q2-01",
+        "question": "Can identity information be easily forged or faked?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 1,
+        "id": "IDNT02-Q2-02",
+        "question": "Can the exchange of identity information be manipulated during registration?",
+        "answer_type": "yn_unknown"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Identity Management Testing",
+    "WSTG_ID": "WSTG-IDNT-03",
+    "questionnaire_title": "Account Provisioning Process",
+    "polarity": "yes_is_weakness",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "IDNT03-Q-01",
+        "question": "Is there any authorisation required before an account is provisioned?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 1,
+        "id": "IDNT03-Q-02",
+        "question": "Can accounts be provisioned with excessive privileges?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 2,
+        "id": "IDNT03-Q-03",
+        "question": "Can one user provision an account for another user without oversight?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 3,
+        "id": "IDNT03-Q-04",
+        "question": "Are provisioned accounts tied to a verified identity?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 4,
+        "id": "IDNT03-Q-05",
+        "question": "Is the provisioning process logged and auditable?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 5,
+        "id": "IDNT03-Q-06",
+        "question": "Is there a de-provisioning (offboarding) process, and is it enforced?",
+        "answer_type": "yn_unknown"
+      },
+      {
+        "index": 6,
+        "id": "IDNT03-Q-07",
+        "question": "Are provisioning requests validated before execution?",
+        "answer_type": "yn_unknown"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-03",
+    "questionnaire_title": "Weak Lockout Mechanism",
+    "polarity": "yes_is_weakness",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "ATHN03-Item_1",
+        "question": "Does the endpoint allow brute force? (No lockout / rate limiting observed after repeated failed attempts)",
+        "answer_type": "yn"
+      },
+      {
+        "index": 1,
+        "id": "ATHN03-Item_2",
+        "question": "Are security questions easy to guess? (Weak, common, or user-enumerable answers accepted)",
+        "answer_type": "yn",
+        "note": "Evaluated regardless of Item_1 verdict. Y = indicator of compromise."
+      },
+      {
+        "index": 2,
+        "id": "ATHN03-Item_3",
+        "question": "If brute force is allowed, is OTP code guessing present? (OTP endpoint lacks lockout)",
+        "answer_type": "choice",
+        "options": [
+          "Y",
+          "N",
+          "No OTP Code found"
+        ],
+        "condition": "ATHN03-Item_1 == Y",
+        "note": "Skipped (N/A) when Item_1 is N."
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-07",
+    "questionnaire_title": "Weak Password Policy",
+    "polarity": "yes_is_control_present",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "Q1_entropy",
+        "question": "Does the password policy enforce sufficient entropy (minimum length + character complexity: uppercase, lowercase, numbers, symbols)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 1,
+        "id": "Q2_history_bypass",
+        "question": "Can password history be bypassed? (e.g. cycle through N passwords so the Nth+1 reuse of the original is accepted)",
+        "answer_type": "yn",
+        "note": "Verdict semantics in the script: True = history enforced (bypass not possible)."
+      },
+      {
+        "index": 2,
+        "id": "Q3_nist_expiry",
+        "question": "Does the password expiry policy align with NIST SP 800-63B? (NIST recommends NO mandatory periodic expiry unless compromise is suspected)",
+        "answer_type": "yn",
+        "reference": "https://pages.nist.gov/800-63-3/sp800-63b.html#sec5"
+      },
+      {
+        "index": 3,
+        "id": "Q4_history_maintained",
+        "question": "Does the application maintain a history of the user's previous passwords to prevent reuse?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 4,
+        "id": "Q5_personal_info_rejected",
+        "question": "Does the policy reject passwords containing the user's first name, last name, or username?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 5,
+        "id": "Q6_common_passwords_blocked",
+        "question": "Does the policy reject common/dictionary passwords? (Test with a set of common passwords)",
+        "answer_type": "yn"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-09",
+    "questionnaire_title": "Weak Password Change or Reset Functionalities",
+    "polarity": "flawed_is_weakness",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "a.1",
+        "question": "Is the password reset endpoint protected against rate limiting?",
+        "answer_type": "flawed",
+        "category": "a",
+        "category_name": "Rate Limiting"
+      },
+      {
+        "index": 1,
+        "id": "b.1",
+        "question": "Is the password reset flow vulnerable to SQL Injection?",
+        "answer_type": "flawed",
+        "category": "b",
+        "category_name": "SQL Injection"
+      },
+      {
+        "index": 2,
+        "id": "c.1",
+        "question": "Does the password reset flow lack MFA?",
+        "answer_type": "flawed",
+        "category": "c",
+        "category_name": "MFA on Password Reset"
+      },
+      {
+        "index": 3,
+        "id": "d.1",
+        "question": "Does the login flow lack MFA?",
+        "answer_type": "flawed",
+        "category": "d",
+        "category_name": "MFA on Login"
+      },
+      {
+        "index": 4,
+        "id": "e.1",
+        "question": "Does the user get sent a new password by email?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "is_gate": true,
+        "note": "If Yes, this is likely compromised — review sub-questions"
+      },
+      {
+        "index": 5,
+        "id": "e.2",
+        "question": "Is the user forced to change the password on initial login?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "parent_condition": "e.1 == Flawed"
+      },
+      {
+        "index": 6,
+        "id": "e.3",
+        "question": "Is the password securely generated (sufficient entropy)?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "parent_condition": "e.1 == Flawed"
+      },
+      {
+        "index": 7,
+        "id": "e.4",
+        "question": "Is the user's EXISTING password sent to them (plaintext storage indicator)?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "parent_condition": "e.1 == Flawed"
+      },
+      {
+        "index": 8,
+        "id": "e.5",
+        "question": "Are the reset emails sent from a domain with anti-spoofing protection (SPF, DKIM, DMARC)?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "parent_condition": "e.1 == Flawed"
+      },
+      {
+        "index": 9,
+        "id": "e.6",
+        "question": "Is email considered a sufficiently secure channel for credential delivery?",
+        "answer_type": "flawed",
+        "category": "e",
+        "category_name": "New Password Sent by Email",
+        "parent_condition": "e.1 == Flawed"
+      },
+      {
+        "index": 10,
+        "id": "f.1",
+        "question": "Does the user get an email with a password reset link?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "is_gate": true,
+        "note": "If Yes, assess sub-questions"
+      },
+      {
+        "index": 11,
+        "id": "f.2",
+        "question": "Does the reset link use HTTPS?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 12,
+        "id": "f.3",
+        "question": "Can the reset link be used multiple times?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 13,
+        "id": "f.4",
+        "question": "Does the reset link expire if it remains unused?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 14,
+        "id": "f.5",
+        "question": "Is the reset token sufficiently long and random (high entropy)?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 15,
+        "id": "f.6",
+        "question": "Does the reset link contain a User ID (leaks account enumeration)?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 16,
+        "id": "f.7",
+        "question": "Does a Google dork expose the reset link (indexed by search engines)?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed"
+      },
+      {
+        "index": 17,
+        "id": "f.8",
+        "question": "Are reset emails sent from a domain with anti-spoofing protection (SPF, DKIM, DMARC)?",
+        "answer_type": "flawed",
+        "category": "f",
+        "category_name": "Password Reset Link Sent by Email",
+        "parent_condition": "f.1 == Flawed",
+        "note": "Same check as e.5 under a different parent; kept as-is."
+      },
+      {
+        "index": 18,
+        "id": "g.1",
+        "question": "Does the user get a reset token / link over SMS?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "is_gate": true,
+        "note": "If Yes, assess sub-questions"
+      },
+      {
+        "index": 19,
+        "id": "g.2",
+        "question": "Is the SMS token sufficiently long and random?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "parent_condition": "g.1 == Flawed"
+      },
+      {
+        "index": 20,
+        "id": "g.3",
+        "question": "Can the SMS token be used multiple times?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "parent_condition": "g.1 == Flawed"
+      },
+      {
+        "index": 21,
+        "id": "g.4",
+        "question": "Does the SMS token expire if it remains unused?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "parent_condition": "g.1 == Flawed"
+      },
+      {
+        "index": 22,
+        "id": "g.5",
+        "question": "Are rate limits in place for the SMS token endpoint?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "parent_condition": "g.1 == Flawed"
+      },
+      {
+        "index": 23,
+        "id": "g.6",
+        "question": "Is SMS considered a sufficiently secure channel for authentication?",
+        "answer_type": "flawed",
+        "category": "g",
+        "category_name": "Reset Token Sent by SMS",
+        "parent_condition": "g.1 == Flawed",
+        "note": "SMS is vulnerable to SIM-swapping and SS7 attacks. NIST 800-63B designates it RESTRICTED."
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Authentication Testing",
+    "WSTG_ID": "WSTG-ATHN-11",
+    "questionnaire_title": "Testing Multi-Factor Authentication",
+    "polarity": "mixed",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "ATHN11-Q1",
+        "question": "Does MFA exist on this application?",
+        "answer_type": "yn",
+        "polarity": "yes_is_control_present",
+        "note": "If No, verdict is Compromised immediately and remaining questions are skipped."
+      },
+      {
+        "index": 1,
+        "id": "ATHN11-Q2",
+        "question": "Which factors are confirmed present? (TUI checklist from the factor catalog)",
+        "answer_type": "checklist",
+        "options": [
+          "totp",
+          "hardware_key",
+          "push_notification",
+          "sms_otp",
+          "email_otp",
+          "biometric",
+          "voice_call",
+          "backup_codes",
+          "password",
+          "security_question"
+        ],
+        "condition": "ATHN11-Q1 == Y",
+        "note": "Verdict: Not Compromised if >=2 factors confirmed, otherwise Compromised. Per-factor technology name may be entered."
+      },
+      {
+        "index": 2,
+        "id": "ATHN11-Q3",
+        "question": "What is the MFA technology / product?",
+        "answer_type": "text",
+        "condition": "ATHN11-Q1 == Y"
+      },
+      {
+        "index": 3,
+        "id": "ATHN11-Q4",
+        "question": "Which requests are the authentication endpoints? (Burp XML indices, via --auth-ep or TUI picker)",
+        "answer_type": "list",
+        "condition": "ATHN11-Q1 == Y"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-03",
+    "questionnaire_title": "Session Fixation Checklist",
+    "polarity": "informational",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "SESS03-01",
+        "question": "What is the login endpoint URL?",
+        "answer_type": "text"
+      },
+      {
+        "index": 1,
+        "id": "SESS03-02",
+        "question": "Have you cleared cookies and cache (or used a fresh private window)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 2,
+        "id": "SESS03-03",
+        "question": "What is the pre-auth cookie name and value?",
+        "answer_type": "text",
+        "fields": [
+          "cookie_name",
+          "cookie_value"
+        ]
+      },
+      {
+        "index": 3,
+        "id": "SESS03-04",
+        "question": "Did authentication succeed?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 4,
+        "id": "SESS03-05",
+        "question": "What is the post-auth cookie name and value?",
+        "answer_type": "text",
+        "fields": [
+          "cookie_name",
+          "cookie_value"
+        ],
+        "note": "Identical to pre-auth value = VULNERABLE (session fixation). Different = PASS. Missing = INCONCLUSIVE."
+      },
+      {
+        "index": 5,
+        "id": "SESS03-06",
+        "question": "Notes (optional)",
+        "answer_type": "text",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-06",
+    "questionnaire_title": "Logout Functionality Checklist",
+    "polarity": "yes_is_control_present",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "A1",
+        "question": "Is a logout button/link visible and accessible from all authenticated pages?",
+        "answer_type": "yn_skip",
+        "category": "A",
+        "category_name": "UI Logout Controls"
+      },
+      {
+        "index": 1,
+        "id": "A2",
+        "question": "Does logout complete in a single clear action (no multi-step confirmation maze)?",
+        "answer_type": "yn_skip",
+        "category": "A",
+        "category_name": "UI Logout Controls"
+      },
+      {
+        "index": 2,
+        "id": "A3",
+        "question": "After logout, is the user redirected to a non-authenticated page (login page, home)?",
+        "answer_type": "yn_skip",
+        "category": "A",
+        "category_name": "UI Logout Controls"
+      },
+      {
+        "index": 3,
+        "id": "B1",
+        "question": "Do any cookies in the XML have Max-Age / Expires directives, and are they within the 24h threshold?",
+        "answer_type": "auto",
+        "category": "B",
+        "category_name": "Session Timeout",
+        "note": "Auto-scanned from Burp XML (--xml). No question is asked; marked manual if no XML supplied."
+      },
+      {
+        "index": 4,
+        "id": "B2",
+        "question": "Does the application warn the user before their session expires due to inactivity?",
+        "answer_type": "yn_skip",
+        "category": "B",
+        "category_name": "Session Timeout"
+      },
+      {
+        "index": 5,
+        "id": "B3",
+        "question": "Is the timeout enforced consistently across all session types (web, API, mobile, remember-me)?",
+        "answer_type": "yn_skip",
+        "category": "B",
+        "category_name": "Session Timeout"
+      },
+      {
+        "index": 6,
+        "id": "C1",
+        "question": "After logout, does replaying a captured authenticated request return 401 / 403 / redirect rather than a valid authenticated response?",
+        "answer_type": "yn_skip",
+        "category": "C",
+        "category_name": "Server-Side Session Invalidation"
+      },
+      {
+        "index": 7,
+        "id": "C2",
+        "question": "Is the old session token rejected when manually re-submitted in the Cookie header?",
+        "answer_type": "yn_skip",
+        "category": "C",
+        "category_name": "Server-Side Session Invalidation"
+      },
+      {
+        "index": 8,
+        "id": "C3",
+        "question": "Does the server appear to invalidate the session server-side, not just clear the client cookie?",
+        "answer_type": "yn_skip",
+        "category": "C",
+        "category_name": "Server-Side Session Invalidation"
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Session Management Testing",
+    "WSTG_ID": "WSTG-SESS-09",
+    "questionnaire_title": "Session Hijacking Checklist",
+    "polarity": "mixed",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "SESS09-01",
+        "question": "What is the URL or description of the secure function?",
+        "answer_type": "text",
+        "step": 1,
+        "polarity": "informational"
+      },
+      {
+        "index": 1,
+        "id": "SESS09-02",
+        "question": "HSTS adoption level?",
+        "answer_type": "choice",
+        "options": [
+          "none",
+          "partial",
+          "full"
+        ],
+        "step": 2,
+        "polarity": "informational"
+      },
+      {
+        "index": 2,
+        "id": "SESS09-03",
+        "question": "Which cookie names did you delete? (comma-separated, optional)",
+        "answer_type": "list",
+        "optional": true,
+        "step": 3,
+        "polarity": "informational"
+      },
+      {
+        "index": 3,
+        "id": "SESS09-04",
+        "question": "Did the secure function complete successfully with the reduced cookie jar?",
+        "answer_type": "yn",
+        "step": 4,
+        "polarity": "yes_is_weakness"
+      },
+      {
+        "index": 4,
+        "id": "SESS09-05",
+        "question": "Did the secure function complete successfully with the attacker plus victim cookies?",
+        "answer_type": "yn",
+        "step": 8,
+        "polarity": "yes_is_weakness"
+      },
+      {
+        "index": 5,
+        "id": "SESS09-06",
+        "question": "Is the step-8 action visible / reflected in the victim's account?",
+        "answer_type": "yn",
+        "step": 10,
+        "polarity": "yes_is_weakness",
+        "note": "Steps 5, 6, 7 and 9 of the script are confirm-only (press ENTER) and record no answers. VULNERABLE if SESS09-05 and SESS09-06 are both Y; PARTIAL if only SESS09-04 is Y."
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Business Logic Testing",
+    "WSTG_ID": "WSTG-BUSL-08",
+    "questionnaire_title": "Upload of Unexpected File Types (Pre-Test Questionnaire)",
+    "polarity": "informational",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "BUSL08-01",
+        "question": "Target base URL?",
+        "answer_type": "text"
+      },
+      {
+        "index": 1,
+        "id": "BUSL08-02",
+        "question": "Briefly describe the service / application.",
+        "answer_type": "text"
+      },
+      {
+        "index": 2,
+        "id": "BUSL08-03",
+        "question": "Known tech stack?",
+        "answer_type": "text",
+        "optional": true
+      },
+      {
+        "index": 3,
+        "id": "BUSL08-04",
+        "question": "Are you testing as an authenticated user?",
+        "answer_type": "yn",
+        "follow_up": [
+          "What role / privilege level?"
+        ]
+      },
+      {
+        "index": 4,
+        "id": "BUSL08-05",
+        "question": "Does a file upload feature exist on the site (by design)?",
+        "answer_type": "yn",
+        "follow_up": [
+          "List all known upload endpoints / pages.",
+          "What file types does the application claim to accept?"
+        ]
+      },
+      {
+        "index": 5,
+        "id": "BUSL08-06",
+        "question": "Is there a stated file size limit?",
+        "answer_type": "text",
+        "optional": true
+      },
+      {
+        "index": 6,
+        "id": "BUSL08-07",
+        "question": "Have you already found any unexpected or unintended file paths?",
+        "answer_type": "yn",
+        "follow_up": [
+          "List the unexpected paths you found.",
+          "Have you manually tried to upload a file to any of those paths?",
+          "What happened?"
+        ]
+      },
+      {
+        "index": 7,
+        "id": "BUSL08-08",
+        "question": "Have you reviewed robots.txt / sitemap.xml for path hints?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 8,
+        "id": "BUSL08-09",
+        "question": "Have you reviewed page source / JS files for hidden upload endpoints?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 9,
+        "id": "BUSL08-10",
+        "question": "Any notes from the Burp Suite sitemap / proxy history relevant to uploads?",
+        "answer_type": "text",
+        "optional": true
+      },
+      {
+        "index": 10,
+        "id": "BUSL08-11",
+        "question": "Anything else the wordlist generator should know?",
+        "answer_type": "text",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "WSTG_CATEGORY_NAME": "Business Logic Testing",
+    "WSTG_ID": "WSTG-BUSL-09",
+    "questionnaire_title": "Upload of Malicious Files (Pre-Test Questionnaire)",
+    "polarity": "informational",
+    "questionnaire": [
+      {
+        "index": 0,
+        "id": "BUSL09-01",
+        "question": "Target base URL?",
+        "answer_type": "text"
+      },
+      {
+        "index": 1,
+        "id": "BUSL09-02",
+        "question": "Briefly describe the service / application.",
+        "answer_type": "text"
+      },
+      {
+        "index": 2,
+        "id": "BUSL09-03",
+        "question": "Known server-side tech?",
+        "answer_type": "text",
+        "optional": true
+      },
+      {
+        "index": 3,
+        "id": "BUSL09-04",
+        "question": "Are you testing as an authenticated user?",
+        "answer_type": "yn",
+        "follow_up": [
+          "Role / privilege level?"
+        ]
+      },
+      {
+        "index": 4,
+        "id": "BUSL09-05",
+        "question": "Does a file upload feature exist on the site?",
+        "answer_type": "yn",
+        "follow_up": [
+          "Known upload endpoints?",
+          "What file types does the application claim to accept?",
+          "Does the server appear to process/execute uploaded files?"
+        ]
+      },
+      {
+        "index": 5,
+        "id": "BUSL09-06",
+        "question": "Where are uploaded files stored, and are they publicly accessible?",
+        "answer_type": "text",
+        "optional": true,
+        "follow_up": [
+          "Are uploaded files accessible via a public URL after upload?"
+        ]
+      },
+      {
+        "index": 6,
+        "id": "BUSL09-07",
+        "question": "Does the site appear to use client-side file type validation (JS/HTML accept=)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 7,
+        "id": "BUSL09-08",
+        "question": "Do you know if the server validates Content-Type (or only the file extension)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 8,
+        "id": "BUSL09-09",
+        "question": "Do you know if the server validates file magic bytes / signatures?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 9,
+        "id": "BUSL09-10",
+        "question": "Have you tried double extensions (e.g. shell.php.jpg, shell.jpg.php)?",
+        "answer_type": "yn",
+        "follow_up": [
+          "What happened?"
+        ]
+      },
+      {
+        "index": 10,
+        "id": "BUSL09-11",
+        "question": "Have you tried null-byte injection?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 11,
+        "id": "BUSL09-12",
+        "question": "Have you tried spoofing the MIME type in the Content-Type header?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 12,
+        "id": "BUSL09-13",
+        "question": "Is webshell / RCE via uploaded .php/.asp/.jsp the primary concern?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 13,
+        "id": "BUSL09-14",
+        "question": "Are you considering polyglot files?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 14,
+        "id": "BUSL09-15",
+        "question": "Are there archive upload endpoints (zip/tar) that might be extracted server-side (zip-slip)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 15,
+        "id": "BUSL09-16",
+        "question": "Does the server appear to rename uploaded files (randomise filename)?",
+        "answer_type": "yn"
+      },
+      {
+        "index": 16,
+        "id": "BUSL09-17",
+        "question": "Have you already run the BUSL-08 unexpected file type scan?",
+        "answer_type": "yn",
+        "follow_up": [
+          "Any BUSL-08 findings relevant to malicious upload testing?"
+        ]
+      },
+      {
+        "index": 17,
+        "id": "BUSL09-18",
+        "question": "Any manual findings or additional context?",
+        "answer_type": "text",
+        "optional": true
+      }
+    ]
+  }
+]

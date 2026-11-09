@@ -1,0 +1,4522 @@
+{
+  "_meta": {
+    "source": "docstring_report.txt",
+    "tag_legend": {
+      "inputs": [
+        "XML_INPUT",
+        "JSON_INPUT",
+        "WORDLIST_INPUT",
+        "URL_INPUT",
+        "DOMAIN_INPUT",
+        "IP_INPUT",
+        "KEYWORD_INPUT",
+        "TEXT_INPUT",
+        "FILETYPE_INPUT",
+        "OPTION_INPUT"
+      ],
+      "outputs": [
+        "MD_OUTPUT",
+        "JSON_OUTPUT",
+        "XML_OUTPUT",
+        "TXT_OUTPUT",
+        "HTML_OUTPUT",
+        "SVG_OUTPUT"
+      ]
+    },
+    "ordering_notes": "run_order = order within the WSTG ID. depends_on lists scripts whose outputs this script reads. category_run_order at the bottom gives the cross-ID sequence. Entries marked inferred=true are my reading of the docstrings, not stated explicitly.",
+    "fragments_merged": [
+      {
+        "fragment_file": "wstg_pipeline_part2.json",
+        "merged_at": "2026-10-26T15:53:10+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (02_Configuration_and_Deployment_Management spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at wstg_pipeline.json and --fragment at this file, to fold it in. The fragment's category key(s) are deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {
+            "TXT_INPUT": "plain .txt report consumed as input (e.g. HSTS report.txt)",
+            "MD_INPUT": "markdown file consumed as input (e.g. methods_outcome.md)"
+          },
+          "docstring_missing": [
+            "WSTG-CONF-10 / conf10_takeover.py — no triple-quoted docstring found in source; entry built from cross-reference in WSTG-INFO-10's info10_collect.py docstring only."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part3.json",
+        "merged_at": "2026-10-26T16:33:39+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (03_Identity_Management spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {},
+          "notes": [
+            "All four scripts in this category are interactive CLI questionnaires or report generators over static question banks -- not Burp/XML-driven recon tools like categories 01 and 02.",
+            "WSTG-IDNT-03/script_me.py's optional svc_json input is the same 'services JSON' format consumed throughout categories 01 and 02 (e.g. WSTG-CONF-02/03/04/05/09/13). This docstring batch doesn't name which script produces it, so the dependency is recorded as cross-category and unresolved rather than guessed."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part4.json",
+        "merged_at": "2026-10-26T16:35:30+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (04_Authentication spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {
+            "STDOUT_OUTPUT": "script's result is printed to the terminal only -- no -o/--output flag or file path was documented for it"
+          },
+          "tags_reused_from_prior_fragments": [
+            "INTERACTIVE_INPUT (from wstg_pipeline_part3.json) -- CLI questionnaire answers typed at a prompt"
+          ],
+          "notes": [
+            "This category mixes three patterns: svc_dsr-style wordlist builders (ATHN-02), interactive questionnaire -> verdict script pairs (ATHN-03, ATHN-07, ATHN-09, ATHN-11), and one Burp/XML comparison tool (ATHN-10) in the style of categories 01/02.",
+            "Three verdict scripts (ATHN_VERDICT.py, verdict_ATHN09.py, verdict_ATHN11.py) have no documented -o/--output flag -- their usage blocks only show an -i input flag, so their result is treated as STDOUT_OUTPUT rather than a file artifact. Confirm this against source if a file output does exist.",
+            "athn11_mfa.py's docstring contains the author's own in-progress marker: 'COMMENT: STILL DO THIS — 10172026'. Treat this entry as provisional; re-spider WSTG-ATHN-11 once that work lands.",
+            "No cross-ID dependencies were stated anywhere in this batch -- every ID here is self-contained (unlike WSTG-INFO-10 or WSTG-CONF-13 in earlier categories)."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part5.json",
+        "merged_at": "2026-10-26T16:36:53+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (05_Authorization spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {},
+          "tags_reused_from_prior_fragments": [
+            "INTERACTIVE_INPUT (part3)",
+            "STDOUT_OUTPUT (part4)"
+          ],
+          "notes": [
+            "WSTG-ATHZ-02 is explicitly numbered by its own docstrings: parse_athz02.py = Script 1, 2athz_tasks.py = Script 2, athz_reporting.py = Script 3. That numbering is used directly for run_order here.",
+            "Cross-category link (not a script-to-script dependency, a shared-source relationship): WSTG-INFO-10/info10_collect.py's --athz02-xml flag reads the SAME raw Burp XML directory (WSTG-ATHZ-02/inputs/xml/*.xml) that parse_athz02.py also reads -- it does not consume parse_athz02.py's own outputs. Both just read the per-user walk XML independently."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part6.json",
+        "merged_at": "2026-10-26T16:39:13+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (06_Session_Management spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {},
+          "tags_reused_from_prior_fragments": [
+            "INTERACTIVE_INPUT (part3)",
+            "STDOUT_OUTPUT (part4, unused this batch)"
+          ],
+          "notes": [
+            "DOCSTRING CONFLICT, flagged rather than resolved: sess01_m0_pull_cookies.py's own commentary says 'The dataset JSON feeds Modules 1-3', but sess01_m1_string_seeker.py's documented Usage block only shows a --xml flag -- no --cookies/--dataset flag consuming m0's output. m2 DOES explicitly consume m0's cookies_by_name.json via --cookies, and m3's overlap-detection step explicitly reads m0's cookies_raw.txt (by description, not a CLI flag). So m0 -> m2 and m0 -> m3 are confirmed; m0 -> m1 is only claimed in m0's docstring and not evidenced in m1's own usage block. Recorded m1 as depends_on: [] per its stated interface, with the conflict noted on the entry itself.",
+            "svc_env_grab.py (WSTG-SESS-04) is the THIRD standalone reimplementation of the svc_dsr.py trigger/extractor pipeline seen so far in this repo, after svc_dsr.py itself (WSTG-CONF-02) and athn_02_wordlist.py (WSTG-ATHN-02) -- all three read the same how_to_steps_bridge.json and run the same category logic, just wired to different output paths. Worth consolidating if you're refactoring later.",
+            "No cross-ID dependencies were stated within this category -- WSTG-SESS-02/03/06/07/09 are each self-contained; only SESS-01 (internally, across its 4 modules) and SESS-04 (svc_env_grab.py -> sess_04_analyze.py) have multi-script chains."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part7.json",
+        "merged_at": "2026-10-26T16:41:28+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (09_Weak_Cryptography spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {},
+          "tags_reused_from_prior_fragments": [
+            "INTERACTIVE_INPUT (part3, unused this batch)",
+            "STDOUT_OUTPUT (part4)"
+          ],
+          "skipped_categories": "07_Input_Validation (injection) and 08_Error_Handling were intentionally skipped per user instruction. This fragment jumps from 06_Session_Management straight to 09_Weak_Cryptography. category_run_order stays contiguous in OUR numbering (it's an append-only sequence of IDs actually documented), but there is a gap in the WSTG folder numbers themselves (06 -> 09) that reflects the skip, not a missing spider batch.",
+          "docstring_missing": [
+            "WSTG-CRYP-01/cryp01_analyze.py -- no triple-quoted docstring found in source."
+          ],
+          "notes": [
+            "WSTG-CRYP-02/padding_verdict.py is explicitly labeled 'Script 2' in its own docstring and reads padding_oracle_scan.json '(from padding_scan.py)' -- but padding_scan.py (the implied Script 1) was NOT captured in this spider batch. Recorded as a known-missing upstream script rather than guessed.",
+            "WSTG-CRYP-04 contains TWO INDEPENDENT sub-chains that read DIFFERENT Burp XML exports, despite being numbered Script 1-4 together: Chain A = cryp04_gather.py (Script 1, reads cryp04_targets.xml) -> cryp04_analyze.py (Script 2); Chain B = case2_cryp04.py (Script 3, reads entropy_targs.xml) -> here_place_UUID.py (Script 4). Chain B does not depend on Chain A or vice versa. Flagged explicitly so the different input XML files aren't conflated.",
+            "cryp04_gather.py also ingests an out-of-band artifact (storage_dump.json) produced manually via a browser DevTools JS snippet, not by any script in this repo -- recorded as an optional input with that caveat."
+          ]
+        }
+      },
+      {
+        "fragment_file": "wstg_pipeline_part8.json",
+        "merged_at": "2026-10-26T16:46:05+00:00",
+        "fragment_meta": {
+          "source": "docstring_report.txt (10_Business_Logic spider)",
+          "fragment_of": "wstg_pipeline.json",
+          "merge_instructions": "This file is a MERGE FRAGMENT, not a standalone master. Run merge_wstg_json.py, pointing --base at the growing master (e.g. wstg_pipeline_merged.json) and --fragment at this file, to fold it in. The fragment's category key is deep-merged into the base, and 'category_run_order_append' is appended onto the base's 'category_run_order' with order numbers renumbered to continue the sequence.",
+          "new_tags_introduced": {},
+          "tags_reused_from_prior_fragments": [
+            "INTERACTIVE_INPUT (part3)",
+            "STDOUT_OUTPUT (part4)"
+          ],
+          "docstring_missing": [
+            "WSTG-BUSL-09 has no wordlist/probe-generation script captured in this batch (unlike its sibling WSTG-BUSL-08, which explicitly has busl_08_wordlist.py as 'Script 1'). busl_09_verdict.py's docstring confirms BUSL-09 is 'adapted from busl_08_verdict.py', implying a parallel wordlist step should exist, but it wasn't spidered here. Recorded busl_09_verdict.py's depends_on with this gap flagged rather than guessing a filename."
+          ],
+          "unresolved_cross_references": [
+            "WSTG-BUSL-04/busl_04_prep.py's docstring says 'Same multi-file pattern as hpp_04'. HTTP Parameter Pollution (HPP) is WSTG-INPV-04, which falls under 07_Input_Validation -- a category the user has explicitly chosen to skip in this spidering project. This reference is recorded but will intentionally stay unresolved unless that category gets spidered later."
+          ],
+          "notes": [
+            "This whole category shares one alert-threshold table almost verbatim: busl01_validation.py, verdict_busl_03.py, busl_08_verdict.py, and busl_09_verdict.py (with its own additional RCE/EXEC categories) all use the same 200/302/202/301/403-500/404 status+body-size logic seen earlier in WSTG-CONF-02/conf_02_verdict.py. Recorded in full per-script since exact severity labels differ slightly between them (e.g. BUSL-01/03 rank 302 above 202 above 301; CONF-02 does not rank at all).",
+            "WSTG-BUSL-08: busl_08_questionnaire.py is explicitly documented to run BEFORE 'Script 1' (busl_08_wordlist.py), even though the questionnaire itself carries no script number of its own. Recorded as run_order 1, ahead of the numbered scripts.",
+            "WSTG-BUSL-08/busl_08_wordlist.py reuses the exact svc_repo.json secondary-service-repo pattern (CommonEndpoints + UndesirableEndpoints, dedup'd, MISSING LOGIC stub for the primary repo) seen in WSTG-CONF-02/conf_02_wordlist.py and WSTG-CONF-05/conf_05_wordlist.py."
+          ]
+        }
+      }
+    ]
+  },
+  "01_Information_Gathering": {
+    "WSTG-INFO-01": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "dork_seek.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-01/Utilities/python/dork_seek.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python dork_seek.py --input_file <terms.txt> --input_keyword <keyword> [--filetype <ext> [<ext> ...]] --output <dork_results.txt>",
+          "example": "python dork_seek.py --input_file Inputs/Data/terms.txt --input_keyword \"Trusted Ascent\" --filetype pdf xlsx --output Outputs/test_outputs/dork_results.txt",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--input_file",
+              "example": "Inputs/Data/terms.txt",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "KEYWORD_INPUT",
+              "flag": "--input_keyword",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "FILETYPE_INPUT",
+              "flag": "--filetype",
+              "required": false,
+              "note": "one or more extensions",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "TXT_OUTPUT",
+              "flag": "--output",
+              "path": "Outputs/test_outputs/dork_results.txt",
+              "flag_required": true
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "info2_orchestrator.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-02/Utilities/python/info2_orchestrator.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python info2_orchestrator.py --file <burp_export.xml> [--webserverenum <path/to/WebserverEnum.py>] [--base <repo_base_path>] [--no-wait]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--file",
+              "description": "Burp XML export; target URL(s) parsed from it",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--webserverenum",
+              "description": "path to WebserverEnum.py",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--no-wait",
+              "description": "skips the 2 minute pause",
+              "required": false,
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Utilities/Kali_Tools/curl/<timestamp>.md",
+              "condition": "single domain (curl -I)"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Utilities/Kali_Tools/httpx/<timestamp>.md",
+              "condition": "multiple domains (httpx)"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Utilities/Kali_Tools/whatweb/<timestamp>.md"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/findings.md"
+            }
+          ],
+          "internal_steps": [
+            "1. parse target URL(s) from Burp XML",
+            "2. curl -I (single domain) OR httpx (multiple domains)",
+            "3. wait 2 minutes",
+            "4. whatweb against each target",
+            "5. run WebserverEnum.py (Burp XML version scanner)"
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "metafile_fetcher.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-03/Utilities/python/metafile_fetcher.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python metafile_fetcher.py --url <https://example.com> [--output-base <path>] [--timeout <seconds>]",
+          "inputs": [
+            {
+              "tag": "URL_INPUT",
+              "flag": "--url",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--output-base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--timeout",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/<TOOL_NAME>/",
+              "note": "one file per tool (wget, curl); fetches security.txt, robots.txt, llms.txt, humans.txt, sitemap.xml with and without /.well-known/"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "metatag_scraper.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-03/Utilities/python/metatag_scraper.py",
+          "run_order": 2,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No hard dependency in the docstring. Ordered second only because it works from a URL list, which can be informed by the metafile results (e.g. sitemap.xml).",
+          "command": "python metatag_scraper.py --input <urls.txt> [--output-base <path>] [--timeout <seconds>] [--delay <seconds>]",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--input",
+              "description": "plaintext file, one URL per line",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--output-base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--timeout",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--delay",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/metatag_scraper/"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "subdomain_seeker.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-04/Utilities/python/subdomain_seeker.py",
+          "run_order": 1,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "Docstring says it runs separately from the orchestrator. Placed first so its discovered subdomains can feed the domains file used by script_2.",
+          "command": "python subdomain_seeker.py --input_xml <burp_export.xml> --target_url <target.com> [--output-base <path>] [--include-requests]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--input_xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "DOMAIN_INPUT",
+              "flag": "--target_url",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--output-base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--include-requests",
+              "required": false,
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "<output-base>/",
+              "note": "deduplicated list of discovered subdomains; exact filename not stated in docstring"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "info4_orchestrator.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-04/Utilities/python/info4_orchestrator.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (optional, for domains.txt)"
+          ],
+          "command": "python info4_orchestrator.py --domains <domains.txt> --ip <TARGET_IP> [--base <WSTG-INFO-04 root>] [--dns-sleep <seconds>] [--naabu-rate <rate>] [--no-wait] [--skip-dns] [--skip-portscan] [--skip-vhost]",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--domains",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "IP_INPUT",
+              "flag": "--ip",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--dns-sleep",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--naabu-rate",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--no-wait",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-dns",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-portscan",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-vhost",
+              "required": false,
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "TXT_OUTPUT",
+              "path": "Outputs/test_outputs/DNS_MODULE/results.txt",
+              "step": 1
+            },
+            {
+              "tag": "XML_OUTPUT",
+              "path": "Outputs/data/uxp_scan.xml",
+              "step": 3
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/naabu_service/service_<ts>.md",
+              "step": 3
+            },
+            {
+              "tag": "XML_OUTPUT",
+              "path": "Outputs/data/vhost_scan.xml",
+              "step": 5
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/naabu_vhost/vhost_<ts>.md",
+              "step": 5
+            }
+          ],
+          "internal_steps": [
+            "1. DNS active enumeration (dig A/AAAA/MX/TXT/NS/CNAME/SOA/SRV)",
+            "2. wait 2 minutes",
+            "3. naabu + nmap -Pn -vvv -sV (service scan)",
+            "4. wait 2 minutes",
+            "5. naabu + nmap --script http-vhosts (virtual host scan)"
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-05": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "info5_orchestrator.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-05/Utilities/python/info5_orchestrator.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python info5_orchestrator.py --input <burp_export.xml> [--base <WSTG-INFO-05 root>] [--output <explicit output path>]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--input",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "--output",
+              "path": "Outputs/test_outputs/info5_leakage/leakage_<ts>.json",
+              "flag_required": false
+            }
+          ],
+          "internal_steps": [
+            "1. version info (version strings, server tech, CVE correlation)",
+            "2. sensitive info (API keys, tokens, passwords, PII, credit cards)",
+            "3. paths (interesting file paths, directories, extensions)"
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-08": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "info8_orchestrator.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-08/Utilities/python/info8_orchestrator.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python info8_orchestrator.py --input <burp_export.xml> [--domains <extra_domains.txt>] [--target-domain <root>] [--nc-ports 80,443,8080,8443] [--base <WSTG-INFO-08 root>] [--skip-version] [--skip-comments] [--skip-whatweb] [--skip-nc]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--input",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--domains",
+              "required": false,
+              "description": "extra domains merged with Burp-derived targets",
+              "takes_value": true
+            },
+            {
+              "tag": "DOMAIN_INPUT",
+              "flag": "--target-domain",
+              "required": false,
+              "description": "root domain for subdomain regex sweep",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--nc-ports",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-version",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-comments",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-whatweb",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--skip-nc",
+              "required": false,
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/version_detection.md",
+              "step": 3
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/comment_extract.md",
+              "step": 4
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/whatweb.md",
+              "step": 5
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "Outputs/test_outputs/nc.md",
+              "step": 6
+            }
+          ],
+          "internal_steps": [
+            "1. parse Burp XML, extract unique domains + subdomain regex sweep",
+            "2. merge with optional domains file, dedupe",
+            "3. version_detection",
+            "4. comment_extract",
+            "5. whatweb --color=never -v",
+            "6. nc banner grab on --nc-ports"
+          ]
+        }
+      }
+    },
+    "WSTG-INFO-10": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "info10_collect.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-10/Utilities/python/info10_collect.py",
+          "run_order": 1,
+          "depends_on": [
+            "WSTG-INFO-04 / info4_orchestrator.py (uxp_scan.xml, DNS results.txt)",
+            "WSTG-CONF-11 (test_findings.txt)",
+            "WSTG-CONF-10 (findings.md)",
+            "WSTG-INFO-06 (Burp XML, auth endpoints)",
+            "WSTG-ATHZ-02 (Burp XML, authed user functions)"
+          ],
+          "command": "python3 info10_collect.py [--base <repo_root>] [--nmap <uxp_scan.xml>] [--conf11 <test_findings.txt>] [--conf10 <findings.md>] [--dns <results.txt>] [--info06-xml <dir>] [--athz02-xml <dir>] [--out <output_dir>]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--nmap",
+              "path": "WSTG-INFO-04/Outputs/data/uxp_scan.xml",
+              "description": "nmap service scan XML",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "TEXT_INPUT",
+              "flag": "--conf11",
+              "path": "WSTG-CONF-11/outputs/test_output/test_findings.txt",
+              "description": "cloud storage report",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "TEXT_INPUT",
+              "flag": "--conf10",
+              "path": "WSTG-CONF-10/outputs/test_outputs/findings.md",
+              "description": "subdomain takeover report",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "TEXT_INPUT",
+              "flag": "--dns",
+              "path": "WSTG-INFO-04/Outputs/test_outputs/DNS_MODULE/results.txt",
+              "description": "dig DNS output",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "XML_INPUT",
+              "flag": "--info06-xml",
+              "path": "WSTG-INFO-06/inputs/xml/*.xml",
+              "description": "Burp XML directory (auth endpoints)",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "XML_INPUT",
+              "flag": "--athz02-xml",
+              "path": "WSTG-ATHZ-02/inputs/xml/*.xml",
+              "description": "Burp XML directory (authed user functions)",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/arch_data.json",
+              "note": "master JSON consumed by script_2"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/server.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/services.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/cloud_providers.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/subdomains.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/auth_endpoints.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/authed_endpoints.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/main_app_endpoints.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/databases.txt"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/third_parties.txt",
+              "note": "EMPTY placeholder"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-INFO-10/inputs/data/config_mgmt.txt",
+              "note": "EMPTY placeholder"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "info10_diagram.py",
+          "path": "WSTG_Repository/01_Information_Gathering/WSTG-INFO-10/Utilities/python/info10_diagram.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (info10_collect.py -> arch_data.json)"
+          ],
+          "command": "python3 info10_diagram.py [--data <arch_data.json>] [--out <output_dir>] [--base <repo_root>] [--title <app name>]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--data",
+              "path": "WSTG-INFO-10/inputs/data/arch_data.json",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--out",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--base",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--title",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "HTML_OUTPUT",
+              "path": "WSTG-INFO-10/outputs/diagram/arch_diagram.html"
+            },
+            {
+              "tag": "SVG_OUTPUT",
+              "path": "WSTG-INFO-10/outputs/diagram/arch_diagram.svg"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "category_run_order": [
+    {
+      "order": 1,
+      "id": "WSTG-INFO-01",
+      "reason": "independent OSINT"
+    },
+    {
+      "order": 2,
+      "id": "WSTG-INFO-02",
+      "reason": "needs Burp XML; independent of others"
+    },
+    {
+      "order": 3,
+      "id": "WSTG-INFO-03",
+      "reason": "independent; URL based"
+    },
+    {
+      "order": 4,
+      "id": "WSTG-INFO-04",
+      "reason": "produces uxp_scan.xml and DNS results.txt that INFO-10 consumes"
+    },
+    {
+      "order": 5,
+      "id": "WSTG-INFO-05",
+      "reason": "needs Burp XML; independent"
+    },
+    {
+      "order": 6,
+      "id": "WSTG-INFO-08",
+      "reason": "needs Burp XML; independent"
+    },
+    {
+      "order": 7,
+      "id": "WSTG-INFO-10",
+      "reason": "aggregator; must run last, after INFO-04 plus CONF-10, CONF-11, INFO-06 and ATHZ-02 outputs exist"
+    },
+    {
+      "id": "WSTG-CONF-02",
+      "reason": "builds base wordlist infra (conf_02_paths.json) and the shared svc_dsr.py utility that CONF-05 also uses",
+      "order": 8
+    },
+    {
+      "id": "WSTG-CONF-03",
+      "reason": "independent; Burp XML + services JSON only",
+      "order": 9
+    },
+    {
+      "id": "WSTG-CONF-04",
+      "reason": "independent; Burp XML + services JSON only",
+      "order": 10
+    },
+    {
+      "id": "WSTG-CONF-05",
+      "reason": "reuses svc_dsr bridge logic from CONF-02 and svc_repo.json; independent otherwise",
+      "order": 11
+    },
+    {
+      "id": "WSTG-CONF-06",
+      "reason": "independent 3-step chain (gen -> test -> outcome)",
+      "order": 12
+    },
+    {
+      "id": "WSTG-CONF-07",
+      "reason": "independent 2-step chain (test -> findings report)",
+      "order": 13
+    },
+    {
+      "id": "WSTG-CONF-09",
+      "reason": "independent; feeds CONF-13 as an example wordlist source",
+      "order": 14
+    },
+    {
+      "id": "WSTG-CONF-10",
+      "reason": "docstring missing; output path confirmed via WSTG-INFO-10 cross-reference only",
+      "order": 15
+    },
+    {
+      "id": "WSTG-CONF-11",
+      "reason": "independent; output consumed by WSTG-INFO-10",
+      "order": 16
+    },
+    {
+      "id": "WSTG-CONF-12",
+      "reason": "independent",
+      "order": 17
+    },
+    {
+      "id": "WSTG-CONF-13",
+      "reason": "last: explicitly rehashes wordlists already produced by CONF-02 and CONF-09 (and generically any prior ID)",
+      "order": 18
+    },
+    {
+      "id": "WSTG-IDNT-02",
+      "reason": "independent interactive questionnaire pair (q1 -> optional q2 cross-reference); no dependency on categories 01/02",
+      "order": 19
+    },
+    {
+      "id": "WSTG-IDNT-03",
+      "reason": "independent interactive questionnaire + report generator; report generator's optional svc_json input may someday tie to a services-JSON producer elsewhere in the repo, but that's unresolved as of this spider batch",
+      "order": 20
+    },
+    {
+      "id": "WSTG-ATHN-02",
+      "reason": "independent; svc_dsr-based wordlist builder, same bridge file as WSTG-CONF-02/05",
+      "order": 21
+    },
+    {
+      "id": "WSTG-ATHN-03",
+      "reason": "independent 2-step questionnaire -> report chain",
+      "order": 22
+    },
+    {
+      "id": "WSTG-ATHN-07",
+      "reason": "independent 2-step questionnaire -> verdict chain",
+      "order": 23
+    },
+    {
+      "id": "WSTG-ATHN-08",
+      "reason": "independent OSINT dork generator",
+      "order": 24
+    },
+    {
+      "id": "WSTG-ATHN-09",
+      "reason": "independent 2-step questionnaire -> verdict chain",
+      "order": 25
+    },
+    {
+      "id": "WSTG-ATHN-10",
+      "reason": "independent; only Burp/XML comparison tool in this category",
+      "order": 26
+    },
+    {
+      "id": "WSTG-ATHN-11",
+      "reason": "independent 2-step questionnaire -> verdict chain; athn11_mfa.py is marked in-development by its own author comment",
+      "order": 27
+    },
+    {
+      "id": "WSTG-ATHZ-02",
+      "reason": "explicit 3-script chain (parse -> tasks -> reporting); parse_athz02.py's inputs/xml dir is also read directly by WSTG-INFO-10 for authed user functions",
+      "order": 28
+    },
+    {
+      "id": "WSTG-ATHZ-04",
+      "reason": "independent 2-script chain (scan -> wordlist)",
+      "order": 29
+    },
+    {
+      "id": "WSTG-SESS-01",
+      "reason": "4-module chain (m0 pull cookies -> m1 string checks / m2 sequential analysis / m3 reverse engineering); m0 is the foundational cookie extractor for the category",
+      "order": 30
+    },
+    {
+      "id": "WSTG-SESS-02",
+      "reason": "independent; Burp XML cookie-attribute audit",
+      "order": 31
+    },
+    {
+      "id": "WSTG-SESS-03",
+      "reason": "independent interactive checklist",
+      "order": 32
+    },
+    {
+      "id": "WSTG-SESS-04",
+      "reason": "2-script chain (svc_env_grab.py -> sess_04_analyze.py)",
+      "order": 33
+    },
+    {
+      "id": "WSTG-SESS-06",
+      "reason": "independent interactive checklist, XML optional",
+      "order": 34
+    },
+    {
+      "id": "WSTG-SESS-07",
+      "reason": "independent interactive timeout test",
+      "order": 35
+    },
+    {
+      "id": "WSTG-SESS-09",
+      "reason": "independent interactive checklist",
+      "order": 36
+    },
+    {
+      "id": "WSTG-CRYP-01",
+      "reason": "2-step chain (scan -> analyze); analyze step has no docstring, ordering inferred",
+      "order": 37
+    },
+    {
+      "id": "WSTG-CRYP-02",
+      "reason": "verdict step only; its upstream scan script wasn't captured in this spider batch",
+      "order": 38
+    },
+    {
+      "id": "WSTG-CRYP-03",
+      "reason": "independent 2-step chain (curl tester -> report reader)",
+      "order": 39
+    },
+    {
+      "id": "WSTG-CRYP-04",
+      "reason": "two independent 2-step chains reading different Burp XML sources: gather->analyze (params/entropy) and UUID-scan->UUID-analyze",
+      "order": 40
+    },
+    {
+      "id": "WSTG-BUSL-01",
+      "reason": "2-script chain (field-type wordlist gen -> Intruder verdict)",
+      "order": 41
+    },
+    {
+      "id": "WSTG-BUSL-03",
+      "reason": "2-script chain, same verdict pattern as BUSL-01",
+      "order": 42
+    },
+    {
+      "id": "WSTG-BUSL-04",
+      "reason": "2-script chain (prep -> TOCTOU race runner); references an unresolved sibling script (hpp_04) in a skipped category",
+      "order": 43
+    },
+    {
+      "id": "WSTG-BUSL-05",
+      "reason": "2-script chain explicitly numbered as workflow steps 1-5 in its own docstring",
+      "order": 44
+    },
+    {
+      "id": "WSTG-BUSL-06",
+      "reason": "2-script chain (GUI grouping -> curl workflow tester)",
+      "order": 45
+    },
+    {
+      "id": "WSTG-BUSL-08",
+      "reason": "3-step chain (questionnaire -> wordlist -> verdict); wordlist step reuses the CONF-02/CONF-05 svc_repo.json pattern",
+      "order": 46
+    },
+    {
+      "id": "WSTG-BUSL-09",
+      "reason": "2-step chain (questionnaire -> verdict); missing its own wordlist-generation sibling script in this spider batch",
+      "order": 47
+    }
+  ],
+  "02_Configuration_and_Deployment_Management": {
+    "WSTG-CONF-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf_02_wordlist.py",
+          "path": "WSTG-CONF-02/utilities/python/conf_02_wordlist.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python3 WSTG-CONF-02/utilities/python/conf_02_wordlist.py [--repo WSTG-CONF-02/inputs/json/svc_repo.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--repo",
+              "path": "WSTG-CONF-02/inputs/json/svc_repo.json",
+              "required": false,
+              "description": "secondary service repo; without it, source 2 (svc_repo paths) is skipped",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-CONF-02/inputs/wordlist/conf_02_paths.txt",
+              "description": "flat Burp-ready list"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CONF-02/inputs/json/conf_02_paths.json",
+              "description": "categorised JSON: debug/dotslash/config/default/svc_repo/backup_variants"
+            }
+          ],
+          "sources": [
+            "1. hardcoded base lists (debug, dotslash, config, default)",
+            "2. svc_repo.json -> Ports[] -> PotentialServices[] -> DefaultEndpoints+CommonEndpoints+UndesirableEndpoints (category svc_repo)",
+            "3. primary service repo -- MISSING LOGIC stub, returns [] with warning",
+            "4. OBJ1/OBJ2 backup-variant suffix generation over all of the above (category backup_variants)"
+          ]
+        },
+        "script_2": {
+          "name": "conf02_enum.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-02/Utilities/python/conf02_enum.py",
+          "run_order": 2,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No CLI usage block was in the docstring, so flags/paths are unknown. Ordered independently of conf_02_wordlist.py -- different enumeration source (Burp XML + services JSON, not svc_repo.json).",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "description": "Burp Suite XML export",
+              "flag": null,
+              "required": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "description": "services JSON (detected-services map)",
+              "flag": null,
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": null,
+              "description": "targeted wordlist, capped at 15 CommonEndpoints + 15 UndesirableEndpoints per matched service"
+            }
+          ]
+        },
+        "script_3": {
+          "name": "svc_dsr.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-02/Utilities/python/svc_dsr.py",
+          "run_order": 3,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "Independent shared utility ('Service Disseminator'); WSTG-CONF-05/conf_05_wordlist.py reuses this same trigger/extractor logic for its 'paths' category.",
+          "command": "python3 svc_dsr.py --init | python3 svc_dsr.py --type <category> | python3 svc_dsr.py --all",
+          "modes": [
+            {
+              "flag": "--init",
+              "description": "create SVC_DSR/ folder structure + default input.txt files"
+            },
+            {
+              "flag": "--type",
+              "values": [
+                "env_vars",
+                "paths",
+                "headers",
+                "default_creds",
+                "commands"
+              ],
+              "description": "run one category"
+            },
+            {
+              "flag": "--all",
+              "description": "run all five categories sequentially (also runs --init first)"
+            }
+          ],
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--bridge",
+              "path": "how_to_steps_bridge.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--main",
+              "path": "conceptual_mapping_v4_complete.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "path": "SVC_DSR/<Folder>/input.txt",
+              "description": "one trigger per line; plain string = substring match (case-insensitive); 'regex:' prefix = raw regex; '#' = comment",
+              "required": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "SVC_DSR/<Folder>/output.json",
+              "description": "{ query_type, matched_items, LIST, References }",
+              "per_category": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "SVC_DSR/<Folder>/wordlist.txt",
+              "description": "flat newline-separated extracted values, Burp-ready",
+              "per_category": true
+            },
+            {
+              "tag": "TXT_OUTPUT",
+              "path": "SVC_DSR/<Folder>/output.txt",
+              "description": "backward-compat duplicate of output.json",
+              "per_category": true
+            }
+          ]
+        },
+        "script_4": {
+          "name": "conf_02_verdict.py",
+          "path": "WSTG-CONF-02/utilities/python/conf_02_verdict.py",
+          "run_order": 4,
+          "depends_on": [
+            "script_1 (conf_02_wordlist.py -> conf_02_paths.json, optional)",
+            "manual: wordlist loaded into Burp Intruder to produce intruder_conf02.xml"
+          ],
+          "command": "python3 WSTG-CONF-02/utilities/python/conf_02_verdict.py --intruder WSTG-CONF-02/inputs/xml/intruder_conf02.xml [--paths-json WSTG-CONF-02/inputs/json/conf_02_paths.json] [--min-bytes 500] [--target https://app.example.com]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--intruder",
+              "path": "WSTG-CONF-02/inputs/xml/intruder_conf02.xml",
+              "required": true,
+              "description": "Burp Intruder or proxy XML export",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--paths-json",
+              "path": "WSTG-CONF-02/inputs/json/conf_02_paths.json",
+              "required": false,
+              "description": "category map for payload->category reverse lookup; if absent all payloads are 'unknown'",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-bytes",
+              "default": 500,
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-CONF-02/outputs/test_outputs/sitrep.md",
+              "description": "appended, not overwritten"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CONF-02/inputs/json/intruder_alerts.json"
+            }
+          ],
+          "alert_logic": {
+            "200": "HIGH",
+            "404": "SKIP",
+            "302/202/301": "MEDIUM",
+            "403/500 >= --min-bytes": "LOW (verbose error, interesting)",
+            "403/500 < --min-bytes": "SKIP (bare error, noise)",
+            "other": "SKIP",
+            "body_signals": [
+              "INDEXING (Index of, Parent Directory, mod_autoindex, etc.)",
+              "SENSITIVE_CONTENT (DB_HOST, password=, API_KEY, secret=, etc.)"
+            ]
+          }
+        }
+      }
+    },
+    "WSTG-CONF-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf03_backup.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-03/Utilities/python/conf03_backup.py",
+          "run_order": 1,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No CLI usage block in docstring.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "description": "Burp Suite XML export",
+              "flag": null,
+              "required": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "description": "services JSON (detected-services map)",
+              "flag": null,
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": null,
+              "description": "CommonEndpoints + UndesirableEndpoints filtered to backup/archive extensions, plus a hardcoded extension list"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf04_sensitive.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-04/Utilities/python/conf04_sensitive.py",
+          "run_order": 1,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No CLI usage block in docstring.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "description": "Burp Suite XML export",
+              "flag": null,
+              "required": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "description": "services JSON (detected-services map)",
+              "flag": null,
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": null,
+              "description": "endpoints filtered to credential/secret/source extensions + special paths (.git/, .docker/) per OWASP WSTG-CONF-04 sensitive file taxonomy"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-05": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "Conf05_admin.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-05/Utilities/python/Conf05_admin.py",
+          "run_order": 1,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No CLI usage block in docstring. No stated dependency on conf_05_wordlist.py.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "description": "Burp Suite XML export",
+              "flag": null,
+              "required": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "description": "services JSON (detected-services map)",
+              "flag": null,
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": null,
+              "description": "CommonEndpoints + UndesirableEndpoints filtered to admin/management/control-panel keyword paths; string-type paths only"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "conf_05_wordlist.py",
+          "path": "WSTG-CONF-05/utilities/python/conf_05_wordlist.py",
+          "run_order": 2,
+          "depends_on": [],
+          "note": "This test case has NO verdict script. Fuzz results are reviewed manually, or fed into WSTG-CONF-02/conf_02_verdict.py if response classification is needed.",
+          "command": "python3 WSTG-CONF-05/utilities/python/conf_05_wordlist.py [--bridge how_to_steps_bridge.json] [--repo WSTG-CONF-05/inputs/json/svc_repo.json] [--paths WSTG-CONF-05/inputs/txt/dsr_triggers.txt]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--bridge",
+              "path": "how_to_steps_bridge.json",
+              "required": false,
+              "description": "svc_dsr source data; if absent, config_actual.txt is skipped with a warning",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--repo",
+              "path": "WSTG-CONF-05/inputs/json/svc_repo.json",
+              "required": false,
+              "description": "if absent, possible_defaults.txt is skipped with a warning",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--paths",
+              "path": "WSTG-CONF-05/inputs/txt/dsr_triggers.txt",
+              "required": false,
+              "description": "trigger file for the disseminator pass; built-in admin/config trigger set used if omitted",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-CONF-05/inputs/wordlists/config_actual.txt",
+              "description": "paths from how_to_steps_bridge.json (real service documentation)"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-CONF-05/inputs/wordlists/possible_defaults.txt",
+              "description": "paths from svc_repo.json DefaultEndpoints+CommonEndpoints+UndesirableEndpoints"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CONF-05/inputs/json/conf_05_paths.json",
+              "description": "combined, categorised"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-06": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "methods_gen.py",
+          "path": "WSTG-CONF-06/utilities/python/methods_gen.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Step 1 of 3",
+          "command": "python3 methods_gen.py --xml-file inputs/xml/export.xml [-o inputs/wordlists/curl_urls.txt] [--methods-out inputs/wordlists/methods.txt]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml-file",
+              "required": true,
+              "description": "Burp Suite XML export (sitemap)",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "-o / --output",
+              "path": "inputs/wordlists/curl_urls.txt",
+              "description": "curl target URL list, default path shown",
+              "flag_required": false
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "--methods-out",
+              "path": "inputs/wordlists/methods.txt",
+              "description": "safe methods only: OPTIONS, TRACE, HEAD, CONNECT -- never PUT/DELETE/PATCH",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "methods_test.py",
+          "path": "WSTG-CONF-06/utilities/python/methods_test.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (methods_gen.py -> curl_urls.txt, methods.txt)"
+          ],
+          "step_label": "Step 2 of 3",
+          "safety_constraint": "Refuses to run PUT, DELETE, or PATCH -- those write operations must be tested manually with explicit intent.",
+          "command": "python3 methods_test.py --url-list inputs/wordlists/curl_urls.txt --methods inputs/wordlists/methods.txt -o outputs/test_outputs/WSTG-CONF-06/methods_outcome.md",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--url-list",
+              "required": true,
+              "description": "from methods_gen.py",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--methods",
+              "required": true,
+              "description": "from methods_gen.py",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--timeout",
+              "default": 10,
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--concurrency",
+              "default": 5,
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--auth-only",
+              "required": false,
+              "description": "only test URLs containing auth path keywords",
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/WSTG-CONF-06/methods_outcome.md",
+              "description": "full response headers + status code per method/URL pair",
+              "flag_required": true
+            }
+          ]
+        },
+        "script_3": {
+          "name": "methods_outcome.py",
+          "path": "WSTG-CONF-06/utilities/python/methods_outcome.py",
+          "run_order": 3,
+          "depends_on": [
+            "script_2 (methods_test.py -> methods_outcome.md)"
+          ],
+          "step_label": "Step 3 of 3",
+          "command": "python3 methods_outcome.py -i outputs/test_outputs/WSTG-CONF-06/methods_outcome.md -o outputs/test_outputs/WSTG-CONF-06/methods_findings.md",
+          "inputs": [
+            {
+              "tag": "MD_INPUT",
+              "flag": "-i / --input",
+              "path": "outputs/test_outputs/WSTG-CONF-06/methods_outcome.md",
+              "required": true,
+              "description": "from methods_test.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/WSTG-CONF-06/methods_findings.md",
+              "flag_required": true
+            }
+          ],
+          "flags_checked": [
+            "dangerous methods advertised in Allow headers (PUT, CONNECT, DELETE, PATCH)",
+            "TRACE accepted (XST risk)",
+            "methods returning unexpected 2xx on auth pathways",
+            "CONNECT accepted (proxy tunnelling)"
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-07": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "HSTS_test.py",
+          "path": "WSTG-CONF-07/utilities/python/HSTS_test.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python3 HSTS_test.py -d example.com [sub.example.com ...] [-o outputs/test_outputs/report.txt] | python3 HSTS_test.py --domains-file inputs/domains.txt",
+          "inputs": [
+            {
+              "tag": "DOMAIN_INPUT",
+              "flag": "-d / --domains",
+              "required": false,
+              "description": "one or more domains, space separated",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--domains-file",
+              "path": "inputs/domains.txt",
+              "required": false,
+              "description": "alternative to -d",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "TXT_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/report.txt",
+              "description": "default path shown",
+              "flag_required": false
+            }
+          ],
+          "checks": [
+            "1. HSTS header: curl -s -D- https://<domain> | grep -i strict-transport-security -> max-age, includeSubDomains, preload",
+            "2. HSTS preload status: curl -s https://hstspreload.org/api/v2/status?domain=<domain>",
+            "3. HTTP->HTTPS redirect: curl -s -D- http://<domain> | head -n 5"
+          ]
+        },
+        "script_2": {
+          "name": "HSTS_findings_report.py",
+          "path": "WSTG-CONF-07/utilities/python/HSTS_findings_report.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (HSTS_test.py -> report.txt)"
+          ],
+          "command": "python3 HSTS_findings_report.py -i outputs/test_outputs/report.txt -o outputs/test_outputs/HSTS_findings.md",
+          "inputs": [
+            {
+              "tag": "TXT_INPUT",
+              "flag": "-i / --input",
+              "path": "outputs/test_outputs/report.txt",
+              "required": true,
+              "description": "from HSTS_test.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/HSTS_findings.md",
+              "description": "severity ratings + remediation guidance",
+              "flag_required": true
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-09": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf09_logs.py",
+          "path": "WSTG-CONF-09/utilities/python/conf09_logs.py",
+          "run_order": 1,
+          "depends_on": [],
+          "note": "svc_recon component only -- service disseminator (svc_dsr.py) handled separately.",
+          "command": "python3 conf09_logs.py -x burp.xml -j services.json -w wordlists/logs.txt",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x",
+              "required": true,
+              "description": "Burp Suite XML export",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-j",
+              "required": true,
+              "description": "services JSON",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "-w",
+              "path": "wordlists/logs.txt",
+              "description": "endpoints matching log-file/log-directory strings + hardcoded common log paths",
+              "flag_required": true
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-10": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf10_takeover.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-10/Utilities/python/conf10_takeover.py",
+          "run_order": 1,
+          "depends_on": [],
+          "docstring_missing": true,
+          "note": "No triple-quoted docstring found during spidering. This entry is reconstructed only from the cross-reference in WSTG-INFO-10/info10_collect.py, which reads this script's findings.md as its 'subdomain takeover report' source. Re-run the docstring spider on this file directly, or paste its source, to fill in command/inputs.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "UNKNOWN_INPUT",
+              "description": "undocumented -- likely a subdomain list (e.g. from WSTG-INFO-04/subdomain_seeker.py) and/or DNS CNAME data",
+              "flag": null,
+              "required": null
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-CONF-10/outputs/test_outputs/findings.md",
+              "description": "subdomain takeover report, per WSTG-INFO-10's consumption of it",
+              "confidence": "confirmed path (cross-referenced), undocumented content format"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-11": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf11_cloud_storage.py",
+          "path": "WSTG-CONF-11/utilities/python/conf11_cloud_storage.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python3 conf11_cloud_storage.py --xml inputs/XML/subfolder/export.xml --strings inputs/Data/cloud_strings.json -o outputs/test_output/test_findings.txt",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x / --xml",
+              "required": true,
+              "description": "Burp Suite XML export",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-s / --strings",
+              "path": "inputs/Data/cloud_strings.json",
+              "required": false,
+              "default": true,
+              "description": "cloud storage indicator strings",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-hits",
+              "default": 1,
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--category",
+              "required": false,
+              "description": "e.g. aws_s3, azure_blob",
+              "takes_value": null
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "TXT_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_output/test_findings.txt",
+              "description": "confirmed as the 'cloud storage report' consumed by WSTG-INFO-10/info10_collect.py",
+              "flag_required": true
+            }
+          ],
+          "scans": "every part of each Burp item (request URL/headers/body, response status/headers/body, incl. base64-decoded content); categorised by provider (AWS S3, Azure Blob, GCS, etc.)"
+        }
+      }
+    },
+    "WSTG-CONF-12": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf12_csp_scanner.py",
+          "path": "utilities/CSP_Scanner.py",
+          "run_order": 1,
+          "depends_on": [],
+          "command": "python3 utilities/CSP_Scanner.py --xml inputs/XML/subfolder/export.xml --csp-strings inputs/Data/CSP_Strings.json -o outputs/test_output/test_findings.txt",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x / --xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-c / --csp-strings",
+              "path": "inputs/Data/CSP_Strings.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--auth-only",
+              "required": false,
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--input-only",
+              "required": false,
+              "takes_value": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "TXT_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_output/test_findings.txt",
+              "flag_required": true
+            }
+          ],
+          "checks": [
+            "1. Content-Security-Policy response header",
+            "2. Content-Security-Policy-Report-Only flagged as finding",
+            "3. fallback: <meta http-equiv=\"Content-Security-Policy\"> if no header",
+            "4. high-risk directives (unsafe-inline, unsafe-eval, unsafe-hashes, data:, blob:), wildcard sources, missing critical directives",
+            "5. endpoint tagged AUTH or INPUT-BEARING by path keywords",
+            "6. severity-rated findings per endpoint"
+          ]
+        }
+      }
+    },
+    "WSTG-CONF-13": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "conf13_path_confusion.py",
+          "path": "WSTG_Repository/02_Configuration_and_Deployment_Management/WSTG-CONF-13/Utilities/python/conf13_path_confusion.py",
+          "run_order": 1,
+          "depends_on": [
+            "WSTG-CONF-02/conf_02_wordlist.py (example source: conf02.txt)",
+            "WSTG-CONF-09/conf09_logs.py (example source: conf09.txt)",
+            "docstring states generically 'previously generated wordlists (e.g. from CONF-02..09)' -- any prior ID's wordlist output can be passed via -w"
+          ],
+          "order_note": "Runs last in this category: it rehashes real paths collected from Burp XML, services JSON, and prior wordlists, so it is most useful after CONF-02 through CONF-09 have produced their wordlists.",
+          "command": "python3 conf13_path_confusion.py --xml inputs/xml/export.xml --json inputs/services.json --wordlists inputs/wordlists/conf02.txt inputs/wordlists/conf09.txt -o inputs/wordlists/conf13_confused.txt",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "required": false,
+              "description": "Burp Suite XML export (observed sitemap paths)",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--json",
+              "required": false,
+              "description": "services JSON; requires --xml for service matching",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "-w / --wordlists",
+              "required": false,
+              "description": "one or more prior wordlist .txt files to merge, e.g. CONF-02/CONF-09 outputs",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--no-encode",
+              "required": false,
+              "description": "skip URL-encoded / double-encoded variants",
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--depth",
+              "default": 6,
+              "required": false,
+              "description": "max traversal depth for ../ sequences",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "-o / --output",
+              "path": "inputs/wordlists/conf13_confused.txt",
+              "description": "flat wordlist for Intruder / ffuf / feroxbuster",
+              "flag_required": true
+            }
+          ],
+          "expansion_types": [
+            "prepend (../../ + real path)",
+            "append (real path + /..)",
+            "inject (/real/../injected/path)",
+            "null-byte variants",
+            "URL-encoded variants",
+            "double-encoded variants",
+            "semicolon/parameter injection variants"
+          ]
+        }
+      }
+    }
+  },
+  "03_Identity_Management": {
+    "WSTG-IDNT-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "idnt02_q1.py",
+          "path": "WSTG_Repository/03_Identity_Management/WSTG-IDNT-02/Utilities/python/idnt02_q1.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Questionnaire 1 of 2: Registration Process. Interactive CLI covering the 6 core WSTG-IDNT-02 registration-process questions (Y/N/? per question), with an optional end-of-run vulnerability flag + reason.",
+          "command": "python3 utilities/python/q1.py [-o outputs/test_outputs/q1_json.json] [--target \"MyApp v2.1\"] [--tester \"jsmith\"]",
+          "inputs": [
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "description": "name/version of the app under test, recorded in the output",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--tester",
+              "required": false,
+              "description": "tester identifier, recorded in the output",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "6 Y/N/? questionnaire answers entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/q1_json.json",
+              "description": "default path shown",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "idnt02_q2.py",
+          "path": "WSTG_Repository/03_Identity_Management/WSTG-IDNT-02/Utilities/python/idnt02_q2.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (idnt02_q1.py -> q1_json.json, optional via --q1)"
+          ],
+          "description": "Questionnaire 2 of 2: Identity Forgery & Manipulation. Interactive CLI covering the 2 identity-integrity questions from IDNT-02 (Y/N/? + optional notes), plus a vulnerability flag with free-text reason.",
+          "command": "python3 utilities/python/q2.py [-o outputs/test_outputs/q2_json.json] [--target \"MyApp v2.1\"] [--tester \"jsmith\"] [--q1 outputs/test_outputs/q1_json.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--q1",
+              "path": "outputs/test_outputs/q1_json.json",
+              "required": false,
+              "description": "prior q1 output, from idnt02_q1.py",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--tester",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "2 Y/N/? questionnaire answers + optional notes, entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/q2_json.json",
+              "description": "default path shown",
+              "flag_required": false
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-IDNT-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "idnt03_q.py",
+          "path": "WSTG_Repository/03_Identity_Management/WSTG-IDNT-03/Utilities/python/idnt03_q.py",
+          "run_order": 1,
+          "depends_on": [],
+          "inferred": true,
+          "order_note": "No stated dependency between this and script_me.py; ordered first as the primary interactive test-case action.",
+          "description": "Questionnaire: Account Provisioning. Interactive CLI covering the 7 core WSTG-IDNT-03 provisioning questions (Y/N/? + optional note per answer), with a closing vulnerability-flag section.",
+          "command": "python3 utilities/python/idnt03_q.py [-o outputs/test_outputs/idnt03_q_json.json] [--target \"MyApp v2.1\"] [--tester \"jsmith\"]",
+          "inputs": [
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--tester",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "7 Y/N/? questionnaire answers + optional notes, entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/idnt03_q_json.json",
+              "description": "default path shown",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "script_me.py",
+          "path": "WSTG_Repository/03_Identity_Management/WSTG-IDNT-03/Utilities/python/script_me.py",
+          "run_order": 2,
+          "depends_on": [
+            "static question bank q_base.json (not produced by idnt03_q.py; a pre-existing per-ID question stub, same family as the questions idnt03_q.py asks interactively)",
+            "cross-category, unresolved: optional svc_json is the same services-JSON format used in WSTG-CONF-02/03/04/05/09/13 -- the docstring batch spidered so far doesn't identify which script in this repo produces it"
+          ],
+          "inferred": true,
+          "order_note": "Ordered second only because it is a report generator layered on top of the question set idnt03_q.py also exercises; it does not actually read idnt03_q.py's output (idnt03_q_json.json). Its real inputs are 3 required + 1 optional static/reference files, independent of script_1's run.",
+          "description": "Report Generator. Reads a how-to bridge (ID -> full description/steps), a question bank (IDNT-03 questions with applicable_how_tos stubs), a plain-text query-string file used to match services in svc_json, and an optional services JSON. Emits a per-question checklist with resolved how-to descriptions, a matched-services section, and a how-to reference table.",
+          "command": "python3 script_me.py -How_To_bridge /inputs/data/how_to_bridge.json -questionnaire /inputs/data/q_base.json -input_strings /inputs/data/how_to_query.txt [-svc_json /inputs/data/svc.json] [-o outputs/test_outputs/report.md]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-How_To_bridge",
+              "path": "/inputs/data/how_to_bridge.json",
+              "required": true,
+              "description": "maps how-to guide IDs to full descriptions/steps",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-questionnaire",
+              "path": "/inputs/data/q_base.json",
+              "required": true,
+              "description": "IDNT-03 questions with applicable_how_tos stubs",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "-input_strings",
+              "path": "/inputs/data/how_to_query.txt",
+              "required": true,
+              "description": "plain-text query strings used to match svc_json services",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-svc_json",
+              "path": "/inputs/data/svc.json",
+              "required": false,
+              "description": "services JSON (Ports -> PotentialServices -> CommonEndpoints); service-matched section of the report is omitted if absent",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/report.md",
+              "description": "per-question checklist, matched-services section, how-to reference table",
+              "flag_required": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "04_Authentication": {
+    "WSTG-ATHN-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "athn_02_wordlist.py",
+          "path": "WSTG-ATHN-02/utilities/python/athn_02_wordlist.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Runs the service disseminator (svc_dsr) against how_to_steps_bridge.json for two categories: 'default_creds' (usernames/passwords/pairs from service docs) and 'paths' filtered to auth-adjacent terms (login/auth/admin paths). Prints a manual login-attempt note at the end.",
+          "command": "python3 WSTG-ATHN-02/utilities/python/athn_02_wordlist.py [--bridge how_to_steps_bridge.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--bridge",
+              "path": "how_to_steps_bridge.json",
+              "required": false,
+              "default": true,
+              "description": "same bridge file svc_dsr.py (WSTG-CONF-02) and conf_05_wordlist.py (WSTG-CONF-05) read",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHN-02/inputs/wordlists/default_creds.txt",
+              "description": "usernames, passwords, credential pairs"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHN-02/inputs/wordlists/default_paths.txt",
+              "description": "login/auth/admin interface paths"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-ATHN-02/inputs/json/athn_02_creds.json",
+              "description": "structured version, for reference"
+            }
+          ],
+          "manual_followup": "operator manually tries the found credentials against the found paths"
+        }
+      }
+    },
+    "WSTG-ATHN-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "weak_lockout.py",
+          "path": "WSTG-ATHN-03/utilities/python/weak_lockout.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Three-question branching questionnaire (brute force -> security questions -> OTP guessing, with Item_3 skipped if Item_1 = No). Reads the questionnaire structure from JSON, fills verdicts interactively, writes the completed JSON back to disk.",
+          "command": "python3 utilities/python/weak_lockout.py -questionnaire inputs/data/q1.json [-o inputs/data/q1.json]",
+          "note": "the example usage writes -o back to the SAME path as -questionnaire -- this script overwrites its own input file in place unless a different -o path is given",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-questionnaire",
+              "path": "inputs/data/q1.json",
+              "required": true,
+              "description": "questionnaire structure (3 branching items)",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "Y/N verdicts for each applicable item, entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o / --output",
+              "path": "inputs/data/q1.json",
+              "description": "completed questionnaire; defaults to overwriting the -questionnaire input file",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "weak_lockout_report.py",
+          "path": "WSTG-ATHN-03/utilities/python/weak_lockout_report.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (weak_lockout.py -> completed q1.json)"
+          ],
+          "command": "python3 utilities/python/weak_lockout_report.py -questionnaire inputs/data/q1.json [-o outputs/test_outputs/weak_lockout_findings.md]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-questionnaire",
+              "path": "inputs/data/q1.json",
+              "required": true,
+              "description": "completed questionnaire, from weak_lockout.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "-o / --output",
+              "path": "outputs/test_outputs/weak_lockout_findings.md",
+              "flag_required": false
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-ATHN-07": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "ATHN_07.py",
+          "path": "WSTG-ATHN-07/utilities/python/ATHN-07.py",
+          "run_order": 1,
+          "depends_on": [],
+          "note": "File title given as ATHN_07.py; the Usage block and docstring body both refer to it as ATHN-07.py (hyphen, no underscore). Recorded as-is; verify which casing matches the actual filename on disk.",
+          "description": "Six password-policy questions, each rendered as a two-column reference table before prompting. Reads from q1.json, fills verdicts interactively, writes completed JSON.",
+          "command": "python3 utilities/python/ATHN-07.py [-q inputs/json/q1.json] [-o outputs/test_outputs/WSTG_verdict.json]",
+          "reference_tool": "https://github.com/JimboJimbabwe/ForSelf/blob/main/MissionTools/Credential_Auditing/PasswordChecker.py",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-q",
+              "path": "inputs/json/q1.json",
+              "required": false,
+              "description": "question set",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "verdict for each of the 6 password-policy questions, entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o",
+              "path": "outputs/test_outputs/WSTG_verdict.json",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "ATHN_VERDICT.py",
+          "path": "WSTG-ATHN-07/utilities/python/ATHN_VERDICT.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (ATHN-07.py -> WSTG_verdict.json)"
+          ],
+          "command": "python3 utilities/python/ATHN_VERDICT.py [-i outputs/test_outputs/WSTG_verdict.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-i",
+              "path": "outputs/test_outputs/WSTG_verdict.json",
+              "required": false,
+              "default": true,
+              "description": "completed verdict JSON, from ATHN-07.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "overall verdict (Vulnerable/Not Vulnerable), which controls failed, human-readable explanation. No -o flag documented."
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-ATHN-08": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "script_ATHN08.py",
+          "path": "WSTG-ATHN-08/utilities/python/script_ATHN08.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "OSINT dork generator. Builds combinatorial Google dork strings by crossing personal identifiers, security-question keywords, and infrastructure/site operators.",
+          "command": "python3 utilities/python/script_ATHN08.py --security_questions inputs/data/secq_keywords.txt --optionals inputs/data/optionals_keywords.json --infrastructure inputs/data/infrastructure_keywords.txt [--username jsmith] --output inputs/wordlist/dork_test.txt --output_json inputs/wordlist/dork_test.json",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--security_questions",
+              "path": "inputs/data/secq_keywords.txt",
+              "required": true,
+              "description": "security-question keywords (pet name, mother's maiden name, etc.)",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--optionals",
+              "path": "inputs/data/optionals_keywords.json",
+              "required": true,
+              "description": "personal identifiers: name, email, username, URL, org, etc.",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--infrastructure",
+              "path": "inputs/data/infrastructure_keywords.txt",
+              "required": true,
+              "description": "site operators, e.g. site:pastebin.com, filetype:txt",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--username",
+              "required": false,
+              "description": "optional if already set in optionals_keywords.json",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "--output",
+              "path": "inputs/wordlist/dork_test.txt",
+              "description": "one dork string per line, ready to paste into Google",
+              "flag_required": true
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "--output_json",
+              "path": "inputs/wordlist/dork_test.json",
+              "description": "flat payloads array + combinatorial_map showing how each dork was built",
+              "flag_required": true
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-ATHN-09": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "q1_ATHN09.py",
+          "path": "WSTG-ATHN-09/utilities/python/q1_ATHN09.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Nested categorical questionnaire, categories a-g. Leaf categories (a-d) are single questions; branch categories (e-g) have a gating first question, with sub-questions only asked if the gate verdict is Flawed.",
+          "command": "python3 utilities/python/q1_ATHN09.py [-q input/json/ATHN_09_questionnaire.json] [-o outputs/test_outputs/questionnaire_ATHN09.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-q",
+              "path": "input/json/ATHN_09_questionnaire.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "verdicts for leaf categories a-d and gated branch categories e-g, entered at the CLI prompt",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o",
+              "path": "outputs/test_outputs/questionnaire_ATHN09.json",
+              "default": true,
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "verdict_ATHN09.py",
+          "path": "WSTG-ATHN-09/utilities/python/verdict_ATHN09.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (q1_ATHN09.py -> questionnaire_ATHN09.json)"
+          ],
+          "command": "python3 utilities/python/verdict_ATHN09.py [-i outputs/test_outputs/questionnaire_ATHN09.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-i",
+              "path": "outputs/test_outputs/questionnaire_ATHN09.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "three-mode failure determination (combination fail, cumulative fail, single-question fail). No -o flag documented."
+            }
+          ],
+          "failure_modes": {
+            "mode_1_combination": "specific question sets that together constitute a high-risk scenario even if individually minor",
+            "mode_2_cumulative": "N or more total 'Flawed' verdicts across all questions fails the asset regardless of which questions",
+            "mode_3_single_question": "certain questions are individually sufficient to fail the asset"
+          }
+        }
+      }
+    },
+    "WSTG-ATHN-10": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "athn_10_compare.py",
+          "path": "WSTG-ATHN-10/utilities/python/athn_10_compare.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Reads a folder of Burp proxy/spider XML exports (one per 'walk' condition, e.g. no_cookies, weak_tls, ua_iphone) plus a baseline XML. Computes LACKS (in baseline, absent from walk) and EXCLUSIVE (only in walk) endpoint sets per walk; EXCLUSIVE is the primary finding. A second pass flags EXCLUSIVE endpoints with indicator-of-compromise heuristics.",
+          "command": "python3 WSTG-ATHN-10/utilities/python/athn_10_compare.py --walks-dir WSTG-ATHN-10/inputs/xml/ --baseline baseline.xml [--min-ioc LOW]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--walks-dir",
+              "path": "WSTG-ATHN-10/inputs/xml/",
+              "required": true,
+              "description": "folder of Burp XML exports, one per walk condition; filenames determine walk category (baseline.xml, no_cookies.xml, no_javascript.xml, no_java_plugins.xml, no_tls.xml, weak_tls.xml, ua_iphone.xml, ua_mobile.xml, ua_android.xml, ua_blackberry.xml, or a custom label)",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--baseline",
+              "required": true,
+              "description": "filename (within --walks-dir) to treat as the baseline",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-ioc",
+              "required": false,
+              "description": "minimum IoC severity to report, e.g. LOW",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-ATHN-10/outputs/test_outputs/athn10_findings.json"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-ATHN-10/outputs/test_outputs/athn10_report.md"
+            }
+          ],
+          "ioc_heuristics": [
+            "auth-bypass keywords in path (login, auth, token, session, ...)",
+            "sensitive-resource keywords (admin, config, backup, internal, api, ...)",
+            "unauthenticated parameter exposure (password, secret, key, token in params)",
+            "HTTP not HTTPS endpoints when walk = weak_tls or no_tls",
+            "methods other than GET (POST/PUT/DELETE on exclusive paths)"
+          ]
+        }
+      }
+    },
+    "WSTG-ATHN-11": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "athn11_mfa.py",
+          "path": "WSTG-ATHN-11/utilities/python/athn11_mfa.py",
+          "run_order": 1,
+          "depends_on": [],
+          "status": "in_development",
+          "status_note": "Docstring contains the author's own marker: 'COMMENT: STILL DO THIS — 10172026'. Treat as provisional and re-spider once finalized.",
+          "description": "Interactive MFA assessment: Y/N gating question (does MFA exist?), a curses TUI factor checklist, free-text MFA technology/product name entry, and endpoint identification either via --auth-ep CSV indices or a --xml TUI picker. Verdict: Not Compromised if >=2 factors confirmed, Compromised if <2 or MFA absent.",
+          "command": "python3 utilities/python/athn11_mfa.py [-q inputs/data/athn11_questionnaire.json] [-o outputs/test_outputs/athn11_results.json] [--xml captures/burp_export.xml] [--auth-ep 2,5]",
+          "modes": [
+            {
+              "description": "no XML -- manual endpoint entry",
+              "example": "python3 utilities/python/athn11_mfa.py"
+            },
+            {
+              "description": "known auth endpoint indices in the XML",
+              "example": "python3 utilities/python/athn11_mfa.py --xml captures/login.xml --auth-ep 1,3,7"
+            },
+            {
+              "description": "TUI picker -- browse and select auth endpoints from the XML",
+              "example": "python3 utilities/python/athn11_mfa.py --xml captures/login.xml"
+            }
+          ],
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-q",
+              "path": "inputs/data/athn11_questionnaire.json",
+              "required": false,
+              "description": "factor catalog + schema",
+              "takes_value": true
+            },
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "captures/burp_export.xml",
+              "required": false,
+              "description": "Burp export; enables --auth-ep index selection or the TUI picker",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--auth-ep",
+              "required": false,
+              "description": "comma-separated endpoint indices into --xml",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "Y/N MFA-exists gate, curses TUI factor checklist, free-text MFA product name",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o",
+              "path": "outputs/test_outputs/athn11_results.json",
+              "flag_required": false
+            }
+          ]
+        },
+        "script_2": {
+          "name": "verdict_ATHN11.py",
+          "path": "WSTG-ATHN-11/utilities/python/verdict_ATHN11.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (athn11_mfa.py -> athn11_results.json)"
+          ],
+          "description": "ATHN-09-equivalent three-mode verdict structure applied to MFA findings.",
+          "command": "python3 utilities/python/verdict_ATHN11.py [-i outputs/test_outputs/athn11_results.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "-i",
+              "path": "outputs/test_outputs/athn11_results.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "three-mode MFA verdict. No -o flag documented."
+            }
+          ],
+          "failure_modes": {
+            "mode_3_single_question_critical": [
+              "MFA absent entirely",
+              "only password present (pure SFA)",
+              "SMS OTP is the ONLY second factor (NIST RESTRICTED)"
+            ],
+            "mode_1_combination": [
+              "SMS OTP as second factor + no rate limiting indicator",
+              "backup codes checked as the only second factor",
+              "security question (KBA) counted as a factor"
+            ],
+            "mode_2_cumulative": [
+              "fewer than 2 confirmed factors = Compromised"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "05_Authorization": {
+    "WSTG-ATHZ-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "parse_athz02.py",
+          "path": "WSTG-ATHZ-02/utilities/python/parse_athz02.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "description": "Walks WSTG-ATHZ-02/inputs/xml/ (flat or one-level subfolders). Each XML is a Burp Suite proxy export for one user, named <username>_walk.xml. Extracts per-user, per-endpoint: cookies, JWT tokens, UUIDs (standard + no-hyphen variants), unique alphanumeric path segments (>=8 chars, not the username), and headers that appear on an endpoint for some users but not all.",
+          "command": "python3 WSTG-ATHZ-02/utilities/python/parse_athz02.py [--xml-dir WSTG-ATHZ-02/inputs/xml] [--data-dir WSTG-ATHZ-02/data] [--admin alice_walk.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml-dir",
+              "path": "WSTG-ATHZ-02/inputs/xml",
+              "required": false,
+              "default": true,
+              "description": "one Burp proxy export per user, named <username>_walk.xml; flat or one-level subfolders",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--admin",
+              "required": false,
+              "description": "marks the given walk file's user as higher_priv; all others default to lower_priv",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>_cookies.txt",
+              "per_user": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>_JWTs.txt",
+              "per_user": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>_UUIDs.txt",
+              "per_user": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>_uniqueIDs.txt",
+              "per_user": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>_headers.txt",
+              "per_user": true
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/json/ATHZ_02.json",
+              "description": "per-user privilege classification + extracted data, consumed by script_2 and script_3"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "2athz_tasks.py",
+          "path": "WSTG-ATHZ-02/utilities/python/2athz_tasks.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (parse_athz02.py -> WSTG-ATHZ-02/data/*.txt, ATHZ_02.json)"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads WSTG-ATHZ-02/data/*.txt files produced by parse_athz02.py. For each user builds per-object-type wordlists, identifies higher/lower privilege users from the JSON, prints swap-test suggestions (e.g. 'for higher_priv user X, login and swap [objects] from lower user Y'), and lists authorization-relevant endpoints to test on.",
+          "command": "python3 WSTG-ATHZ-02/utilities/python/2athz_tasks.py [--data-dir WSTG-ATHZ-02/data] [--json WSTG-ATHZ-02/data/json/ATHZ_02.json]",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--data-dir",
+              "path": "WSTG-ATHZ-02/data",
+              "required": false,
+              "default": true,
+              "description": "the *.txt files written by parse_athz02.py",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--json",
+              "path": "WSTG-ATHZ-02/data/json/ATHZ_02.json",
+              "required": false,
+              "default": true,
+              "description": "from parse_athz02.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-02/data/<username>/<OBJECT>.txt",
+              "per_user": true,
+              "description": "per-object-type wordlist, consumed by script_3's right-panel toggles"
+            },
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "swap-test suggestions per privilege pair, and a list of authorization-relevant endpoints to test. No file output documented for this part."
+            }
+          ]
+        },
+        "script_3": {
+          "name": "athz_reporting.py",
+          "path": "WSTG-ATHZ-02/utilities/python/athz_reporting.py",
+          "run_order": 3,
+          "depends_on": [
+            "script_1 (parse_athz02.py -> ATHZ_02.json)",
+            "script_2 (2athz_tasks.py -> WSTG-ATHZ-02/data/<username>/<OBJECT>.txt, which pre-populate the right panel's object-type toggles)"
+          ],
+          "step_label": "Script 3",
+          "description": "Curses TUI. Left panel: endpoint list, pre-checked, uncheck to omit. Right panel: object-type toggles, pre-checked per available wordlists. Generates the findings report on Enter.",
+          "command": "python3 WSTG-ATHZ-02/utilities/python/athz_reporting.py [--json WSTG-ATHZ-02/data/json/ATHZ_02.json] [--data WSTG-ATHZ-02/data] [--output WSTG-ATHZ-02/outputs/test_outputs/athz02_report.md]",
+          "controls": {
+            "up_down": "navigate active panel",
+            "tab": "switch between panels",
+            "space": "toggle checkbox",
+            "enter": "generate report",
+            "q": "quit without generating"
+          },
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--json",
+              "path": "WSTG-ATHZ-02/data/json/ATHZ_02.json",
+              "required": false,
+              "default": true,
+              "description": "from parse_athz02.py",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--data",
+              "path": "WSTG-ATHZ-02/data",
+              "required": false,
+              "default": true,
+              "description": "incl. per-object wordlists from 2athz_tasks.py",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "endpoint and object-type checkbox selections via curses TUI",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "--output",
+              "path": "WSTG-ATHZ-02/outputs/test_outputs/athz02_report.md",
+              "flag_required": false
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-ATHZ-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "athz_04_scan.py",
+          "path": "WSTG-ATHZ-04/utilities/python/athz_04_scan.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Reads a Burp proxy history XML export and scans every request/response across 4 locations (URL params, request body params, request/response headers, raw body JSON/XML fields) for weak-entropy or enumerable ID patterns. Findings deduplicated on (pattern_type, location, value).",
+          "command": "python3 WSTG-ATHZ-04/utilities/python/athz_04_scan.py [--proxy WSTG-ATHZ-04/inputs/xml/proxy_history.xml] [--min-confidence MEDIUM]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--proxy",
+              "path": "WSTG-ATHZ-04/inputs/xml/proxy_history.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-confidence",
+              "required": false,
+              "description": "e.g. MEDIUM",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-ATHZ-04/outputs/test_outputs/athz04_findings.json",
+              "description": "consumed by script_2"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-ATHZ-04/outputs/test_outputs/athz04_report.md"
+            }
+          ],
+          "patterns_detected": {
+            "HIGH": [
+              "sequential integers",
+              "base64-encoded integers",
+              "hex-encoded integers",
+              "MongoDB ObjectIDs",
+              "unix timestamps (seconds)",
+              "unix timestamps (milliseconds)",
+              "compound IDs with numeric part"
+            ],
+            "MEDIUM": [
+              "UUIDv1 (time-based)"
+            ],
+            "LOW": [
+              "UUIDv4 (random)"
+            ]
+          },
+          "scan_locations": [
+            "URL parameters",
+            "request body parameters",
+            "request/response headers",
+            "raw body (JSON/XML field extraction)"
+          ]
+        },
+        "script_2": {
+          "name": "athz_04_wordlist.py",
+          "path": "WSTG-ATHZ-04/utilities/python/athz_04_wordlist.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (athz_04_scan.py -> athz04_findings.json)"
+          ],
+          "description": "Reads athz04_findings.json and generates enumeration wordlists -- one .txt per unique finding, plus a combined wordlist ready for Burp Intruder's Sniper mode.",
+          "command": "python3 WSTG-ATHZ-04/utilities/python/athz_04_wordlist.py [--findings WSTG-ATHZ-04/outputs/test_outputs/athz04_findings.json] [--range 50] [--min-confidence HIGH]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--findings",
+              "path": "WSTG-ATHZ-04/outputs/test_outputs/athz04_findings.json",
+              "required": false,
+              "default": true,
+              "description": "from athz_04_scan.py",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--range",
+              "default": 50,
+              "required": false,
+              "description": "enumeration range (+/-) for numeric patterns",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-confidence",
+              "required": false,
+              "default": "HIGH",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-04/inputs/wordlists/<pattern_type>_<param>_<hash>.txt",
+              "per_finding": true
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-ATHZ-04/inputs/wordlists/combined_wordlist.txt",
+              "description": "ready for Burp Intruder Sniper mode"
+            }
+          ],
+          "generator_logic": {
+            "sequential_integer": "base +/- range (default 50), step 1",
+            "base64_encoded_id": "decode -> int -> enumerate -> re-encode",
+            "hex_encoded_integer": "int -> enumerate -> zero-padded hex",
+            "mongodb_objectid": "keep timestamp prefix, enumerate counter (last 6 hex chars) +/- range",
+            "unix_timestamp_seconds": "base +/- 3600s, step 60",
+            "unix_timestamp_milliseconds": "base +/- 3,600,000ms, step 60,000 (=60s)",
+            "uuidv1": "note only -- not enumerable by brute force; prints extraction instructions",
+            "uuidv4": "skip -- random, not enumerable",
+            "compound_id": "enumerate each numeric segment +/- range, keep non-numeric segments fixed"
+          }
+        }
+      }
+    }
+  },
+  "06_Session_Management": {
+    "WSTG-SESS-01": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess01_m0_pull_cookies.py",
+          "path": "WSTG-SESS-01/utilities/python/sess01_m0_pull_cookies.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Module 0",
+          "description": "Parses a single-user Burp Suite XML export and extracts all cookie names and values from every request and response.",
+          "command": "python3 WSTG-SESS-01/utilities/python/sess01_m0_pull_cookies.py --xml WSTG-SESS-01/inputs/xml/session_walk.xml",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-SESS-01/inputs/xml/session_walk.xml",
+              "required": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/cookies_raw.txt",
+              "description": "NAME=VALUE per line; consumed by script_4 (m3) for overlap detection"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/cookies_by_name.json",
+              "description": "{name: [value, value, ...]}; consumed by script_3 (m2)"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/cookies_dataset.json",
+              "description": "[{request_index, url, name, value}, ...]. Docstring claims this 'feeds Modules 1-3', but only m2/m3 have a confirmed consumption path -- see fragment _meta notes."
+            }
+          ]
+        },
+        "script_2": {
+          "name": "sess01_m1_string_seeker.py",
+          "path": "WSTG-SESS-01/utilities/python/sess01_m1_string_seeker.py",
+          "run_order": 2,
+          "depends_on": [],
+          "docstring_conflict": "m0's docstring claims its dataset JSON feeds this module, but this module's own Usage block only takes --xml, with no flag consuming m0's output. See fragment _meta notes.",
+          "step_label": "Module 1",
+          "description": "Examines every Set-Cookie directive and request/response header across the full XML walk to surface cookie security misconfigurations.",
+          "command": "python3 WSTG-SESS-01/utilities/python/sess01_m1_string_seeker.py --xml WSTG-SESS-01/inputs/xml/session_walk.xml",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-SESS-01/inputs/xml/session_walk.xml",
+              "required": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m1_findings.json"
+            },
+            {
+              "tag": "TXT_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m1_report.txt",
+              "description": "human-readable"
+            }
+          ],
+          "checks": [
+            "1. all Set-Cookie headers tagged Secure?",
+            "2. any cookie operations over HTTP (unencrypted)?",
+            "3. can a cookie be forced over HTTP? (HTTP endpoint exists for same host)",
+            "4. any cookies Persistent? (Expires or Max-Age)",
+            "5. is expiry reasonable? (>24h flagged long-lived)",
+            "6. HTTP/1.1 Cache-Control directives present? (no-store, no-cache, must-revalidate)",
+            "7. HTTP/1.0 Pragma: no-cache present?",
+            "8. HttpOnly flag present on session cookies?",
+            "9. SameSite attribute present and Strict or Lax?"
+          ]
+        },
+        "script_3": {
+          "name": "sess01_m2_cookie_analyzer.py",
+          "path": "WSTG-SESS-01/utilities/python/sess01_m2_cookie_analyzer.py",
+          "run_order": 3,
+          "depends_on": [
+            "script_1 (sess01_m0_pull_cookies.py -> cookies_by_name.json)"
+          ],
+          "step_label": "Module 2",
+          "description": "Reads cookies_by_name.json and performs sequential pattern analysis on each cookie's ordered value history: for each cookie with >=2 observed values, slides windows of size 2-5 across each value, tries parsing as decimal integers, and flags a position as sequential if >=2 consecutive values parse with a constant numeric step. A 'Break' alert logs observation indices when >=2 sequential windows recur at the same position across consecutive cookies.",
+          "why_it_matters": "Sequential session tokens indicate predictable server-side token generation; an attacker who observes their own token can compute adjacent tokens for other active sessions. Reference: OWASP WSTG-SESS-01 section Token Analysis.",
+          "command": "python3 WSTG-SESS-01/utilities/python/sess01_m2_cookie_analyzer.py --cookies WSTG-SESS-01/outputs/cookies_by_name.json",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--cookies",
+              "path": "WSTG-SESS-01/outputs/cookies_by_name.json",
+              "required": true,
+              "description": "from sess01_m0_pull_cookies.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m2_analysis.json"
+            },
+            {
+              "tag": "TXT_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m2_alerts.txt"
+            }
+          ]
+        },
+        "script_4": {
+          "name": "sess01_m3_reverse_engineer.py",
+          "path": "WSTG-SESS-01/utilities/python/sess01_m3_reverse_engineer.py",
+          "run_order": 4,
+          "depends_on": [
+            "script_1 (sess01_m0_pull_cookies.py -> cookies_raw.txt, used for overlap detection; not a CLI flag, by description only)",
+            "self (WSTG-SESS-01/inputs/json/static_items.json persisted by this script's own prior runs -- read back unless --reset)"
+          ],
+          "step_label": "Module 3",
+          "description": "Black-box cookie reverse engineering. Combines static items (credentials, auto-detected IP, run-time timestamp, user-agent) with items auto-extracted from the XML (domain, headers, body values, path segments, endpoint names). Generates all non-empty subsets of the combined item pool, concatenates with common separators, encodes/hashes each combo with every supported algorithm, then checks for overlap against actual cookie values from cookies_raw.txt.",
+          "persistence": "static_items.json is written on first run and read back on subsequent runs without --username/--password; --reset forces re-collection.",
+          "command": "python3 WSTG-SESS-01/utilities/python/sess01_m3_reverse_engineer.py --xml WSTG-SESS-01/inputs/xml/session_walk.xml [--username jsmith --password hunter2] [--ip <override>] [--ua <0-11>] [--reset]",
+          "run_variants": [
+            {
+              "description": "first run -- supply credentials, auto-detect IP/timestamp/UA",
+              "example": "--xml ... --username jsmith --password hunter2"
+            },
+            {
+              "description": "subsequent runs -- reads stored static_items.json, credential flags optional",
+              "example": "--xml ..."
+            },
+            {
+              "description": "reset stored items and re-supply",
+              "example": "--xml ... --username jsmith --password hunter2 --reset"
+            },
+            {
+              "description": "pick a specific user-agent index instead of all",
+              "example": "--ua 3"
+            }
+          ],
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--username",
+              "required": false,
+              "description": "required on first run unless static_items.json already exists",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--password",
+              "required": false,
+              "description": "same condition as --username",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--ip",
+              "required": false,
+              "description": "auto-detected from outbound interface; overridable",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--ua",
+              "required": false,
+              "description": "user-agent index 0-11; omit to try all",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--reset",
+              "required": false,
+              "description": "forces re-collection of static items",
+              "takes_value": false
+            },
+            {
+              "tag": "JSON_INPUT",
+              "path": "WSTG-SESS-01/inputs/json/static_items.json",
+              "flag": null,
+              "required": false,
+              "description": "persisted from a prior run; read back unless --reset"
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "path": "WSTG-SESS-01/outputs/cookies_raw.txt",
+              "flag": null,
+              "required": false,
+              "description": "from sess01_m0_pull_cookies.py; used for overlap comparison, not a CLI flag"
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/inputs/json/static_items.json",
+              "description": "persisted items for reuse across runs"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m3_wordlist.txt",
+              "description": "all encoded/hashed combos"
+            },
+            {
+              "tag": "TXT_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m3_overlaps.txt",
+              "description": "overlap findings against actual cookie values"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-01/outputs/m3_combo_map.json",
+              "description": "variant -> source combo"
+            }
+          ],
+          "encodings_hashes": [
+            "plain",
+            "hex",
+            "HEX (uppercase)",
+            "base64",
+            "base64url",
+            "url_encoded",
+            "double_url_encoded",
+            "html_entity",
+            "unicode_escape",
+            "decimal_bytes",
+            "binary_bytes",
+            "md5",
+            "sha1",
+            "sha256",
+            "sha512",
+            "rot13",
+            "reverse",
+            "jwt_decode (attempted if value looks like a JWT)"
+          ]
+        }
+      }
+    },
+    "WSTG-SESS-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess02_cookie_attributes.py",
+          "path": "WSTG-SESS-02/utilities/python/sess02_cookie_attributes.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Reads a Burp Suite XML export and audits every Set-Cookie directive across all responses for Secure, HttpOnly, Domain, Path, Expires/Max-Age, and SameSite, plus RFC 6265bis __Secure-/__Host- prefix rule violations.",
+          "command": "python3 WSTG-SESS-02/utilities/python/sess02_cookie_attributes.py --xml WSTG-SESS-02/inputs/xml/session_walk.xml",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-SESS-02/inputs/xml/<filename>.xml",
+              "required": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-SESS-02/outputs/test_outputs/<filename>_report.md",
+              "description": "filename derived from the input XML's filename"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-02/outputs/test_outputs/<filename>_findings.json"
+            }
+          ],
+          "attributes_audited": {
+            "Secure": "must be present (HIGH if absent)",
+            "HttpOnly": "must be present (MEDIUM if absent)",
+            "Domain": "informational; over-broad domain widens cookie scope",
+            "Path": "informational; '/' is broad but normal",
+            "Expires_Max-Age": "persistent cookies flagged (MEDIUM if >24h)",
+            "SameSite": "must be Strict or Lax. None=MEDIUM (CSRF surface), Lax=INFO (top-level GET nav unprotected), absent=LOW"
+          },
+          "secure_prefix_rules": {
+            "__Secure-": "must have Secure flag; set over HTTPS",
+            "__Host-": "must have Secure flag; set over HTTPS; no Domain directive; Path=/",
+            "violation_severity": "HIGH if a cookie claims a prefix but violates its requirements"
+          }
+        }
+      }
+    },
+    "WSTG-SESS-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess03_fixation_checklist.py",
+          "path": "WSTG-SESS-03/utilities/python/sess03_fixation_checklist.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Interactive operator checklist for session fixation testing. Walks the tester through each manual step, records answers, flags a vulnerability if the pre-auth cookie is reused after login.",
+          "command": "python3 WSTG-SESS-03/utilities/python/sess03_fixation_checklist.py [--out-dir WSTG-SESS-03/outputs/test_outputs]",
+          "inputs": [
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--out-dir",
+              "path": "WSTG-SESS-03/outputs/test_outputs",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "step-by-step operator confirmations and the pre/post-login cookie values",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-SESS-03/outputs/test_outputs/sess03_report.md"
+            }
+          ],
+          "steps": [
+            "1. identify the login endpoint",
+            "2. confirm browser cache/cookies cleared",
+            "3. visit the login endpoint (unauthenticated)",
+            "4. record the pre-authentication cookie value",
+            "5. authenticate as a valid user",
+            "6. check whether the server issued a NEW cookie post-login -- same cookie reused = HIGH (session fixation), new cookie issued = pass"
+          ]
+        }
+      }
+    },
+    "WSTG-SESS-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "svc_env_grab.py",
+          "path": "WSTG-SESS-04/utilities/python/svc_env_grab.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Runs the service disseminator bridge logic for the 'env_vars' category against how_to_steps_bridge.json and writes a flat wordlist for use by sess_04_analyze.py. A minimal standalone shim applying the same trigger/extractor pipeline svc_dsr.py uses for env_vars, wired to WSTG-SESS-04 output paths.",
+          "command": "python3 WSTG-SESS-04/utilities/python/svc_env_grab.py [--bridge how_to_steps_bridge.json]",
+          "example_triggers": [
+            "$APP_SECRET",
+            "SESSION_KEY",
+            "JWT_SECRET",
+            "DB_PASSWORD",
+            "AWS_ACCESS_KEY_ID",
+            "REDIS_URL",
+            "OAUTH_CLIENT_SECRET",
+            "API_KEY",
+            "AUTH_TOKEN"
+          ],
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--bridge",
+              "path": "how_to_steps_bridge.json",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-SESS-04/inputs/data/wordlist.txt",
+              "description": "flat, one env var per line; consumed by script_2's --wordlist default"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-04/inputs/data/env_vars.json",
+              "description": "structured with metadata"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "sess_04_analyze.py",
+          "path": "WSTG-SESS-04/utilities/python/sess_04_analyze.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (svc_env_grab.py -> wordlist.txt, default path for --wordlist)"
+          ],
+          "description": "Reads a Burp Suite proxy history XML export and searches each item for sensitive environment variable names from svc_env_grab.py's wordlist, across 5 locations: request headers, request cookies, request URL (query + path), request body data, response HTML/body data. A match includes a variable name found as a key, value prefix, or inline string (e.g. SESSION_TOKEN=, Authorization: Bearer ..., ?api_key=...).",
+          "command": "python3 WSTG-SESS-04/utilities/python/sess_04_analyze.py --proxy WSTG-SESS-04/inputs/xml/proxy_history.xml [--wordlist WSTG-SESS-04/inputs/data/wordlist.txt]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--proxy",
+              "path": "WSTG-SESS-04/inputs/xml/proxy_history.xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--wordlist",
+              "path": "WSTG-SESS-04/inputs/data/wordlist.txt",
+              "required": false,
+              "default": true,
+              "description": "from svc_env_grab.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-SESS-04/outputs/test_outputs/json_SESS04.json",
+              "schema": "{ Findings: { 'Exposed variables': { 'Endpoint[N]': { PATH, Headers, Cookies, Url, 'Body data', 'Html response data' } } } }"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-SESS-04/outputs/test_outputs/markdown_SESS04.md"
+            }
+          ],
+          "scan_locations": [
+            "request headers",
+            "request cookies",
+            "request URL (query string + path)",
+            "request body data",
+            "response HTML/body data"
+          ]
+        }
+      }
+    },
+    "WSTG-SESS-06": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess06_logout_checklist.py",
+          "path": "WSTG-SESS-06/utilities/python/sess06_logout_checklist.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Three-category checklist for secure session termination testing: UI logout controls (operator attestation), session timeout (XML auto-scan for B1 + operator attestation), and server-side session invalidation (operator attestation).",
+          "command": "python3 WSTG-SESS-06/utilities/python/sess06_logout_checklist.py [--xml WSTG-SESS-06/inputs/xml/session_walk.xml]",
+          "note": "runs without --xml too; B1 is then marked for manual review instead of auto-checked",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-SESS-06/inputs/xml/<filename>.xml",
+              "required": false,
+              "description": "optional; enhances B1 (auto-detects Max-Age/Expires on cookies)",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "operator attestation for A1-A3, B2-B3, C1-C3",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-SESS-06/outputs/test_outputs/sess06_report.md"
+            }
+          ],
+          "categories": {
+            "A_ui_logout_controls": [
+              "A1. logout control visible/accessible from all authenticated pages?",
+              "A2. single clear gesture, no buried menus?",
+              "A3. redirected to non-authenticated page after logout?"
+            ],
+            "B_session_timeout": [
+              "B1. [AUTO] does any cookie have Max-Age or Expires?",
+              "B2. inactivity timeout warning shown before expiry?",
+              "B3. timeout enforced consistently across all session types?"
+            ],
+            "C_server_side_invalidation": [
+              "C1. replaying a captured authenticated request post-logout returns 401/403/redirect?",
+              "C2. session token rejected even if manually re-submitted in Cookie header?",
+              "C3. server invalidates token server-side, not just clears client cookie?"
+            ]
+          }
+        }
+      }
+    },
+    "WSTG-SESS-07": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess07_timeout_timer.py",
+          "path": "WSTG-SESS-07/utilities/python/sess07_timeout_timer.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Tests whether session management enforces an appropriate inactivity timeout. Parses the login request from Burp XML for the session cookie and login timestamp, has the operator select a sensitivity tier (which sets the expected timeout window), runs an elapsed-time display while the operator goes idle, then records whether the session was still active on return.",
+          "command": "python3 WSTG-SESS-07/utilities/python/sess07_timeout_timer.py --xml WSTG-SESS-07/inputs/xml/login_request.xml",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-SESS-07/inputs/xml/<filename>.xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "sensitivity tier selection (SENSITIVE vs NOT-SENSITIVE), idle period, and return confirmation of whether the session was still active",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-SESS-07/outputs/test_outputs/sess07_report.md"
+            }
+          ],
+          "sensitivity_tiers": {
+            "SENSITIVE": "5-15 min expected timeout (banking, healthcare, HR)",
+            "NOT-SENSITIVE": "30-60 min expected timeout (general web, e-commerce)"
+          },
+          "flow": [
+            "1. parse login request from Burp XML -- extract session cookie name/value and login timestamp",
+            "2. operator selects sensitivity tier",
+            "3. elapsed-time display starts; operator goes idle",
+            "4. operator returns and presses Enter; script shows elapsed time",
+            "5. operator answers whether session was still active -- still active past threshold = FAIL, expired within window = PASS",
+            "6. results and elapsed time written to report"
+          ]
+        }
+      }
+    },
+    "WSTG-SESS-09": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "sess_09_checklist.py",
+          "path": "WSTG-SESS-09/utilities/python/sess_09_checklist.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Interactive checklist walking the operator through the WSTG-SESS-09 session hijacking test procedure step by step. Each step must be confirmed before the next is revealed; operator records observations at key decision points. Renders a final verdict and writes a markdown report.",
+          "command": "python3 WSTG-SESS-09/utilities/python/sess_09_checklist.py [--target https://app.example.com] [--out WSTG-SESS-09/outputs/test_outputs/sess09_report.md]",
+          "inputs": [
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "step-by-step confirmations and observations at each decision point",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "flag": "--out",
+              "path": "WSTG-SESS-09/outputs/test_outputs/sess09_report.md",
+              "default": true,
+              "flag_required": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "09_Weak_Cryptography": {
+    "WSTG-CRYP-01": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "cryp01_scan.py",
+          "path": "WSTG-CRYP-01/utilities/python/cryp01_scan.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "description": "Reads a list of target hosts and runs sslyze (comprehensive TLS/SSL configuration audit) and nmap (SSL cipher enumeration via ssl-enum-ciphers) against each target sequentially. Strips http:///https:// prefixes automatically; handles host:port or bare host (defaults to port 443).",
+          "command": "python3 WSTG-CRYP-01/utilities/python/cryp01_scan.py [--targets WSTG-CRYP-01/inputs/data/targets.txt] [--out-dir WSTG-CRYP-01/outputs/test_outputs] [--port 443]",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--targets",
+              "path": "WSTG-CRYP-01/inputs/data/targets.txt",
+              "required": false,
+              "default": true,
+              "description": "one target host per line, with or without scheme/port",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CRYP-01/outputs/test_outputs/<host>_sslyze.json",
+              "per_target": true
+            },
+            {
+              "tag": "XML_OUTPUT",
+              "path": "WSTG-CRYP-01/outputs/test_outputs/<host>_nmap.xml",
+              "per_target": true
+            }
+          ]
+        },
+        "script_2": {
+          "name": "cryp01_analyze.py",
+          "path": "WSTG-CRYP-01/utilities/python/cryp01_analyze.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (cryp01_scan.py -- inferred; no docstring to confirm)"
+          ],
+          "docstring_missing": true,
+          "inferred": true,
+          "order_note": "No docstring found for this file. Ordered second and dependent on cryp01_scan.py purely by filename convention (analyze follows scan) and category precedent elsewhere in this repo (e.g. CONF-11/CONF-12 scan->report pattern). Re-spider this file directly, or paste its source, to confirm command/inputs/outputs.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "UNKNOWN_INPUT",
+              "description": "undocumented -- likely the per-host sslyze.json / nmap.xml outputs of cryp01_scan.py",
+              "flag": null,
+              "required": null
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "UNKNOWN_OUTPUT",
+              "description": "undocumented",
+              "path": null
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CRYP-02": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "padding_scan.py",
+          "path": "WSTG-CRYP-02/utilities/python/padding_scan.py",
+          "run_order": 1,
+          "depends_on": [],
+          "docstring_missing": true,
+          "note": "NOT captured in this spider batch. padding_verdict.py's own docstring refers to this script by name as the producer of padding_oracle_scan.json, confirming it exists, but no commentary/usage for it was spidered here. Placeholder entry -- re-spider WSTG-CRYP-02 to fill this in.",
+          "command": null,
+          "inputs": [
+            {
+              "tag": "UNKNOWN_INPUT",
+              "description": "undocumented",
+              "flag": null,
+              "required": null
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CRYP-02/outputs/test_outputs/padding_oracle_scan.json",
+              "description": "confirmed to exist only because padding_verdict.py consumes it; path inferred from that script's --scan default"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "padding_verdict.py",
+          "path": "WSTG-CRYP-02/utilities/python/padding_verdict.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (padding_scan.py -> padding_oracle_scan.json; padding_scan.py itself undocumented in this batch)"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads padding_oracle_scan.json, confirms block-size candidates (decoded byte length a multiple of 8 or 16, with >=2 blocks), generates 256-payload Burp Intruder probe wordlists (XOR each value 0x00-0xFF against the last byte of the penultimate block), and writes a findings report. A padding oracle is confirmed when one or more of the 256 payloads produces a distinct response from the majority when run through Burp Intruder Sniper mode.",
+          "command": "python3 WSTG-CRYP-02/utilities/python/padding_verdict.py --scan WSTG-CRYP-02/outputs/test_outputs/padding_oracle_scan.json",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--scan",
+              "path": "WSTG-CRYP-02/outputs/test_outputs/padding_oracle_scan.json",
+              "required": true,
+              "description": "from padding_scan.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-CRYP-02/outputs/test_outputs/<param>_ep<idx>_probes.txt",
+              "per_candidate": true,
+              "description": "256 encoded payloads per candidate, for Burp Intruder Sniper mode"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-CRYP-02/outputs/test_outputs/padding_oracle_report.md"
+            }
+          ],
+          "probe_generation_logic": [
+            "1. decode the raw value using its detected encoding",
+            "2. split into blocks of block_size bytes",
+            "3. identify the penultimate block (blocks[-2])",
+            "4. target the last byte of the penultimate block",
+            "5. XOR that byte with each value 0x00-0xFF (256 variants)",
+            "6. re-assemble the full ciphertext with the modified block",
+            "7. re-encode to the original encoding (base64/hex/etc.)",
+            "8. write all 256 encoded strings to a wordlist file"
+          ]
+        }
+      }
+    },
+    "WSTG-CRYP-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "cryp_03.py",
+          "path": "WSTG-CRYP-03/utilities/python/cryp_03.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Curl-based tester. Accepts a single domain, a domain list file, or reads endpoints from a Burp Suite proxy history XML export (default). Runs 5 test cases per host/endpoint.",
+          "command": "python cryp_03.py [-x /path/to/export.xml | -d example.com | -f hosts.txt] [-o /path/to/out.json]",
+          "run_variants": [
+            {
+              "description": "default -- reads Inputs/XML/cryp03.xml",
+              "example": "python cryp_03.py"
+            },
+            {
+              "description": "single domain",
+              "example": "python cryp_03.py -d example.com"
+            },
+            {
+              "description": "domain list file",
+              "example": "python cryp_03.py -f hosts.txt"
+            },
+            {
+              "description": "explicit XML + output path",
+              "example": "python cryp_03.py -x /path/to/export.xml -o /path/to/out.json"
+            }
+          ],
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x",
+              "path": "Inputs/XML/cryp03.xml",
+              "required": false,
+              "default": true,
+              "description": "mutually exclusive with -d/-f",
+              "takes_value": true
+            },
+            {
+              "tag": "DOMAIN_INPUT",
+              "flag": "-d",
+              "required": false,
+              "description": "single domain; mutually exclusive with -x/-f",
+              "takes_value": true
+            },
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "-f",
+              "path": "hosts.txt",
+              "required": false,
+              "description": "domain list file; mutually exclusive with -x/-d",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "flag": "-o",
+              "path": "Outputs/test_outputs/cryp03_out.json",
+              "default": true,
+              "flag_required": false
+            }
+          ],
+          "test_cases": {
+            "TC-01": "does the host respond on plain HTTP (2xx)?",
+            "TC-02": "does plain HTTP redirect to HTTPS on the login path?",
+            "TC-03": "is Strict-Transport-Security present and sane (max-age >= 1yr)?",
+            "TC-04": "do login form actions post to an http:// URL?",
+            "TC-AUX": "any Set-Cookie headers missing the Secure flag?"
+          }
+        },
+        "script_2": {
+          "name": "cryp_03_report.py",
+          "path": "WSTG-CRYP-03/utilities/python/cryp_03_report.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (cryp_03.py -> cryp03_out.json)"
+          ],
+          "description": "Reads cryp03_out.json and prints every vulnerable index, endpoint, and the specific test case(s) that fired.",
+          "command": "python cryp_03_report.py [path/to/cryp03_out.json]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": null,
+              "path": "Outputs/test_outputs/cryp03_out.json",
+              "required": false,
+              "default": true,
+              "description": "positional argument; from cryp_03.py"
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "vulnerable index, endpoint, and firing test case(s). No -o/file output documented."
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-CRYP-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "cryp04_gather.py",
+          "path": "WSTG-CRYP-04/utilities/python/cryp04_gather.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "chain": "A (param/entropy analysis chain -- see fragment _meta notes)",
+          "description": "Extracts parameter values from a Burp Suite XML export across 4 sources (URL params, body params, cookies, headers), saving them to objects_gathered.json. Separately ingests a manually-produced storage_dump.json (from a browser DevTools JS snippet) into local_storage.json.",
+          "command": "python3 WSTG-CRYP-04/utilities/python/cryp04_gather.py --xml WSTG-CRYP-04/inputs/xml/cryp04_targets.xml [--storage WSTG-CRYP-04/inputs/json/storage_dump.json]",
+          "manual_prereq_for_storage_flag": [
+            "1. open the target application in your browser",
+            "2. open DevTools (F12) -> Console tab",
+            "3. paste and run the storage dumper JS snippet",
+            "4. save the downloaded storage_dump.json to WSTG-CRYP-04/inputs/json/storage_dump.json",
+            "5. re-run this script with --storage pointing to that file"
+          ],
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-CRYP-04/inputs/xml/cryp04_targets.xml",
+              "required": true,
+              "description": "NOT the same file as case2_cryp04.py's entropy_targs.xml -- see fragment _meta notes",
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--storage",
+              "path": "WSTG-CRYP-04/inputs/json/storage_dump.json",
+              "required": false,
+              "description": "produced manually via browser DevTools, not by any script in this repo",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "objects_gathered.json",
+              "description": "consumed by cryp04_analyze.py (script_2); schema: { url_params[], body_params[], cookies[], headers[], _meta: { source_xml, generated, total_values } }"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "local_storage.json",
+              "description": "ingested from --storage"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "cryp04_analyze.py",
+          "path": "WSTG-CRYP-04/utilities/python/cryp04_analyze.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (cryp04_gather.py -> objects_gathered.json)"
+          ],
+          "step_label": "Script 2",
+          "chain": "A (param/entropy analysis chain)",
+          "description": "Reads objects_gathered.json and runs two independent analyses on every collected parameter value: Part A decoding/block-size analysis against known symmetric cipher block sizes (CWE-326, 327, 261); Part B Shannon entropy/randomness analysis grouped by parameter name across all endpoints (NIST SP 800-22).",
+          "command": "python3 WSTG-CRYP-04/utilities/python/cryp04_analyze.py --gathered WSTG-CRYP-04/outputs/test_outputs/objects_gathered.json",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--gathered",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/objects_gathered.json",
+              "required": true,
+              "description": "from cryp04_gather.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/objects_gathered.json",
+              "description": "enriched IN PLACE -- same file as the input, overwritten with decode + entropy fields filled"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/cryp04_report.md"
+            }
+          ],
+          "part_a_block_size_analysis": {
+            "cwe_refs": {
+              "CWE-326": "Inadequate Encryption Strength",
+              "CWE-327": "Use of a Broken or Risky Cryptographic Algorithm",
+              "CWE-261": "Weak Encoding for Password"
+            },
+            "key_rule": "256-bit (32-byte) key material = PASS, current best practice (AES-256-GCM); must NOT be flagged vulnerable",
+            "verdicts_by_decoded_length": {
+              "8_bytes": "VULN -- 1x8-byte DES block (DES/3DES, deprecated)",
+              "16_bytes": "INFO -- 1x16-byte AES block (AES-128, acceptable)",
+              "24_bytes": "VULN -- 3x8-byte DES or 1.5x16 (DES/3DES key material)",
+              "32_bytes": "PASS -- 2x16-byte AES or 4x8-byte (AES-256, best practice)",
+              "64_bytes": "PASS -- 4x16 (AES-256 with IV)",
+              "other_multiple_of_8": "INFO -- unusual, worth noting",
+              "other_multiple_of_16": "INFO -- AES-128 CBC data?",
+              "anything_else": "no cipher match"
+            }
+          },
+          "part_b_entropy_analysis": {
+            "academic_basis": "Shannon (1948) 'A Mathematical Theory of Communication', Bell System Technical Journal 27(3), 379-423 -- H(X) = -sum(p(x) log2 p(x)); NIST SP 800-22 Rev 1a (2010), 15 statistical randomness tests, frequency/monobit and approximate entropy tests most actionable for token corpora",
+            "expected_entropy_by_charset": {
+              "base64_64chars": "6.00 bits/char theoretical max",
+              "hex_16chars": "4.00 bits/char",
+              "alphanumeric_62chars": "~5.95 bits/char"
+            },
+            "practical_thresholds": {
+              "below_3.5": "SUSPICIOUS -- low entropy, possible pattern",
+              "3.5_to_4.5": "LOW -- below expected for crypto tokens",
+              "4.5_to_5.5": "MEDIUM -- acceptable for most token types",
+              "above_5.5": "HIGH -- strong randomness"
+            },
+            "confidence_note": "entropy estimates are unreliable with fewer than 100 samples per NIST SP 800-22 2.1; small corpora are flagged with a confidence warning"
+          }
+        },
+        "script_3": {
+          "name": "case2_cryp04.py",
+          "path": "WSTG-CRYP-04/utilities/python/case2_cryp04.py",
+          "run_order": 3,
+          "depends_on": [],
+          "step_label": "Script 3",
+          "chain": "B (UUID analysis chain -- independent of Chain A, see fragment _meta notes)",
+          "description": "Scans a Burp Suite XML export for UUID patterns across URL paths/segments, query params, POST body values (form + JSON), cookie values, request headers, and response bodies. Deduplicates and writes to UUIDs.txt for here_place_UUID.py. Also prints a summary of where each UUID was found.",
+          "command": "python3 WSTG-CRYP-04/utilities/python/case2_cryp04.py [--xml WSTG-CRYP-04/inputs/xml/entropy_targs.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-CRYP-04/inputs/xml/entropy_targs.xml",
+              "required": false,
+              "default": true,
+              "description": "NOT the same file as cryp04_gather.py's cryp04_targets.xml -- see fragment _meta notes",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-CRYP-04/inputs/data/UUIDs.txt",
+              "description": "one UUID per line, deduplicated; consumed by here_place_UUID.py (script_4)"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/uuid_locations.json",
+              "description": "context map of where each UUID was found"
+            },
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "summary of where each UUID was found"
+            }
+          ],
+          "scan_locations": [
+            "URL paths and path segments",
+            "query string parameter values",
+            "POST body values (form-encoded and JSON top-level)",
+            "cookie values",
+            "request header values",
+            "response bodies (if present in Burp XML)"
+          ]
+        },
+        "script_4": {
+          "name": "here_place_UUID.py",
+          "path": "WSTG-CRYP-04/utilities/python/here_place_UUID.py",
+          "run_order": 4,
+          "depends_on": [
+            "script_3 (case2_cryp04.py -> UUIDs.txt)"
+          ],
+          "step_label": "Script 4",
+          "chain": "B (UUID analysis chain)",
+          "description": "Reads UUIDs.txt and performs deep per-UUID analysis to identify version, decode embedded data, and assess predictability/security risk, plus corpus-level checks across multiple UUIDs of the same version.",
+          "command": "python3 WSTG-CRYP-04/utilities/python/here_place_UUID.py --uuids WSTG-CRYP-04/inputs/data/UUIDs.txt",
+          "inputs": [
+            {
+              "tag": "WORDLIST_INPUT",
+              "flag": "--uuids",
+              "path": "WSTG-CRYP-04/inputs/data/UUIDs.txt",
+              "required": true,
+              "description": "from case2_cryp04.py",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/uuid_report.md"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-CRYP-04/outputs/test_outputs/uuid_analysis.json"
+            }
+          ],
+          "per_version_analysis": {
+            "v1_time_based": {
+              "risk": "HIGH",
+              "detail": "extract 60-bit timestamp (UUID epoch 1582-10-15), 48-bit node/MAC (check random vs real MAC per RFC 4122 bit 40), 14-bit clock_seq (check sequential increment); timestamp + MAC leaks machine identity and enables enumeration"
+            },
+            "v2_dce_security": {
+              "risk": "HIGH",
+              "detail": "like v1 + POSIX UID/GID embedded in time_low; extremely rare in web apps, flag immediately"
+            },
+            "v3_md5_hash_based": {
+              "risk": "MEDIUM",
+              "detail": "deterministic (same namespace+name -> same UUID always); MD5 is broken (collision attacks, CWE-327); predictable if namespace/name guessable"
+            },
+            "v4_random": {
+              "risk": "LOW if CSPRNG, MEDIUM if weak PRNG detected",
+              "detail": "validates variant bits (RFC 4122 4.4); corpus analysis checks bit-position entropy across multiple v4 UUIDs for a broken/seeded PRNG"
+            },
+            "v5_sha1_hash_based": {
+              "risk": "MEDIUM",
+              "detail": "same determinism risk as v3 but with SHA-1; SHA-1 deprecated for crypto use (CWE-327)"
+            },
+            "v6_reordered_v1": {
+              "risk": "MEDIUM",
+              "detail": "RFC 9562; time-sortable, still leaks timestamp"
+            },
+            "v7_unix_ms_plus_random": {
+              "risk": "INFO",
+              "detail": "RFC 9562; time-ordered but random suffix, modern and acceptable"
+            },
+            "unknown_version": {
+              "risk": "manual review",
+              "detail": "could be nil UUID (all zeros), max UUID (all ones), or non-standard"
+            }
+          },
+          "corpus_level_checks": [
+            "v1: are timestamps sequential within a window? (enumerable)",
+            "v1: do all UUIDs share the same node (same machine)?",
+            "v4: bit-position entropy check (weak PRNG detection)",
+            "mixed versions: flag as inconsistent implementation"
+          ]
+        }
+      }
+    }
+  },
+  "10_Business_Logic": {
+    "WSTG-BUSL-01": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "business_logic_validation.py",
+          "path": "WSTG-BUSL-01/utilities/python/business_logic_validation.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "description": "Reads a Burp Suite XML export, identifies endpoints with parameter values that are exclusively alphabetic OR exclusively numeric, records them to EP_SFCS.json, and generates a per-endpoint Burp Intruder wordlist testing whether each field enforces its apparent data type.",
+          "command": "python3 WSTG-BUSL-01/utilities/python/business_logic_validation.py [--xml WSTG-BUSL-01/inputs/xml/busl_01.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-BUSL-01/inputs/xml/busl_01.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-01/outputs/test_outputs/EP_SFCS.json"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-BUSL-01/inputs/wordlist/EP_<INDEX>.txt",
+              "per_qualifying_endpoint": true,
+              "description": "max 2-3 entries per category per parameter value"
+            }
+          ],
+          "wordlist_categories_alpha_only": {
+            "A1": "unicode full confusion -- every substitutable char replaced",
+            "A2": "unicode partial confusion -- vowels only replaced",
+            "A3": "hex encoding -- full string as hex bytes",
+            "A4": "decimal encoding -- full string as decimal bytes (space-sep)",
+            "A5": "binary encoding -- full string as binary bytes (space-sep)",
+            "A6": "random word variants -- A1-A5 applied to a random substitute word",
+            "A7": "special/painful chars -- 2-3 lines of brutal special chars",
+            "A8": "integer-only lines -- 2-3 integer values",
+            "A9": "negative numbers -- 2-3 negative integer values",
+            "A10": "template injection -- 2 SSTI/client-side template payloads",
+            "A11": "JavaScript injection -- 2 JS execution payloads"
+          },
+          "wordlist_categories_numeric_only": {
+            "N1": "unicode digit confusion -- fullwidth/superscript digit lookalikes",
+            "N2": "hex representation -- number as 0x hex",
+            "N3": "octal representation -- number as 0o octal",
+            "N4": "binary representation -- number as 0b binary",
+            "N5": "negative version -- negated value",
+            "N6": "random number variants -- N1-N5 applied to a random integer",
+            "N7": "special/painful chars -- 2-3 lines of brutal special chars",
+            "N8": "alpha-only strings -- 2-3 pure alphabet strings",
+            "N9": "template injection -- 2 SSTI/client-side template payloads",
+            "N10": "JavaScript injection -- 2 JS execution payloads"
+          }
+        },
+        "script_2": {
+          "name": "busl01_validation.py",
+          "path": "WSTG-BUSL-01/utilities/python/busl01_validation.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (business_logic_validation.py -> EP_<INDEX>.txt wordlists; manual: loaded into Burp Intruder to produce intruder_test.xml)"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads a Burp Intruder results XML export and identifies responses indicating a business logic validation failure -- i.e. the server accepted a payload it should have rejected.",
+          "command": "python3 WSTG-BUSL-01/utilities/python/busl01_validation.py --intruder WSTG-BUSL-01/inputs/xml/intruder_test.xml [--min-bytes 500]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--intruder",
+              "path": "WSTG-BUSL-01/inputs/xml/intruder_test.xml",
+              "required": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-bytes",
+              "default": 500,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-01/inputs/json/intruder_alerts.json"
+            }
+          ],
+          "alert_logic": {
+            "404_any": "SKIP -- not found",
+            "403_lt_min_bytes": "SKIP -- bare forbidden",
+            "500_lt_min_bytes": "SKIP -- bare error",
+            "403_ge_min_bytes": "ALERT -- app responded",
+            "500_ge_min_bytes": "ALERT -- verbose error",
+            "200_any": "ALERT, severity HIGH",
+            "302_or_301_any": "ALERT, severity MEDIUM",
+            "202_any": "ALERT, severity MEDIUM",
+            "other_2xx_3xx": "ALERT, severity LOW"
+          },
+          "alert_severity_sort_order": [
+            "200 OK -- server fully accepted the malicious payload",
+            "302 Found -- redirect after acceptance (login-like flow)",
+            "202 Accepted -- async acceptance",
+            "301 Moved -- redirect (lower confidence than 302)",
+            "403/500 >= min_bytes -- verbose error (information disclosure)",
+            "other 2xx/3xx"
+          ]
+        }
+      }
+    },
+    "WSTG-BUSL-03": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_03.py",
+          "path": "WSTG-BUSL-03/utilities/python/busl_03.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "description": "Reads a Burp Suite XML export of requests that move/store/create/gate data (save, create, read-own, logged-in-only actions). Extracts URL and body parameters, classifies data types, generates per-endpoint Burp Intruder wordlists, and writes a sitrep summarising what will be tested.",
+          "command": "python3 WSTG-BUSL-03/utilities/python/busl_03.py [--xml WSTG-BUSL-03/inputs/xml/busl_03.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-BUSL-03/inputs/xml/busl_03.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-03/inputs/json/xml_assessment.json"
+            },
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "WSTG-BUSL-03/inputs/wordlist/EP_<INDEX>.txt",
+              "per_endpoint": true
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-03/outputs/test_outputs/sitrep.md"
+            }
+          ],
+          "data_type_classification": {
+            "alpha": "value contains only letters (a-z, A-Z)",
+            "numeric": "value contains only digits/decimal number",
+            "alphanumeric": "value contains both letters and digits (mixed)"
+          },
+          "wordlist_strategy": {
+            "alpha": "alpha-only category tests (unicode confusion, encoding, injections)",
+            "numeric": "numeric-only category tests (hex, octal, binary, negative, injections)",
+            "alphanumeric": "both alpha AND numeric tests, plus boundary tests: pure-alpha substitute, pure-numeric substitute, reversed, truncated half"
+          },
+          "log_adjacent_parameter_warning": "parameters or paths matching log, audit, event, trace, debug, activity, record, track are flagged in the sitrep for manual review before sending Intruder payloads"
+        },
+        "script_2": {
+          "name": "verdict_busl_03.py",
+          "path": "WSTG-BUSL-03/utilities/python/verdict_busl_03.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (busl_03.py -> EP_<INDEX>.txt wordlists; manual: loaded into Burp Intruder to produce intruder_tests.xml)"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads a Burp Intruder XML export of integrity-check probe results, classifies each response by status code and body size, and emits structured alerts. Alert logic identical to busl01_validation.py.",
+          "command": "python3 WSTG-BUSL-03/utilities/python/verdict_busl_03.py [--intruder WSTG-BUSL-03/inputs/xml/intruder_tests.xml] [--min-bytes 500]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--intruder",
+              "path": "WSTG-BUSL-03/inputs/xml/intruder_tests.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-bytes",
+              "default": 500,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-03/inputs/json/intruder_alerts.json"
+            }
+          ],
+          "alert_logic": {
+            "200": "HIGH -- request accepted, possible logic bypass",
+            "404": "SKIP -- always",
+            "302_202_301": "MEDIUM -- redirect/queued, worth investigating",
+            "403_500_ge_min_bytes": "LOW -- verbose error leaks info",
+            "403_500_lt_min_bytes": "SKIP -- bare error, noise",
+            "other_2xx_3xx": "LOW",
+            "everything_else": "SKIP"
+          }
+        }
+      }
+    },
+    "WSTG-BUSL-04": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_04_prep.py",
+          "path": "WSTG-BUSL-04/utilities/python/busl_04_prep.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Reads Burp Suite proxy history XML exports from Inputs/XML/ (e.g. authentication.xml, authorization.xml, or any targeted exports), samples N endpoints per category file (default 3), parses each request into curl components, and writes structured JSON per category ready for the race-condition runner.",
+          "cross_reference_note": "Docstring states: 'Same multi-file pattern as hpp_04.' hpp_04 refers to HTTP Parameter Pollution (WSTG-INPV-04), which is under 07_Input_Validation -- a category the user has chosen to skip in this project. This reference is intentionally left unresolved; see fragment _meta.",
+          "command": "python busl_04_prep.py [-n 5] [--only authentication] [--seed 42]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "path": "Inputs/XML/*.xml",
+              "flag": null,
+              "required": true,
+              "description": "multiple category-named XML files dropped into Inputs/XML/, e.g. authentication.xml, authorization.xml"
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "-n",
+              "default": 3,
+              "required": false,
+              "description": "endpoints to sample per category file",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--only",
+              "required": false,
+              "description": "restrict to a single category",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--seed",
+              "required": false,
+              "description": "reproducible sampling",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "Outputs/test_outputs/<category>.json",
+              "per_category": true,
+              "description": "selected endpoints + curl data; consumed by busl_04_runner.py"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "busl_04_runner.py",
+          "path": "WSTG-BUSL-04/utilities/python/busl_04_runner.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (busl_04_prep.py -> Outputs/test_outputs/<category>.json)"
+          ],
+          "description": "Reads the staged endpoint JSON from busl_04_prep.py, fires each curl command TWICE simultaneously on concurrent threads (the TOCTOU race), records both status codes, and classifies the result.",
+          "command": "python busl_04_runner.py [--only authentication] [--race-count 3] [--timeout 15]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "path": "Outputs/test_outputs/<category>.json",
+              "flag": null,
+              "required": true,
+              "description": "from busl_04_prep.py; all staged JSONs by default"
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--only",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--race-count",
+              "required": false,
+              "description": "concurrent requests to fire; example shows 3 though the docstring's core description says fired twice by default",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--timeout",
+              "default": 15,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "Outputs/test_outputs/<category>_results.json",
+              "per_category": true
+            }
+          ],
+          "classification": {
+            "200": "FINDING -- potential race condition/unrestricted access",
+            "403": "INVESTIGATE -- access control present but worth probing further",
+            "404_500": "NOT_FINDING -- endpoint not found/server error",
+            "other": "INVESTIGATE -- review manually"
+          }
+        }
+      }
+    },
+    "WSTG-BUSL-05": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_05_prep.py",
+          "path": "WSTG-BUSL-05/utilities/python/busl_05_prep.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Prep (workflow step 1-3 of 5, per this script's own docstring)",
+          "description": "Reads a Burp Suite proxy history XML export, presents a numbered selection menu of captured requests, and writes one Burp Intruder wordlist per chosen endpoint (EP_0.txt .. EP_4.txt), each containing a single extracted parameter value repeated 50 times for function-limit/rate-limit testing.",
+          "command": "python busl_05_prep.py [--auto] [--indices 0,2,4,7,12] [-x /path/to/export.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x",
+              "path": "Inputs/XML/function_limit.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--auto",
+              "required": false,
+              "description": "auto-pick first 5 endpoints",
+              "takes_value": false
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--indices",
+              "required": false,
+              "description": "explicit comma-separated endpoint selection",
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "numbered menu selection of up to 5 endpoints, if neither --auto nor --indices given",
+              "required": false
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "path": "EP_0.txt ... EP_4.txt",
+              "description": "one per chosen endpoint; single extracted parameter value repeated 50 times"
+            }
+          ],
+          "full_workflow": [
+            "1. place Burp proxy export at Inputs/XML/function_limit.xml",
+            "2. run this script, select 5 endpoints from the menu",
+            "3. load EP_N.txt into Burp Intruder (Sniper / Battering Ram)",
+            "4. run the attack and export results to Inputs/XML/intruder_test.xml",
+            "5. run busl_05_analyze.py to check for successive 200 OKs"
+          ]
+        },
+        "script_2": {
+          "name": "busl_05_analyze.py",
+          "path": "WSTG-BUSL-05/utilities/python/busl_05_analyze.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (busl_05_prep.py -> EP_N.txt wordlists; manual: loaded into Burp Intruder to produce intruder_test.xml)"
+          ],
+          "step_label": "Analyze (workflow step 5 of 5, per busl_05_prep.py's own docstring)",
+          "description": "Reads a Burp Suite Intruder results XML export, groups responses by endpoint path, counts the longest run of consecutive HTTP 200 OK responses, and flags any endpoint where that run exceeds the threshold (default >3), indicating missing function-use limits.",
+          "command": "python busl_05_analyze.py [-x /path/to/intruder_test.xml] [--threshold 5]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "-x",
+              "path": "Inputs/XML/intruder_test.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--threshold",
+              "default": 3,
+              "required": false,
+              "description": "trigger point for the consecutive-200 run length",
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "Outputs/test_outputs/findings.json"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-BUSL-06": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_06_gui.py",
+          "path": "WSTG-BUSL-06/utilities/python/busl_06_gui.py",
+          "run_order": 1,
+          "depends_on": [],
+          "description": "Tkinter GUI for grouping Burp proxy history requests into workflow groups and generating curl commands to test each workflow's final step in isolation. Reconstructs curl from the captured request; Cookie and Authorization header values are replaced with the placeholder <SESSION> so the operator can substitute their own session.",
+          "command": "python3 WSTG-BUSL-06/utilities/python/busl_06_gui.py [--xml WSTG-BUSL-06/inputs/xml/file_here.xml]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-BUSL-06/inputs/xml/file_here.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "GUI: browse requests, select via click/Shift-click/Ctrl-click, name and push groups, 'Save & Report' to finalize",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-06/inputs/json/workflows_groups.json",
+              "description": "consumed by curl_tester.py"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-06/outputs/test_outputs/sitrep.md",
+              "description": "appended"
+            },
+            {
+              "tag": "STDOUT_OUTPUT",
+              "description": "per-group operator instructions"
+            }
+          ],
+          "gui_workflow": [
+            "1. load proxy history XML",
+            "2. browse all requests in the left panel (index, method, path, status)",
+            "3. select N requests with click / Shift-click / Ctrl-click",
+            "4. name the group and press 'Push to Group'",
+            "5. review groups in the right panel; remove individual requests or whole groups",
+            "6. 'Save & Report' writes workflows_groups.json + appends sitrep.md, and prints per-group operator instructions"
+          ]
+        },
+        "script_2": {
+          "name": "curl_tester.py",
+          "path": "WSTG-BUSL-06/utilities/python/curl_tester.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (busl_06_gui.py -> workflows_groups.json)"
+          ],
+          "description": "Reads workflows_groups.json and executes the Curl_to_launch command for every workflow group, recording whether the endpoint was reachable (HTTP 200). A 200 OK means the final workflow step was accessible directly without completing the preceding steps -- the vulnerability.",
+          "session_placeholder_note": "curl commands contain a <SESSION> placeholder for cookies/auth headers. Before running, either edit workflows_groups.json to replace it with a real (or empty) session value, or pass --session-token to have this script substitute it automatically.",
+          "command": "python3 WSTG-BUSL-06/utilities/python/curl_tester.py [--groups WSTG-BUSL-06/inputs/json/workflows_groups.json] [--session-token \"sessionid=abc123\"] [--timeout 15]",
+          "inputs": [
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--groups",
+              "path": "WSTG-BUSL-06/inputs/json/workflows_groups.json",
+              "required": false,
+              "default": true,
+              "description": "from busl_06_gui.py",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--session-token",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--timeout",
+              "default": 15,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-06/outputs/test_outputs/workflow_findings.json"
+            },
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-06/outputs/test_outputs/workflow_findings.md"
+            }
+          ]
+        }
+      }
+    },
+    "WSTG-BUSL-08": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_08_questionnaire.py",
+          "path": "WSTG-BUSL-08/utilities/python/busl_08_questionnaire.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Questionnaire Script (explicitly documented to run BEFORE 'Script 1' / busl_08_wordlist.py, despite carrying no script number itself)",
+          "description": "Interactive pre-test operator questionnaire. Captures operator context and reconnaissance findings, then writes them to the sitrep.",
+          "command": "python3 WSTG-BUSL-08/utilities/python/busl_08_questionnaire.py",
+          "inputs": [
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "description": "operator context and recon findings",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-08/outputs/test_outputs/sitrep.md",
+              "description": "created/overwritten"
+            }
+          ]
+        },
+        "script_2": {
+          "name": "busl_08_wordlist.py",
+          "path": "WSTG-BUSL-08/utilities/python/busl_08_wordlist.py",
+          "run_order": 2,
+          "depends_on": [],
+          "step_label": "Script 1",
+          "description": "Generates a Burp Intruder wordlist of paths to probe for unexpected upload endpoints, combining Burp XML paths, svc_repo.json service-catalogue paths, a missing-logic stub for the primary repo, upload-specific path expansions, extension-appended variants, and indexing/traversal strings.",
+          "command": "python3 WSTG-BUSL-08/utilities/python/busl_08_wordlist.py [--xml WSTG-BUSL-08/inputs/xml/file_input.xml] [--repo WSTG-BUSL-08/inputs/json/svc_repo.json] [--out WSTG-BUSL-08/inputs/wordlist/upload_paths.txt]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--xml",
+              "path": "WSTG-BUSL-08/inputs/xml/file_input.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "JSON_INPUT",
+              "flag": "--repo",
+              "path": "WSTG-BUSL-08/inputs/json/svc_repo.json",
+              "required": false,
+              "description": "same secondary-service-repo pattern as WSTG-CONF-02/conf_02_wordlist.py and WSTG-CONF-05/conf_05_wordlist.py",
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--out",
+              "path": "WSTG-BUSL-08/inputs/wordlist/upload_paths.txt",
+              "default": true,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "WORDLIST_OUTPUT",
+              "flag": "--out",
+              "path": "WSTG-BUSL-08/inputs/wordlist/upload_paths.txt",
+              "flag_required": false
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-08/inputs/json/path_assessment.json"
+            }
+          ],
+          "sources": [
+            "1. paths extracted from the Burp XML proxy capture",
+            "2. svc_repo.json CommonEndpoints + UndesirableEndpoints across all ports, dedup'd",
+            "3. MISSING LOGIC stub for primary service repo (returns [])",
+            "4. upload-specific path expansions (common upload subdirectory variants)",
+            "5. extension-appended variants: unexpected (.txt .csv .xml .html .svg .pdf .zip .tar.gz), malicious (.php .asp .aspx .jsp .py .rb .sh) -- kept broad for discovery since BUSL-08's focus is 'unexpected'",
+            "6. indexing/directory-traversal strings that may trigger directory listing or path disclosure"
+          ]
+        },
+        "script_3": {
+          "name": "busl_08_verdict.py",
+          "path": "WSTG-BUSL-08/utilities/python/busl_08_verdict.py",
+          "run_order": 3,
+          "depends_on": [
+            "script_2 (busl_08_wordlist.py -> upload_paths.txt; manual: loaded into Burp Intruder to produce intruder_test.xml)",
+            "script_1 (busl_08_questionnaire.py -- appends to the sitrep.md it creates; creates sitrep.md itself if the questionnaire hasn't been run)"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads a Burp Intruder XML export of upload-path probe results and classifies each response into INDEXING, EXPOSED PATH, or EXT 200/302. For each alert, reports the probed path, status code + body size, category, and a curl verification command.",
+          "command": "python3 WSTG-BUSL-08/utilities/python/busl_08_verdict.py [--intruder WSTG-BUSL-08/inputs/xml/intruder_test.xml] [--target https://app.example.com] [--min-bytes 500]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--intruder",
+              "path": "WSTG-BUSL-08/inputs/xml/intruder_test.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-bytes",
+              "default": 500,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-08/outputs/test_outputs/sitrep.md",
+              "description": "appended; created if questionnaire hasn't run"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-08/inputs/json/intruder_alerts.json"
+            }
+          ],
+          "alert_categories": {
+            "INDEXING": "payload was an indexing/traversal string AND response was 200 or contained directory-listing indicators (e.g. 'Index of', 'Parent Directory', autoindex)",
+            "EXPOSED_PATH": "a path with NO extension returned 200/302 (directory or resource exists -- unexpected)",
+            "EXT_200_302": "a path WITH a file extension returned 200 or 302 (check immediately -- file may be accessible/writable)"
+          },
+          "status_logic": {
+            "200": "alert -- HIGH for ext, MEDIUM for raw path",
+            "302_301": "alert -- MEDIUM",
+            "403_500_ge_min_bytes": "LOW -- verbose error",
+            "404_or_403_lt_min_bytes": "SKIP"
+          }
+        }
+      }
+    },
+    "WSTG-BUSL-09": {
+      "Python_Scripts": {
+        "script_1": {
+          "name": "busl_09_questionnaire.py",
+          "path": "WSTG-BUSL-09/utilities/python/busl_09_questionnaire.py",
+          "run_order": 1,
+          "depends_on": [],
+          "step_label": "Questionnaire Script (documented to run BEFORE the intruder scan)",
+          "description": "Interactive pre-test operator questionnaire specifically around malicious file upload testing -- executable types (.exe, .bat, .bin, .py, .php, etc.) that could lead to remote code execution or server-side execution if accepted.",
+          "command": "python3 WSTG-BUSL-09/utilities/python/busl_09_questionnaire.py",
+          "inputs": [
+            {
+              "tag": "INTERACTIVE_INPUT",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-09/outputs/test_outputs/sitrep.md",
+              "description": "created/overwritten"
+            }
+          ],
+          "busl_08_vs_09_distinction": {
+            "BUSL-08": "unexpected types (.txt, .xml, .svg, .pdf, .zip, ...)",
+            "BUSL-09": "malicious types (.exe, .bat, .bin, .py, .php, .asp, .sh, ...)",
+            "overlap": "intentional -- a path that accepts .php is both unexpected AND potentially malicious"
+          }
+        },
+        "script_2": {
+          "name": "busl_09_verdict.py",
+          "path": "WSTG-BUSL-09/utilities/python/busl_09_verdict.py",
+          "run_order": 2,
+          "depends_on": [
+            "script_1 (busl_09_questionnaire.py -- appends to the sitrep it creates)",
+            "MISSING: no busl_09_wordlist.py (or equivalent probe/wordlist generator) was captured in this spider batch, unlike sibling WSTG-BUSL-08's busl_08_wordlist.py. This script is 'adapted from busl_08_verdict.py' per its own docstring, implying a parallel wordlist step exists but wasn't spidered here -- see fragment _meta.docstring_missing.",
+            "manual: Burp Intruder run producing intruder_test.xml"
+          ],
+          "step_label": "Script 2",
+          "description": "Reads a Burp Intruder XML export of malicious file upload probe results. Adapted from busl_08_verdict.py, with RCE/EXEC-specific alert categories on top of the unexpected/exposed/indexing categories.",
+          "command": "python3 WSTG-BUSL-09/utilities/python/busl_09_verdict.py [--intruder WSTG-BUSL-09/inputs/xml/intruder_test.xml] [--target https://app.example.com] [--min-bytes 500]",
+          "inputs": [
+            {
+              "tag": "XML_INPUT",
+              "flag": "--intruder",
+              "path": "WSTG-BUSL-09/inputs/xml/intruder_test.xml",
+              "required": false,
+              "default": true,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--target",
+              "required": false,
+              "takes_value": true
+            },
+            {
+              "tag": "OPTION_INPUT",
+              "flag": "--min-bytes",
+              "default": 500,
+              "required": false,
+              "takes_value": true
+            }
+          ],
+          "outputs": [
+            {
+              "tag": "MD_OUTPUT",
+              "path": "WSTG-BUSL-09/outputs/test_outputs/sitrep.md",
+              "description": "appended"
+            },
+            {
+              "tag": "JSON_OUTPUT",
+              "path": "WSTG-BUSL-09/inputs/json/intruder_alerts.json"
+            }
+          ],
+          "alert_categories": {
+            "RCE_RISK": "server-side script extension (.php, .asp, .jsp, .py, .rb, .pl, .sh, .cgi, .cfm) returned 200 or 302 -- attempt to GET the upload URL and look for execution",
+            "EXEC_RISK": "client-executable extension (.exe, .bat, .bin, .cmd) returned 200 -- downloadable, social-engineering/client-side risk",
+            "UNEXPECTED": "extension from the unexpected (non-executable) set returned 200/302 -- a BUSL-08 finding surfacing in a BUSL-09 run",
+            "EXPOSED_PATH": "path with no extension returned 200/302",
+            "INDEXING": "indexing/traversal payload produced a listing response"
+          },
+          "status_logic": {
+            "200": "HIGH for RCE/EXEC, MEDIUM for raw/unexpected",
+            "302_301": "MEDIUM",
+            "403_500_ge_min_bytes": "LOW -- verbose error",
+            "404_or_bare_403_500": "SKIP"
+          }
+        }
+      }
+    }
+  }
+}

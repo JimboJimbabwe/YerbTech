@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WSTG-CLNT-09 – Clickjacking Generator</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --border:#30363d;
+  --fg:#c9d1d9; --muted:#8b949e; --blue:#58a6ff;
+  --red:#f85149; --green:#3fb950; --orange:#e3b341;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'SF Mono','Fira Mono',monospace;
+  background:var(--bg); color:var(--fg);
+  min-height:100vh; display:flex; flex-direction:column;
+}
+header {
+  border-bottom:1px solid var(--border); padding:.7rem 1.5rem;
+  display:flex; align-items:center; gap:.75rem;
+}
+.logo  { color:var(--blue); font-size:1rem; font-weight:700; }
+.badge { font-size:.72rem; background:var(--bg3); border:1px solid var(--border);
+         border-radius:3px; padding:.1rem .5rem; color:var(--muted); }
+.back  { margin-left:auto; color:var(--blue); font-size:.8rem; text-decoration:none; }
+main { flex:1; display:grid; grid-template-columns:400px 1fr; gap:0; }
+
+/* ── Left column ── */
+.left { padding:1.5rem; border-right:1px solid var(--border); display:flex; flex-direction:column; gap:1rem; }
+
+.panel {
+  background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden;
+}
+.panel-hdr {
+  padding:.6rem 1rem; background:var(--bg3);
+  border-bottom:1px solid var(--border);
+  font-size:.82rem; color:var(--blue); font-weight:600;
+}
+.panel-body { padding:1rem; }
+label { font-size:.78rem; color:var(--muted); display:block; margin-bottom:.3rem; margin-top:.6rem; }
+label:first-child { margin-top:0; }
+input[type=text], input[type=url] {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  color:var(--fg); font-family:monospace; font-size:.8rem;
+  padding:.35rem .6rem; border-radius:3px; outline:none;
+}
+input[type=text]:focus, input[type=url]:focus { border-color:var(--blue); }
+
+.btn {
+  background:var(--bg3); color:var(--blue);
+  border:1px solid var(--border); border-radius:4px;
+  padding:.4rem 1rem; font-family:monospace; font-size:.82rem;
+  cursor:pointer; display:inline-block;
+}
+.btn:hover { background:var(--blue); color:var(--bg); border-color:var(--blue); }
+.btn.fire  { color:var(--green); border-color:var(--green); }
+.btn.fire:hover { background:var(--green); color:var(--bg); }
+
+.msg { font-size:.75rem; margin-top:.5rem; padding:.4rem; border-radius:3px; }
+.msg.ok  { color:var(--green); background:rgba(63,185,80,.08); border:1px solid rgba(63,185,80,.3); }
+.msg.err { color:var(--red);   background:rgba(248,81,73,.08);  border:1px solid rgba(248,81,73,.3); }
+
+.info {
+  font-size:.78rem; color:var(--muted); line-height:1.6;
+  padding:.75rem; background:var(--bg); border:1px solid var(--border);
+  border-left:3px solid var(--orange); border-radius:3px;
+}
+.info code { color:var(--blue); }
+
+/* ── Right column: file list ── */
+.right { padding:1.5rem; display:flex; flex-direction:column; gap:1rem; overflow-y:auto; }
+
+.right h2 { font-size:.9rem; color:var(--blue); margin-bottom:.5rem; }
+
+.file-list { display:flex; flex-direction:column; gap:.5rem; }
+.file-item {
+  background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+  padding:.75rem 1rem; display:flex; align-items:center; gap:.75rem;
+}
+.file-item .fname { flex:1; font-size:.8rem; color:var(--fg); word-break:break-all; }
+.file-item .ts    { font-size:.72rem; color:var(--muted); white-space:nowrap; }
+.file-item a {
+  color:var(--blue); font-size:.78rem; text-decoration:none;
+  border:1px solid var(--border); padding:.2rem .6rem; border-radius:3px;
+  white-space:nowrap;
+}
+.file-item a:hover { border-color:var(--blue); }
+.empty-list { color:var(--muted); font-size:.8rem; padding:1rem 0; }
+
+.refresh-btn {
+  background:var(--bg2); color:var(--muted);
+  border:1px solid var(--border); border-radius:3px;
+  padding:.2rem .6rem; font-size:.72rem; cursor:pointer; font-family:monospace;
+}
+.refresh-btn:hover { color:var(--fg); border-color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⚡ Clickjacking Generator</span>
+  <span class="badge">WSTG-CLNT-09</span>
+  <a class="back" href="/">← Dashboard</a>
+</header>
+
+<main>
+
+  <!-- ── Left: generator ── -->
+  <div class="left">
+
+    <div class="panel">
+      <div class="panel-hdr">Generate PoC</div>
+      <div class="panel-body">
+        <label>Target URL (the page to frame):</label>
+        <input type="url" id="target-url" placeholder="https://target.example.com/settings">
+        <label>Label (for filename / title):</label>
+        <input type="text" id="poc-label" placeholder="e.g. settings-page" maxlength="40">
+        <div style="margin-top:.75rem">
+          <button class="btn fire" onclick="generatePoC()">⚡ Generate PoC file</button>
+        </div>
+        <div id="gen-msg" class="msg" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="info">
+      <strong style="color:var(--orange)">How it works:</strong><br>
+      Each generated file creates an invisible iframe over a clickable decoy element.
+      If the target page loads inside the iframe, it means
+      <code>X-Frame-Options</code> and
+      <code>Content-Security-Policy: frame-ancestors</code> are not set or are
+      misconfigured. Toggle iframe visibility with the button on the PoC page to
+      confirm the overlay is aligned.<br><br>
+      <strong style="color:var(--orange)">Evidence to collect:</strong><br>
+      Screenshot with opacity toggled showing target content loaded under the decoy.
+      Also note the missing/permissive <code>X-Frame-Options</code> in the response headers.
+    </div>
+
+    <div class="panel">
+      <div class="panel-hdr">Quick test headers to check</div>
+      <div class="panel-body">
+        <div style="font-size:.75rem;color:var(--muted);line-height:1.8">
+          <div><span style="color:var(--orange)">X-Frame-Options:</span>
+            should be <span style="color:var(--green)">DENY</span> or
+            <span style="color:var(--green)">SAMEORIGIN</span></div>
+          <div><span style="color:var(--orange)">Content-Security-Policy:</span>
+            should include <span style="color:var(--green)">frame-ancestors 'none'</span>
+            or <span style="color:var(--green)">frame-ancestors 'self'</span></div>
+          <div style="margin-top:.4rem;color:var(--border)">
+            If neither header is present → <span style="color:var(--red)">Vulnerable</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Right: file list ── -->
+  <div class="right">
+    <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:0">
+      <h2>Generated PoC Files</h2>
+      <button class="refresh-btn" onclick="loadFileList()">↻ refresh</button>
+    </div>
+
+    <div class="file-list" id="file-list">
+      <div class="empty-list">No PoC files generated yet.</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function generatePoC() {
+  var target = document.getElementById('target-url').value.trim();
+  var label  = document.getElementById('poc-label').value.trim() || 'target';
+  var msg    = document.getElementById('gen-msg');
+
+  if (!target) {
+    msg.className = 'msg err'; msg.style.display = '';
+    msg.textContent = 'Target URL is required.';
+    return;
+  }
+
+  msg.className = 'msg'; msg.style.display = '';
+  msg.textContent = 'Generating…';
+
+  fetch('/api/generate-cj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ target: target, label: label })
+  })
+  .then(function(r) {
+    if (!r.ok) return r.text().then(function(t) { throw new Error(t); });
+    return r.json();
+  })
+  .then(function(data) {
+    msg.className = 'msg ok';
+    msg.innerHTML = '✓ Generated: <a href="' + data.url + '" target="_blank" style="color:var(--blue)">' + data.file + '</a>';
+    loadFileList();
+    document.getElementById('target-url').value = '';
+    document.getElementById('poc-label').value  = '';
+  })
+  .catch(function(e) {
+    msg.className = 'msg err';
+    msg.textContent = 'Error: ' + e.message;
+  });
+}
+
+function loadFileList() {
+  fetch('/api/cj-list')
+    .then(function(r) { return r.json(); })
+    .then(function(files) {
+      var list = document.getElementById('file-list');
+      if (!files.length) {
+        list.innerHTML = '<div class="empty-list">No PoC files generated yet.</div>';
+        return;
+      }
+      list.innerHTML = files.reverse().map(function(f) {
+        // Extract timestamp from filename: cj_label_TIMESTAMP.html
+        var m  = f.match(/_(\d+)\.html$/);
+        var ts = m ? new Date(parseInt(m[1]) * 1000).toLocaleTimeString() : '';
+        var label = f.replace(/^cj_/, '').replace(/_\d+\.html$/, '').replace(/_/g, ' ');
+        return '<div class="file-item">' +
+          '<span class="fname"><span style="color:var(--muted)">' + label + '</span><br>' +
+          '<span style="color:var(--border);font-size:.7rem">' + f + '</span></span>' +
+          (ts ? '<span class="ts">' + ts + '</span>' : '') +
+          '<a href="/payloads/clnt-09-clickjacking/' + f + '" target="_blank">Open PoC ↗</a>' +
+          '</div>';
+      }).join('');
+    })
+    .catch(function() {
+      document.getElementById('file-list').innerHTML =
+        '<div class="empty-list" style="color:var(--red)">Could not load file list.</div>';
+    });
+}
+
+// Allow Enter key in URL field
+document.getElementById('target-url').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') generatePoC();
+});
+
+loadFileList();
+setInterval(loadFileList, 10000);
+</script>
+</body>
+</html>

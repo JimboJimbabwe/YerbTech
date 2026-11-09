@@ -1,0 +1,416 @@
+{
+  "_meta": {
+    "description": "trimmed sample with the same shape and quirks as the real file"
+  },
+  "test_cases": {
+    "WSTG-INFO-01": {
+      "category": "01_Information_Gathering",
+      "scripts": [
+        "dork_seek.py"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "User-Named Output File (.json)",
+            "type": null,
+            "detail": "writes JSON only if --output ends in .json"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "Item-specific artifact",
+            "type": null,
+            "detail": "--input_file: plaintext search-term list (user-supplied)"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "none beyond its own result file (dork_results.txt/.json, user-named via --output)"
+      ]
+    },
+    "WSTG-INFO-02": {
+      "category": "01_Information_Gathering",
+      "scripts": [
+        "info2_orchestrator.py"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "fingerprint_targets.xml",
+            "type": "burp_proxy_xml",
+            "detail": "--file/-f: Burp Suite XML export (required)"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none directly"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "webserverenum_raw_<ts>.json",
+            "type": null,
+            "detail": "intermediate"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "curl_<ts>.md, httpx_<ts>.md, whatweb_<ts>.md, findings.md (final sitrep)"
+      ]
+    },
+    "WSTG-CONF-02": {
+      "category": "02_Configuration_and_Deployment_Management",
+      "scripts": [
+        "svc_dsr.py",
+        "conf_02_wordlist.py",
+        "conf_02_verdict.py",
+        "conf02_enum.py"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "config_probe.xml",
+            "type": "burp_proxy_xml",
+            "detail": "conf02_enum.py -x/--xml (required)"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "how_to_steps_bridge.json",
+            "type": "howto_bridge_json",
+            "detail": "svc_dsr.py --bridge"
+          },
+          {
+            "title": "svc_repo.json",
+            "type": "services_json",
+            "detail": "conf_02_wordlist.py --repo"
+          },
+          {
+            "title": "svc_repo.json",
+            "type": "services_json",
+            "detail": "conf02_enum.py -j"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "conf_02_paths.json",
+            "type": null,
+            "detail": "conf_02_wordlist.py --json-out"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "wordlist.txt",
+            "type": null,
+            "detail": "svc_dsr.py"
+          },
+          {
+            "title": "conf_02_paths.txt",
+            "type": null,
+            "detail": "conf_02_wordlist.py --wordlist"
+          },
+          {
+            "title": "raw.txt",
+            "type": null,
+            "detail": "conf02_enum.py -w"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "conf_02_verdict.py --sitrep: sitrep.md (APPENDED across runs, not overwritten)"
+      ]
+    },
+    "WSTG-CONF-11": {
+      "category": "02_Configuration_and_Deployment_Management",
+      "scripts": [
+        "conf11_cloud_storage.py"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "cloud_recon.xml",
+            "type": "burp_proxy_xml",
+            "detail": "-x/--xml (required)"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "cloud_strings.json",
+            "type": "cloud_strings_json",
+            "detail": "CONFIRMED PRESENT"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "test_findings.txt (category-grouped cloud-indicator report)"
+      ]
+    },
+    "WSTG-CONF-12": {
+      "category": "02_Configuration_and_Deployment_Management",
+      "scripts": [
+        "conf12_csp_scanner.py"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "csp_targets.xml",
+            "type": "burp_proxy_xml",
+            "detail": "-x/--xml (required)"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "CSP_Strings.json",
+            "type": "csp_strings_json",
+            "detail": "CONFIRMED PRESENT at WSTG-CONF-12/Inputs/Data/CSP_Strings.json"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "test_findings.txt"
+      ]
+    },
+    "WSTG-BUSL-08": {
+      "category": "10_Business_Logic",
+      "scripts": [
+        "busl_08_questionnaire.py",
+        "conf10_run.sh (shell orchestrator)",
+        "clnt_setup.py ('Script 1 of 4')"
+      ],
+      "io": {
+        "xml_in": [
+          {
+            "title": "upload_probe.xml",
+            "type": "burp_proxy_xml",
+            "detail": "busl_08_wordlist.py"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "upload_paths.txt",
+            "type": null,
+            "detail": "busl_08_wordlist.py"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "busl_08_questionnaire.py creates sitrep.md (mode w)"
+      ]
+    },
+    "WSTG-INJT (distributor)": {
+      "category": "07_Injection",
+      "scripts": [
+        "inj_distributor.py"
+      ],
+      "io": {},
+      "sitrep_or_output_files": [
+        "none"
+      ]
+    },
+    "WSTG-INJT-04": {
+      "category": "07_Injection",
+      "scripts": [],
+      "io": {
+        "xml_in": [
+          {
+            "title": "injection_points.xml",
+            "type": "burp_proxy_xml",
+            "detail": "fed by both authorization and authentication"
+          },
+          {
+            "title": "stray.xml",
+            "type": null,
+            "detail": "no type declared"
+          }
+        ],
+        "xml_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "json_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_in": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ],
+        "wordlist_out": [
+          {
+            "title": "None",
+            "type": null,
+            "detail": "none"
+          }
+        ]
+      },
+      "sitrep_or_output_files": [
+        "none"
+      ]
+    }
+  }
+}

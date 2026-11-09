@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WSTG-CLNT-07 – CORS Tester</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --border:#30363d;
+  --fg:#c9d1d9; --muted:#8b949e; --blue:#58a6ff;
+  --red:#f85149; --green:#3fb950; --orange:#e3b341;
+  --purple:#bc8cff; --yellow:#d29922;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'SF Mono','Fira Mono',monospace;
+  background:var(--bg); color:var(--fg);
+  min-height:100vh; display:flex; flex-direction:column;
+}
+header {
+  border-bottom:1px solid var(--border); padding:.7rem 1.5rem;
+  display:flex; align-items:center; gap:.75rem;
+}
+.logo { color:var(--blue); font-size:1rem; font-weight:700; }
+.badge { font-size:.72rem; background:var(--bg3); border:1px solid var(--border);
+         border-radius:3px; padding:.1rem .5rem; color:var(--muted); }
+.back { margin-left:auto; color:var(--blue); font-size:.8rem; text-decoration:none; }
+main { flex:1; display:grid; grid-template-columns:1fr 420px; gap:0; }
+
+/* ── Left panel ── */
+.left { padding:1.5rem; display:flex; flex-direction:column; gap:1rem; overflow-y:auto; }
+
+.panel {
+  background:var(--bg2); border:1px solid var(--border); border-radius:6px;
+  overflow:hidden;
+}
+.panel-hdr {
+  padding:.6rem 1rem; background:var(--bg3);
+  border-bottom:1px solid var(--border);
+  font-size:.82rem; color:var(--blue); font-weight:600;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.panel-body { padding:1rem; }
+
+textarea {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  color:var(--fg); font-family:monospace; font-size:.75rem;
+  padding:.6rem; border-radius:3px; resize:vertical;
+  outline:none;
+}
+textarea:focus { border-color:var(--blue); }
+label { font-size:.78rem; color:var(--muted); display:block; margin-bottom:.3rem; }
+
+.btn-row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.75rem; }
+.btn {
+  background:var(--bg3); color:var(--blue);
+  border:1px solid var(--border); border-radius:4px;
+  padding:.35rem .9rem; font-family:monospace; font-size:.8rem;
+  cursor:pointer;
+}
+.btn:hover { background:var(--blue); color:var(--bg); border-color:var(--blue); }
+.btn.danger { color:var(--red); border-color:var(--red); }
+.btn.danger:hover { background:var(--red); color:var(--bg); }
+.btn.fire { color:var(--green); border-color:var(--green); }
+.btn.fire:hover { background:var(--green); color:var(--bg); }
+
+.field-row { display:grid; grid-template-columns:90px 1fr; gap:.5rem; align-items:center; margin-bottom:.5rem; }
+.field-lbl { font-size:.78rem; color:var(--muted); }
+input[type=text] {
+  background:var(--bg); border:1px solid var(--border); color:var(--fg);
+  font-family:monospace; font-size:.78rem; padding:.3rem .6rem;
+  border-radius:3px; width:100%; outline:none;
+}
+input[type=text]:focus { border-color:var(--blue); }
+input[type=checkbox] { cursor:pointer; }
+.check-row { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:var(--muted); margin-bottom:.5rem; }
+
+/* ── XHR code preview ── */
+.code-preview {
+  background:var(--bg); border:1px solid var(--border); border-radius:3px;
+  padding:.7rem; font-size:.73rem; color:var(--purple);
+  white-space:pre; overflow-x:auto; line-height:1.5;
+  max-height:200px; overflow-y:auto;
+}
+
+/* ── Right panel: results ── */
+.right {
+  border-left:1px solid var(--border);
+  display:flex; flex-direction:column;
+  min-height:0;
+}
+.results-hdr {
+  padding:.6rem 1rem; background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  font-size:.82rem; color:var(--blue); font-weight:600;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.results-body { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:.75rem; }
+
+.result-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:4px; overflow:hidden;
+}
+.result-card-hdr {
+  padding:.5rem .75rem; background:var(--bg3); border-bottom:1px solid var(--border);
+  font-size:.78rem; display:flex; align-items:center; gap:.5rem;
+}
+.result-card-body { padding:.75rem; font-size:.75rem; }
+
+.tag-vuln { background:var(--red);    color:#fff; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+.tag-safe  { background:var(--green);  color:#000; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+.tag-warn  { background:var(--yellow); color:#000; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+.tag-info  { background:var(--blue);   color:#000; border-radius:3px; padding:.1rem .4rem; font-size:.7rem; }
+
+.hdr-list { font-size:.73rem; color:var(--muted); line-height:1.8; }
+.hdr-key  { color:var(--orange); }
+.hdr-val  { color:var(--fg); }
+.hdr-val.accent { color:var(--red); font-weight:600; }
+
+.resp-body-pre {
+  background:var(--bg); border:1px solid var(--border); border-radius:3px;
+  padding:.5rem; font-size:.7rem; color:var(--muted);
+  white-space:pre-wrap; word-break:break-all;
+  max-height:120px; overflow-y:auto; margin-top:.5rem;
+}
+
+.empty-state { color:var(--muted); font-size:.8rem; text-align:center; padding:2rem; }
+.spinner { display:inline-block; animation:spin 1s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⚡ CORS Tester</span>
+  <span class="badge">WSTG-CLNT-07</span>
+  <a class="back" href="/">← Dashboard</a>
+</header>
+
+<main>
+  <!-- ── Left: input ── -->
+  <div class="left">
+
+    <!-- Source selector -->
+    <div class="panel">
+      <div class="panel-hdr">
+        Import Request
+        <div style="display:flex;gap:.4rem">
+          <button class="btn" onclick="setMode('xml')"  id="mode-xml">Burp XML</button>
+          <button class="btn" onclick="setMode('manual')" id="mode-manual">Manual</button>
+        </div>
+      </div>
+      <div class="panel-body">
+
+        <!-- Burp XML mode -->
+        <div id="xml-mode">
+          <label>Paste Burp Suite proxy XML export (one or more &lt;item&gt; elements):</label>
+          <textarea id="burp-xml" rows="8" placeholder="&lt;?xml version=&quot;1.0&quot;?&gt;&#10;&lt;items burpVersion=&quot;...&quot;&gt;&#10;  &lt;item&gt;&#10;    &lt;url&gt;https://target.com/api/user&lt;/url&gt;&#10;    ...&#10;  &lt;/item&gt;&#10;&lt;/items&gt;"></textarea>
+          <div class="btn-row">
+            <button class="btn" onclick="parseBurpXml()">Parse XML</button>
+            <button class="btn" onclick="document.getElementById('burp-xml').value=''">Clear</button>
+          </div>
+          <div id="xml-parse-msg" style="font-size:.75rem;color:var(--muted);margin-top:.5rem"></div>
+        </div>
+
+        <!-- Manual mode -->
+        <div id="manual-mode" style="display:none">
+          <div class="field-row">
+            <span class="field-lbl">Method:</span>
+            <input type="text" id="man-method" value="GET" style="width:80px">
+          </div>
+          <div class="field-row">
+            <span class="field-lbl">URL:</span>
+            <input type="text" id="man-url" placeholder="https://target.com/api/endpoint">
+          </div>
+          <div style="margin-bottom:.5rem">
+            <label>Extra headers (one per line, Key: Value):</label>
+            <textarea id="man-headers" rows="3" placeholder="Authorization: Bearer eyJ...&#10;X-Custom: value"></textarea>
+          </div>
+          <div style="margin-bottom:.5rem">
+            <label>Body (leave empty for GET):</label>
+            <textarea id="man-body" rows="2" placeholder="Optional request body"></textarea>
+          </div>
+          <button class="btn" onclick="buildManual()">Build XHR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parsed queue -->
+    <div class="panel" id="queue-panel" style="display:none">
+      <div class="panel-hdr">
+        Queued Requests
+        <span id="queue-count" style="font-size:.75rem;color:var(--muted)">0</span>
+      </div>
+      <div class="panel-body" id="queue-list" style="max-height:160px;overflow-y:auto"></div>
+      <div class="panel-body" style="padding-top:0">
+        <div class="btn-row">
+          <button class="btn fire" onclick="fireAll()">▶ Fire All</button>
+          <button class="btn" onclick="fireNext()">▶ Fire Next</button>
+          <button class="btn danger" onclick="clearQueue()">✕ Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- XHR options -->
+    <div class="panel">
+      <div class="panel-hdr">XHR Options</div>
+      <div class="panel-body">
+        <div class="check-row">
+          <input type="checkbox" id="opt-creds" checked>
+          <label for="opt-creds" style="margin:0">withCredentials: true &nbsp;<span style="color:var(--border)">(send cookies + auth)</span></label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="opt-spoof-origin">
+          <label for="opt-spoof-origin" style="margin:0">Append null origin header test</label>
+        </div>
+        <div class="field-row" style="margin-top:.5rem">
+          <span class="field-lbl">Delay (ms):</span>
+          <input type="text" id="opt-delay" value="200" style="width:80px">
+        </div>
+      </div>
+    </div>
+
+    <!-- XHR preview -->
+    <div class="panel">
+      <div class="panel-hdr">Generated XHR Preview <span id="preview-target" style="color:var(--muted);font-size:.72rem"></span></div>
+      <div class="panel-body">
+        <div class="code-preview" id="xhr-preview">// XHR will appear here after parsing or building</div>
+      </div>
+    </div>
+
+  </div><!-- /.left -->
+
+  <!-- ── Right: results ── -->
+  <div class="right">
+    <div class="results-hdr">
+      Results
+      <button class="btn" style="font-size:.72rem;padding:.2rem .6rem" onclick="clearResults()">clear</button>
+    </div>
+    <div class="results-body" id="results-body">
+      <div class="empty-state">No results yet.<br>Parse a request and fire XHR to begin.</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+var queue = [];   // array of { url, method, headers, body, label }
+var currentMode = 'xml';
+
+// ── Mode toggle ────────────────────────────────────────────────────────────
+function setMode(m) {
+  currentMode = m;
+  document.getElementById('xml-mode').style.display    = m === 'xml'    ? '' : 'none';
+  document.getElementById('manual-mode').style.display  = m === 'manual' ? '' : 'none';
+  document.getElementById('mode-xml').style.borderColor    = m === 'xml'    ? 'var(--blue)' : '';
+  document.getElementById('mode-manual').style.borderColor = m === 'manual' ? 'var(--blue)' : '';
+}
+
+// ── Burp XML parser ────────────────────────────────────────────────────────
+function parseBurpXml() {
+  var raw = document.getElementById('burp-xml').value.trim();
+  var msg = document.getElementById('xml-parse-msg');
+  if (!raw) { msg.textContent = 'Paste some XML first.'; return; }
+
+  try {
+    // Wrap if not already a full XML doc / items wrapper
+    if (!raw.startsWith('<')) {
+      msg.textContent = 'Error: Does not look like XML.';
+      return;
+    }
+
+    var parser = new DOMParser();
+    var doc    = parser.parseFromString(raw, 'text/xml');
+    var items  = Array.from(doc.querySelectorAll('item'));
+
+    if (items.length === 0) {
+      // Try treating raw as a single item
+      msg.textContent = 'No <item> elements found. Check XML format.';
+      return;
+    }
+
+    var parsed = 0;
+    items.forEach(function(item) {
+      var url      = (item.querySelector('url') || {textContent:''}).textContent.trim();
+      var method   = (item.querySelector('method') || {textContent:'GET'}).textContent.trim() || 'GET';
+      var reqEl    = item.querySelector('request');
+      var headers  = {};
+      var body     = '';
+
+      if (reqEl && url) {
+        var rawReq = reqEl.getAttribute('base64') === 'true'
+          ? atob(reqEl.textContent.trim())
+          : reqEl.textContent;
+
+        var lines = rawReq.split('\r\n').length > 1
+          ? rawReq.split('\r\n')
+          : rawReq.split('\n');
+
+        var inBody = false;
+        var bodyLines = [];
+        for (var i = 1; i < lines.length; i++) {
+          if (!inBody && lines[i] === '') { inBody = true; continue; }
+          if (inBody) { bodyLines.push(lines[i]); continue; }
+          var colon = lines[i].indexOf(':');
+          if (colon > 0) {
+            var hKey = lines[i].slice(0, colon).trim();
+            var hVal = lines[i].slice(colon + 1).trim();
+            // Skip headers that XHR can't/shouldn't set
+            if (!['host','content-length','connection','transfer-encoding'].includes(hKey.toLowerCase())) {
+              headers[hKey] = hVal;
+            }
+          }
+        }
+        body = bodyLines.join('\n').trim();
+      }
+
+      if (url) {
+        queue.push({ url: url, method: method, headers: headers, body: body,
+                     label: method + ' ' + url.replace(/^https?:\/\/[^/]+/, '') });
+        parsed++;
+      }
+    });
+
+    msg.textContent = '✓ Parsed ' + parsed + ' request(s) into queue.';
+    renderQueue();
+    if (queue.length > 0) updatePreview(queue[0]);
+  } catch(e) {
+    msg.textContent = 'Parse error: ' + e.message;
+  }
+}
+
+// ── Manual build ───────────────────────────────────────────────────────────
+function buildManual() {
+  var method  = document.getElementById('man-method').value.trim().toUpperCase() || 'GET';
+  var url     = document.getElementById('man-url').value.trim();
+  var hdrRaw  = document.getElementById('man-headers').value.trim();
+  var body    = document.getElementById('man-body').value.trim();
+  if (!url) { alert('URL is required.'); return; }
+
+  var headers = {};
+  hdrRaw.split('\n').forEach(function(line) {
+    var c = line.indexOf(':');
+    if (c > 0) headers[line.slice(0,c).trim()] = line.slice(c+1).trim();
+  });
+
+  queue.push({ url: url, method: method, headers: headers, body: body,
+               label: method + ' ' + url.replace(/^https?:\/\/[^/]+/, '') });
+  renderQueue();
+  updatePreview(queue[queue.length - 1]);
+}
+
+// ── Queue rendering ────────────────────────────────────────────────────────
+function renderQueue() {
+  var list = document.getElementById('queue-list');
+  var panel = document.getElementById('queue-panel');
+  document.getElementById('queue-count').textContent = queue.length;
+  panel.style.display = queue.length ? '' : 'none';
+
+  list.innerHTML = queue.map(function(r, i) {
+    return '<div style="font-size:.75rem;color:var(--muted);padding:.2rem 0;' +
+           'border-bottom:1px solid var(--border);display:flex;justify-content:space-between">' +
+           '<span style="color:var(--blue)">[' + i + ']</span> ' + esc(r.label) +
+           '<button class="btn" style="font-size:.65rem;padding:.1rem .4rem" onclick="fireSingle(' + i + ')">▶</button>' +
+           '</div>';
+  }).join('');
+}
+
+function clearQueue() { queue = []; renderQueue(); }
+
+// ── XHR preview ───────────────────────────────────────────────────────────
+function updatePreview(r) {
+  var creds = document.getElementById('opt-creds').checked;
+  var lines = [
+    "var xhr = new XMLHttpRequest();",
+    "xhr.open('" + r.method + "', '" + r.url + "', true);",
+    creds ? "xhr.withCredentials = true;" : "",
+  ];
+  Object.keys(r.headers).forEach(function(k) {
+    lines.push("xhr.setRequestHeader('" + k + "', '" + r.headers[k] + "');");
+  });
+  lines.push("xhr.onreadystatechange = function() {");
+  lines.push("  if (xhr.readyState === 4) { /* handle response */ }");
+  lines.push("};");
+  lines.push("xhr.send(" + (r.body ? "'" + r.body.replace(/'/g,"\\'").substring(0,80) + "'" : "null") + ");");
+
+  document.getElementById('xhr-preview').textContent = lines.filter(Boolean).join('\n');
+  document.getElementById('preview-target').textContent =
+    '— ' + r.label.substring(0, 60);
+}
+
+// ── Fire XHR ──────────────────────────────────────────────────────────────
+var firing = false;
+
+function fireAll() {
+  if (firing) return;
+  var delay = parseInt(document.getElementById('opt-delay').value) || 200;
+  var i = 0;
+  function next() {
+    if (i >= queue.length) { firing = false; return; }
+    fireRequest(queue[i], i);
+    i++;
+    setTimeout(next, delay);
+  }
+  firing = true;
+  next();
+}
+
+function fireNext() {
+  if (queue.length === 0) return;
+  fireRequest(queue[0], 0);
+  queue.shift();
+  renderQueue();
+}
+
+function fireSingle(idx) {
+  if (queue[idx]) {
+    updatePreview(queue[idx]);
+    fireRequest(queue[idx], idx);
+  }
+}
+
+function fireRequest(r, idx) {
+  updatePreview(r);
+  var cardId = 'result-' + Date.now() + '-' + idx;
+  var card = createResultCard(cardId, r);
+  var body = document.getElementById('results-body');
+  var empty = body.querySelector('.empty-state');
+  if (empty) empty.remove();
+  body.insertBefore(card, body.firstChild);
+
+  var creds = document.getElementById('opt-creds').checked;
+  var xhr   = new XMLHttpRequest();
+
+  try {
+    xhr.open(r.method, r.url, true);
+    if (creds) xhr.withCredentials = true;
+
+    // Set headers (browser may block some)
+    Object.keys(r.headers).forEach(function(k) {
+      try { xhr.setRequestHeader(k, r.headers[k]); } catch(e) {}
+    });
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return;
+      processResponse(cardId, r, xhr);
+    };
+    xhr.onerror = function() {
+      setCardError(cardId, 'Network error / CORS preflight blocked. ' +
+        'This typically means either: (a) the server refused the request, ' +
+        '(b) no CORS headers returned, or (c) preflight OPTIONS was denied.');
+    };
+    xhr.send(r.body || null);
+  } catch(e) {
+    setCardError(cardId, 'XHR exception: ' + e.message);
+  }
+}
+
+// ── Result card ────────────────────────────────────────────────────────────
+function createResultCard(id, r) {
+  var card = document.createElement('div');
+  card.className = 'result-card';
+  card.id = id;
+  card.innerHTML =
+    '<div class="result-card-hdr">' +
+      '<span style="color:var(--orange)">' + esc(r.method) + '</span> ' +
+      '<span style="color:var(--blue);word-break:break-all">' + esc(r.url.replace(/^https?:\/\/[^/]+/, '')) + '</span>' +
+      '<span class="spinner" style="margin-left:auto">⟳</span>' +
+    '</div>' +
+    '<div class="result-card-body" id="' + id + '-body">' +
+      '<span style="color:var(--muted)">Waiting for response…</span>' +
+    '</div>';
+  return card;
+}
+
+function processResponse(cardId, r, xhr) {
+  var status = xhr.status;
+  var rawHdrs = xhr.getAllResponseHeaders();
+  var resBody = '';
+  try { resBody = xhr.responseText; } catch(e) {}
+
+  // Parse response headers
+  var hdrs = {};
+  rawHdrs.split('\r\n').forEach(function(line) {
+    var c = line.indexOf(':');
+    if (c > 0) {
+      var k = line.slice(0,c).trim().toLowerCase();
+      hdrs[k] = line.slice(c+1).trim();
+    }
+  });
+
+  var acao  = hdrs['access-control-allow-origin']      || '';
+  var acac  = hdrs['access-control-allow-credentials'] || '';
+  var acam  = hdrs['access-control-allow-methods']     || '';
+  var origin = window.location.origin;
+
+  // ── Verdict ──────────────────────────────────────────────────────────
+  var verdict = 'SAFE';
+  var findings = [];
+
+  if (acao === '*') {
+    verdict = 'WARN';
+    findings.push('ACAO: * — wildcard allows any origin to read response');
+  }
+  if (acao === origin || acao === 'null') {
+    verdict = 'VULN';
+    findings.push('ACAO reflects this origin (' + acao + ') — cross-origin reads possible');
+  }
+  if (acac.toLowerCase() === 'true' && (acao === origin || acao === 'null')) {
+    verdict = 'VULN';
+    findings.push('ACAC: true + reflected origin — authenticated CORS read possible (credentials exposed)');
+  }
+  if (acac.toLowerCase() === 'true' && acao === '*') {
+    findings.push('ACAC: true + ACAO: * — modern browsers block this combination, but legacy may not');
+  }
+  if (status === 0) {
+    verdict = 'ERR';
+    findings.push('Status 0 — request blocked by browser CORS policy (no CORS headers / preflight denied)');
+  }
+
+  // Update card header
+  var hdrEl = document.querySelector('#' + cardId + ' .result-card-hdr');
+  if (hdrEl) {
+    var spinner = hdrEl.querySelector('.spinner');
+    if (spinner) {
+      var tagClass = verdict === 'VULN' ? 'tag-vuln' : verdict === 'WARN' ? 'tag-warn' : verdict === 'ERR' ? 'tag-warn' : 'tag-safe';
+      spinner.outerHTML = '<span class="' + tagClass + '" style="margin-left:auto">' + verdict + '</span>';
+    }
+  }
+
+  // Build body HTML
+  var html = '';
+
+  if (findings.length) {
+    html += '<div style="margin-bottom:.5rem">' +
+      findings.map(function(f) {
+        return '<div style="color:var(--red);font-size:.76rem;margin-bottom:.2rem">⚡ ' + esc(f) + '</div>';
+      }).join('') + '</div>';
+  } else if (verdict === 'SAFE') {
+    html += '<div style="color:var(--green);font-size:.76rem;margin-bottom:.5rem">✓ No permissive CORS headers detected in this response</div>';
+  }
+
+  // Response status
+  var statusColor = status >= 200 && status < 300 ? 'var(--green)'
+                  : status >= 400 ? 'var(--red)' : 'var(--yellow)';
+  html += '<div class="hdr-list"><span class="hdr-key">Status:</span> ' +
+          '<span class="hdr-val" style="color:' + statusColor + '">' + status + '</span></div>';
+
+  // Relevant headers
+  var relevantHdrs = ['access-control-allow-origin','access-control-allow-credentials',
+    'access-control-allow-methods','access-control-allow-headers','vary','set-cookie'];
+  relevantHdrs.forEach(function(h) {
+    if (hdrs[h]) {
+      var isAccent = h.startsWith('access-control') && hdrs[h] !== 'false';
+      html += '<div class="hdr-list"><span class="hdr-key">' + h + ':</span> ' +
+              '<span class="hdr-val' + (isAccent ? ' accent' : '') + '">' + esc(hdrs[h]) + '</span></div>';
+    }
+  });
+
+  // Response body snippet
+  if (resBody) {
+    html += '<div style="color:var(--muted);font-size:.73rem;margin-top:.4rem">Response body (first 300 chars):</div>' +
+            '<div class="resp-body-pre">' + esc(resBody.substring(0, 300)) + '</div>';
+  }
+
+  document.getElementById(cardId + '-body').innerHTML = html;
+}
+
+function setCardError(cardId, msg) {
+  var hdrEl = document.querySelector('#' + cardId + ' .result-card-hdr .spinner');
+  if (hdrEl) hdrEl.outerHTML = '<span class="tag-warn" style="margin-left:auto">ERR</span>';
+  var bodyEl = document.getElementById(cardId + '-body');
+  if (bodyEl) bodyEl.innerHTML = '<div style="color:var(--yellow);font-size:.76rem">' + esc(msg) + '</div>';
+}
+
+function clearResults() {
+  document.getElementById('results-body').innerHTML =
+    '<div class="empty-state">No results yet.<br>Parse a request and fire XHR to begin.</div>';
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Init mode
+setMode('xml');
+</script>
+</body>
+</html>

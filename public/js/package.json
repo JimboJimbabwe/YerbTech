@@ -1,0 +1,4 @@
+{
+  "type": "module",
+  "_comment": "Scopes ES module syntax to this folder only, so the browser's import/export statements in these files (already how viewer.js etc. load) also let node --test import cvss31.js directly with the real browser code, instead of maintaining a duplicate copy just for testing. Does not change how Express serves this folder."
+}

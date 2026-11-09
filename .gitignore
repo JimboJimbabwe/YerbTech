@@ -1,0 +1,7 @@
+node_modules/
+Projects/*
+!Projects/.gitkeep
+red-team-audit-tool.zip
+.DS_Store
+*.log
+.env

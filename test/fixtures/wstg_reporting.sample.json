@@ -1,0 +1,36 @@
+{
+  "categories": {
+    "Information Gathering": {
+      "id": "WSTG-INFO",
+      "tests": [
+        { "name": "Conduct Search Engine Reconnaissance for Information Leakage", "id": "WSTG-INFO-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/01-Conduct_Search_Engine_Reconnaissance_for_Information_Leakage",
+          "reporting": [ { "What": "Uses search engines and third-party indexing services to find sensitive design, configuration, or internal information.", "Why": "Leaked data such as credentials or internal paths gives attackers a head start." } ] },
+        { "name": "Fingerprint Web Server", "id": "WSTG-INFO-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server",
+          "reporting": [ { "What": "Determines the type and version of the web server.", "Why": "Exact versions let an attacker look up known vulnerabilities." } ] },
+        { "name": "Identify Application Entry Points", "id": "WSTG-INFO-06",
+          "reference": "javascript:alert(1)",
+          "reporting": [ { "What": "Catalogs every place the application accepts input <img src=x onerror=alert(1)>.", "Why": "Every input is a potential injection point." } ] }
+      ]
+    },
+    "Configuration and Deployment Management": {
+      "id": "WSTG-CONF",
+      "tests": [
+        { "name": "Application Platform Configuration", "id": "WSTG-CONF-02", "reference": "https://owasp.org/x",
+          "reporting": [ { "What": "Checks defaults are removed.", "Why": "Leftover defaults are easy targets." } ], "cre_ids": ["843-841"] },
+        { "name": "Cloud Storage", "id": "WSTG-CONF-11", "reference": "https://owasp.org/y",
+          "reporting": [ { "What": "Assesses bucket access control.", "Why": "Misconfigured storage causes breaches." } ] },
+        { "name": "Content Security Policy", "id": "WSTG-CONF-12", "reference": "https://owasp.org/z",
+          "reporting": [ { "What": "Reviews the CSP header.", "Why": "A weak CSP fails to limit XSS." } ] }
+      ]
+    },
+    "Business Logic": {
+      "id": "WSTG-BUSL",
+      "tests": [
+        { "name": "Upload of Unexpected File Types", "id": "WSTG-BUSL-08", "reference": "https://owasp.org/w",
+          "reporting": [ { "What": "Tests rejected file types.", "Why": "Unexpected types can store malicious content." }, { "What": "Second entry what.", "Why": "Second entry why." } ] }
+      ]
+    }
+  }
+}
