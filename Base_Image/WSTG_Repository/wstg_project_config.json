@@ -1,0 +1,843 @@
+{
+  "_meta": {
+    "description": "WSTG Sequential Toolset \u2014 Project Configuration",
+    "author": "Tourtellotte James",
+    "generated": "2026-10-19"
+  },
+  "repo_root": ".",
+  "test_cases": {
+    "WSTG-APIT-01": {
+      "name": "WSTG-APIT-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-APIT-02": {
+      "name": "WSTG-APIT-02",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-APIT-03": {
+      "name": "WSTG-APIT-03",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-APIT-04": {
+      "name": "WSTG-APIT-04",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-APIT-99": {
+      "name": "WSTG-APIT-99",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHN-01": {
+      "name": "WSTG-ATHN-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHN-02": {
+      "name": "WSTG-ATHN-02",
+      "category": "",
+      "scripts": {
+        "athn_02_wordlist": "04_Authentication\\WSTG-ATHN-02\\Utilities\\python\\athn_02_wordlist.py"
+      }
+    },
+    "WSTG-ATHN-03": {
+      "name": "WSTG-ATHN-03",
+      "category": "",
+      "scripts": {
+        "weak_lockout": "04_Authentication\\WSTG-ATHN-03\\Utilities\\python\\weak_lockout.py",
+        "weak_lockout_report": "04_Authentication\\WSTG-ATHN-03\\Utilities\\python\\weak_lockout_report.py"
+      }
+    },
+    "WSTG-ATHN-04": {
+      "name": "WSTG-ATHN-04",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHN-05": {
+      "name": "WSTG-ATHN-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHN-06": {
+      "name": "WSTG-ATHN-06",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHN-07": {
+      "name": "WSTG-ATHN-07",
+      "category": "",
+      "scripts": {
+        "ATHN_07": "04_Authentication\\WSTG-ATHN-07\\Utilities\\python\\ATHN_07.py",
+        "ATHN_VERDICT": "04_Authentication\\WSTG-ATHN-07\\Utilities\\python\\ATHN_VERDICT.py"
+      }
+    },
+    "WSTG-ATHN-08": {
+      "name": "WSTG-ATHN-08",
+      "category": "",
+      "scripts": {
+        "script_ATHN08": "04_Authentication\\WSTG-ATHN-08\\Utilities\\python\\script_ATHN08.py"
+      }
+    },
+    "WSTG-ATHN-09": {
+      "name": "WSTG-ATHN-09",
+      "category": "",
+      "scripts": {
+        "q1_ATHN09": "04_Authentication\\WSTG-ATHN-09\\Utilities\\python\\q1_ATHN09.py",
+        "verdict_ATHN09": "04_Authentication\\WSTG-ATHN-09\\Utilities\\python\\verdict_ATHN09.py"
+      }
+    },
+    "WSTG-ATHN-10": {
+      "name": "WSTG-ATHN-10",
+      "category": "",
+      "scripts": {
+        "athn_10_compare": "04_Authentication\\WSTG-ATHN-10\\Utilities\\python\\athn_10_compare.py"
+      }
+    },
+    "WSTG-ATHN-11": {
+      "name": "WSTG-ATHN-11",
+      "category": "",
+      "scripts": {
+        "athn11_mfa": "04_Authentication\\WSTG-ATHN-11\\Utilities\\python\\athn11_mfa.py",
+        "verdict_ATHN11": "04_Authentication\\WSTG-ATHN-11\\Utilities\\python\\verdict_ATHN11.py"
+      }
+    },
+    "WSTG-ATHZ-01": {
+      "name": "WSTG-ATHZ-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHZ-02": {
+      "name": "WSTG-ATHZ-02",
+      "category": "",
+      "scripts": {
+        "2athz_tasks": "05_Authorization\\WSTG-ATHZ-02\\Utilities\\python\\2athz_tasks.py",
+        "athz_reporting": "05_Authorization\\WSTG-ATHZ-02\\Utilities\\python\\athz_reporting.py",
+        "parse_athz02": "05_Authorization\\WSTG-ATHZ-02\\Utilities\\python\\parse_athz02.py"
+      }
+    },
+    "WSTG-ATHZ-03": {
+      "name": "WSTG-ATHZ-03",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ATHZ-04": {
+      "name": "WSTG-ATHZ-04",
+      "category": "",
+      "scripts": {
+        "athz_04_scan": "05_Authorization\\WSTG-ATHZ-04\\Utilities\\python\\athz_04_scan.py",
+        "athz_04_wordlist": "05_Authorization\\WSTG-ATHZ-04\\Utilities\\python\\athz_04_wordlist.py"
+      }
+    },
+    "WSTG-ATHZ-05": {
+      "name": "WSTG-ATHZ-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-BUSL-01": {
+      "name": "WSTG-BUSL-01",
+      "category": "",
+      "scripts": {
+        "business_logic_validation": "10_Business_Logic\\WSTG-BUSL-01\\Utilities\\python\\business_logic_validation.py",
+        "busl01_validation": "10_Business_Logic\\WSTG-BUSL-01\\Utilities\\python\\busl01_validation.py"
+      }
+    },
+    "WSTG-BUSL-02": {
+      "name": "WSTG-BUSL-02",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-BUSL-03": {
+      "name": "WSTG-BUSL-03",
+      "category": "",
+      "scripts": {
+        "busl_03": "10_Business_Logic\\WSTG-BUSL-03\\Utilities\\python\\busl_03.py",
+        "verdict_busl_03": "10_Business_Logic\\WSTG-BUSL-03\\Utilities\\python\\verdict_busl_03.py"
+      }
+    },
+    "WSTG-BUSL-04": {
+      "name": "WSTG-BUSL-04",
+      "category": "",
+      "scripts": {
+        "busl_04_prep": "10_Business_Logic\\WSTG-BUSL-04\\Utilities\\python\\busl_04_prep.py",
+        "busl_04_runner": "10_Business_Logic\\WSTG-BUSL-04\\Utilities\\python\\busl_04_runner.py"
+      }
+    },
+    "WSTG-BUSL-05": {
+      "name": "WSTG-BUSL-05",
+      "category": "",
+      "scripts": {
+        "busl_05_analyze": "10_Business_Logic\\WSTG-BUSL-05\\Utilities\\python\\busl_05_analyze.py",
+        "busl_05_prep": "10_Business_Logic\\WSTG-BUSL-05\\Utilities\\python\\busl_05_prep.py"
+      }
+    },
+    "WSTG-BUSL-06": {
+      "name": "WSTG-BUSL-06",
+      "category": "",
+      "scripts": {
+        "busl_06_gui": "10_Business_Logic\\WSTG-BUSL-06\\Utilities\\python\\busl_06_gui.py",
+        "curl_tester": "10_Business_Logic\\WSTG-BUSL-06\\Utilities\\python\\curl_tester.py"
+      }
+    },
+    "WSTG-BUSL-07": {
+      "name": "WSTG-BUSL-07",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-BUSL-08": {
+      "name": "WSTG-BUSL-08",
+      "category": "",
+      "scripts": {
+        "busl_08_questionnaire": "10_Business_Logic\\WSTG-BUSL-08\\Utilities\\python\\busl_08_questionnaire.py",
+        "busl_08_verdict": "10_Business_Logic\\WSTG-BUSL-08\\Utilities\\python\\busl_08_verdict.py",
+        "busl_08_wordlist": "10_Business_Logic\\WSTG-BUSL-08\\Utilities\\python\\busl_08_wordlist.py"
+      }
+    },
+    "WSTG-BUSL-09": {
+      "name": "WSTG-BUSL-09",
+      "category": "",
+      "scripts": {
+        "busl_09_questionnaire": "10_Business_Logic\\WSTG-BUSL-09\\Utilities\\python\\busl_09_questionnaire.py",
+        "busl_09_verdict": "10_Business_Logic\\WSTG-BUSL-09\\Utilities\\python\\busl_09_verdict.py"
+      }
+    },
+    "WSTG-BUSL-10": {
+      "name": "WSTG-BUSL-10",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-01": {
+      "name": "WSTG-CLNT-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-02": {
+      "name": "WSTG-CLNT-02",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-03": {
+      "name": "WSTG-CLNT-03",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-04": {
+      "name": "WSTG-CLNT-04",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-05": {
+      "name": "WSTG-CLNT-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-06": {
+      "name": "WSTG-CLNT-06",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-07": {
+      "name": "WSTG-CLNT-07",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-09": {
+      "name": "WSTG-CLNT-09",
+      "category": "",
+      "scripts": {
+        "clnt_09_scan": "11_Client-side\\WSTG-CLNT-09\\Utilities\\python\\clnt_09_scan.py",
+        "clnt_09_verdict": "11_Client-side\\WSTG-CLNT-09\\Utilities\\python\\clnt_09_verdict.py"
+      }
+    },
+    "WSTG-CLNT-10": {
+      "name": "WSTG-CLNT-10",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-11": {
+      "name": "WSTG-CLNT-11",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-12": {
+      "name": "WSTG-CLNT-12",
+      "category": "",
+      "scripts": {
+        "clnt_12_analyze": "11_Client-side\\WSTG-CLNT-12\\Utilities\\python\\clnt_12_analyze.py"
+      }
+    },
+    "WSTG-CLNT-13": {
+      "name": "WSTG-CLNT-13",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-14": {
+      "name": "WSTG-CLNT-14",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CLNT-15": {
+      "name": "WSTG-CLNT-15",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CONF-01": {
+      "name": "WSTG-CONF-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CONF-02": {
+      "name": "WSTG-CONF-02",
+      "category": "",
+      "scripts": {
+        "conf02_enum": "02_Configuration_and_Deployment_Management\\WSTG-CONF-02\\Utilities\\python\\conf02_enum.py",
+        "conf_02_verdict": "02_Configuration_and_Deployment_Management\\WSTG-CONF-02\\Utilities\\python\\conf_02_verdict.py",
+        "conf_02_wordlist": "02_Configuration_and_Deployment_Management\\WSTG-CONF-02\\Utilities\\python\\conf_02_wordlist.py",
+        "svc_dsr": "02_Configuration_and_Deployment_Management\\WSTG-CONF-02\\Utilities\\python\\svc_dsr.py"
+      }
+    },
+    "WSTG-CONF-03": {
+      "name": "WSTG-CONF-03",
+      "category": "",
+      "scripts": {
+        "conf03_backup": "02_Configuration_and_Deployment_Management\\WSTG-CONF-03\\Utilities\\python\\conf03_backup.py"
+      }
+    },
+    "WSTG-CONF-04": {
+      "name": "WSTG-CONF-04",
+      "category": "",
+      "scripts": {
+        "conf04_sensitive": "02_Configuration_and_Deployment_Management\\WSTG-CONF-04\\Utilities\\python\\conf04_sensitive.py"
+      }
+    },
+    "WSTG-CONF-05": {
+      "name": "WSTG-CONF-05",
+      "category": "",
+      "scripts": {
+        "Conf05_admin": "02_Configuration_and_Deployment_Management\\WSTG-CONF-05\\Utilities\\python\\Conf05_admin.py",
+        "conf_05_wordlist": "02_Configuration_and_Deployment_Management\\WSTG-CONF-05\\Utilities\\python\\conf_05_wordlist.py"
+      }
+    },
+    "WSTG-CONF-06": {
+      "name": "WSTG-CONF-06",
+      "category": "",
+      "scripts": {
+        "methods_gen": "02_Configuration_and_Deployment_Management\\WSTG-CONF-06\\Utilities\\python\\methods_gen.py",
+        "methods_outcome": "02_Configuration_and_Deployment_Management\\WSTG-CONF-06\\Utilities\\python\\methods_outcome.py",
+        "methods_test": "02_Configuration_and_Deployment_Management\\WSTG-CONF-06\\Utilities\\python\\methods_test.py"
+      }
+    },
+    "WSTG-CONF-07": {
+      "name": "WSTG-CONF-07",
+      "category": "",
+      "scripts": {
+        "HSTS_findings_report": "02_Configuration_and_Deployment_Management\\WSTG-CONF-07\\Utilities\\python\\HSTS_findings_report.py",
+        "HSTS_test": "02_Configuration_and_Deployment_Management\\WSTG-CONF-07\\Utilities\\python\\HSTS_test.py"
+      }
+    },
+    "WSTG-CONF-09": {
+      "name": "WSTG-CONF-09",
+      "category": "",
+      "scripts": {
+        "conf09_logs": "02_Configuration_and_Deployment_Management\\WSTG-CONF-09\\Utilities\\python\\conf09_logs.py"
+      }
+    },
+    "WSTG-CONF-10": {
+      "name": "WSTG-CONF-10",
+      "category": "",
+      "scripts": {
+        "conf10_run": "02_Configuration_and_Deployment_Management\\WSTG-CONF-10\\Utilities\\Kali_Tools\\conf10_run.sh",
+        "conf10_takeover": "02_Configuration_and_Deployment_Management\\WSTG-CONF-10\\Utilities\\python\\conf10_takeover.py"
+      }
+    },
+    "WSTG-CONF-11": {
+      "name": "WSTG-CONF-11",
+      "category": "",
+      "scripts": {
+        "conf11_cloud_storage": "02_Configuration_and_Deployment_Management\\WSTG-CONF-11\\Utilities\\python\\conf11_cloud_storage.py"
+      }
+    },
+    "WSTG-CONF-12": {
+      "name": "WSTG-CONF-12",
+      "category": "",
+      "scripts": {
+        "conf12_csp_scanner": "02_Configuration_and_Deployment_Management\\WSTG-CONF-12\\Utilities\\python\\conf12_csp_scanner.py"
+      }
+    },
+    "WSTG-CONF-13": {
+      "name": "WSTG-CONF-13",
+      "category": "",
+      "scripts": {
+        "conf13_path_confusion": "02_Configuration_and_Deployment_Management\\WSTG-CONF-13\\Utilities\\python\\conf13_path_confusion.py"
+      }
+    },
+    "WSTG-CONF-14": {
+      "name": "WSTG-CONF-14",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CONF-15": {
+      "name": "WSTG-CONF-15",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-CRYP-01": {
+      "name": "WSTG-CRYP-01",
+      "category": "",
+      "scripts": {
+        "cryp01_analyze": "09_Weak_Cryptography\\WSTG-CRYP-01\\Utilities\\python\\cryp01_analyze.py",
+        "cryp01_scan": "09_Weak_Cryptography\\WSTG-CRYP-01\\Utilities\\python\\cryp01_scan.py"
+      }
+    },
+    "WSTG-CRYP-02": {
+      "name": "WSTG-CRYP-02",
+      "category": "",
+      "scripts": {
+        "padding_verdict": "09_Weak_Cryptography\\WSTG-CRYP-02\\Utilities\\python\\padding_verdict.py"
+      }
+    },
+    "WSTG-CRYP-03": {
+      "name": "WSTG-CRYP-03",
+      "category": "",
+      "scripts": {
+        "cryp_03": "09_Weak_Cryptography\\WSTG-CRYP-03\\Utilities\\python\\cryp_03.py",
+        "cryp_03_report": "09_Weak_Cryptography\\WSTG-CRYP-03\\Utilities\\python\\cryp_03_report.py"
+      }
+    },
+    "WSTG-CRYP-04": {
+      "name": "WSTG-CRYP-04",
+      "category": "",
+      "scripts": {
+        "case2_cryp04": "09_Weak_Cryptography\\WSTG-CRYP-04\\Utilities\\python\\case2_cryp04.py",
+        "cryp04_analyze": "09_Weak_Cryptography\\WSTG-CRYP-04\\Utilities\\python\\cryp04_analyze.py",
+        "cryp04_gather": "09_Weak_Cryptography\\WSTG-CRYP-04\\Utilities\\python\\cryp04_gather.py",
+        "here_place_UUID": "09_Weak_Cryptography\\WSTG-CRYP-04\\Utilities\\python\\here_place_UUID.py"
+      }
+    },
+    "WSTG-ERRH-01": {
+      "name": "WSTG-ERRH-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-ERRH-02": {
+      "name": "WSTG-ERRH-02",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-IDNT-01": {
+      "name": "WSTG-IDNT-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-IDNT-02": {
+      "name": "WSTG-IDNT-02",
+      "category": "",
+      "scripts": {
+        "idnt02_q1": "03_Identity_Management\\WSTG-IDNT-02\\Utilities\\python\\idnt02_q1.py",
+        "idnt02_q2": "03_Identity_Management\\WSTG-IDNT-02\\Utilities\\python\\idnt02_q2.py"
+      }
+    },
+    "WSTG-IDNT-03": {
+      "name": "WSTG-IDNT-03",
+      "category": "",
+      "scripts": {
+        "idnt03_q": "03_Identity_Management\\WSTG-IDNT-03\\Utilities\\python\\idnt03_q.py",
+        "script_me": "03_Identity_Management\\WSTG-IDNT-03\\Utilities\\python\\script_me.py"
+      }
+    },
+    "WSTG-IDNT-04": {
+      "name": "WSTG-IDNT-04",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-IDNT-05": {
+      "name": "WSTG-IDNT-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INFO-01": {
+      "name": "WSTG-INFO-01",
+      "category": "",
+      "scripts": {
+        "dork_seek": "01_Information_Gathering\\WSTG-INFO-01\\Utilities\\python\\dork_seek.py"
+      }
+    },
+    "WSTG-INFO-02": {
+      "name": "WSTG-INFO-02",
+      "category": "",
+      "scripts": {
+        "info2_orchestrator": "01_Information_Gathering\\WSTG-INFO-02\\Utilities\\python\\info2_orchestrator.py"
+      }
+    },
+    "WSTG-INFO-03": {
+      "name": "WSTG-INFO-03",
+      "category": "",
+      "scripts": {
+        "metafile_fetcher": "01_Information_Gathering\\WSTG-INFO-03\\Utilities\\python\\metafile_fetcher.py",
+        "metatag_scraper": "01_Information_Gathering\\WSTG-INFO-03\\Utilities\\python\\metatag_scraper.py"
+      }
+    },
+    "WSTG-INFO-04": {
+      "name": "WSTG-INFO-04",
+      "category": "",
+      "scripts": {
+        "info4_orchestrator": "01_Information_Gathering\\WSTG-INFO-04\\Utilities\\python\\info4_orchestrator.py",
+        "subdomain_seeker": "01_Information_Gathering\\WSTG-INFO-04\\Utilities\\python\\subdomain_seeker.py"
+      }
+    },
+    "WSTG-INFO-05": {
+      "name": "WSTG-INFO-05",
+      "category": "",
+      "scripts": {
+        "info5_orchestrator": "01_Information_Gathering\\WSTG-INFO-05\\Utilities\\python\\info5_orchestrator.py"
+      }
+    },
+    "WSTG-INFO-06": {
+      "name": "WSTG-INFO-06",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INFO-07": {
+      "name": "WSTG-INFO-07",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INFO-08": {
+      "name": "WSTG-INFO-08",
+      "category": "",
+      "scripts": {
+        "info8_orchestrator": "01_Information_Gathering\\WSTG-INFO-08\\Utilities\\python\\info8_orchestrator.py"
+      }
+    },
+    "WSTG-INFO-09": {
+      "name": "WSTG-INFO-09",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INFO-10": {
+      "name": "WSTG-INFO-10",
+      "category": "",
+      "scripts": {
+        "info10_collect": "01_Information_Gathering\\WSTG-INFO-10\\Utilities\\python\\info10_collect.py",
+        "info10_diagram": "01_Information_Gathering\\WSTG-INFO-10\\Utilities\\python\\info10_diagram.py"
+      }
+    },
+    "WSTG-INJT-01": {
+      "name": "WSTG-INJT-01",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-02": {
+      "name": "WSTG-INJT-02",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-03": {
+      "name": "WSTG-INJT-03",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-04": {
+      "name": "WSTG-INJT-04",
+      "category": "",
+      "scripts": {
+        "hpp_04": "07_Injection\\WSTG-INJT-04\\Utilities\\python\\hpp_04.py"
+      }
+    },
+    "WSTG-INJT-05": {
+      "name": "WSTG-INJT-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-06": {
+      "name": "WSTG-INJT-06",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-07": {
+      "name": "WSTG-INJT-07",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-08": {
+      "name": "WSTG-INJT-08",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-09": {
+      "name": "WSTG-INJT-09",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-10": {
+      "name": "WSTG-INJT-10",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-11": {
+      "name": "WSTG-INJT-11",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-12": {
+      "name": "WSTG-INJT-12",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-13": {
+      "name": "WSTG-INJT-13",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-14": {
+      "name": "WSTG-INJT-14",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-15": {
+      "name": "WSTG-INJT-15",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-16": {
+      "name": "WSTG-INJT-16",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-17": {
+      "name": "WSTG-INJT-17",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-18": {
+      "name": "WSTG-INJT-18",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-19": {
+      "name": "WSTG-INJT-19",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-20": {
+      "name": "WSTG-INJT-20",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-21": {
+      "name": "WSTG-INJT-21",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-22": {
+      "name": "WSTG-INJT-22",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-INJT-23": {
+      "name": "WSTG-INJT-23",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-SESS-01": {
+      "name": "WSTG-SESS-01",
+      "category": "",
+      "scripts": {
+        "sess01_m0_pull_cookies": "06_Session_Management\\WSTG-SESS-01\\Utilities\\python\\sess01_m0_pull_cookies.py",
+        "sess01_m1_string_seeker": "06_Session_Management\\WSTG-SESS-01\\Utilities\\python\\sess01_m1_string_seeker.py",
+        "sess01_m2_cookie_analyzer": "06_Session_Management\\WSTG-SESS-01\\Utilities\\python\\sess01_m2_cookie_analyzer.py",
+        "sess01_m3_reverse_engineer": "06_Session_Management\\WSTG-SESS-01\\Utilities\\python\\sess01_m3_reverse_engineer.py"
+      }
+    },
+    "WSTG-SESS-02": {
+      "name": "WSTG-SESS-02",
+      "category": "",
+      "scripts": {
+        "sess02_cookie_attributes": "06_Session_Management\\WSTG-SESS-02\\Utilities\\python\\sess02_cookie_attributes.py"
+      }
+    },
+    "WSTG-SESS-03": {
+      "name": "WSTG-SESS-03",
+      "category": "",
+      "scripts": {
+        "sess03_fixation_checklist": "06_Session_Management\\WSTG-SESS-03\\Utilities\\python\\sess03_fixation_checklist.py"
+      }
+    },
+    "WSTG-SESS-04": {
+      "name": "WSTG-SESS-04",
+      "category": "",
+      "scripts": {
+        "sess_04_analyze": "06_Session_Management\\WSTG-SESS-04\\Utilities\\python\\sess_04_analyze.py",
+        "svc_env_grab": "06_Session_Management\\WSTG-SESS-04\\Utilities\\python\\svc_env_grab.py"
+      }
+    },
+    "WSTG-SESS-05": {
+      "name": "WSTG-SESS-05",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-SESS-06": {
+      "name": "WSTG-SESS-06",
+      "category": "",
+      "scripts": {
+        "sess06_logout_checklist": "06_Session_Management\\WSTG-SESS-06\\Utilities\\python\\sess06_logout_checklist.py"
+      }
+    },
+    "WSTG-SESS-07": {
+      "name": "WSTG-SESS-07",
+      "category": "",
+      "scripts": {
+        "sess07_timeout_timer": "06_Session_Management\\WSTG-SESS-07\\Utilities\\python\\sess07_timeout_timer.py"
+      }
+    },
+    "WSTG-SESS-08": {
+      "name": "WSTG-SESS-08",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-SESS-09": {
+      "name": "WSTG-SESS-09",
+      "category": "",
+      "scripts": {
+        "sess_09_checklist": "06_Session_Management\\WSTG-SESS-09\\Utilities\\python\\sess_09_checklist.py"
+      }
+    },
+    "WSTG-SESS-10": {
+      "name": "WSTG-SESS-10",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-SESS-11": {
+      "name": "WSTG-SESS-11",
+      "category": "",
+      "scripts": {}
+    },
+    "WSTG-WASM-01": {
+      "name": "WSTG-WASM-01",
+      "category": "",
+      "scripts": {}
+    }
+  },
+  "pipeline_order": [
+    "WSTG-APIT-01",
+    "WSTG-APIT-02",
+    "WSTG-APIT-03",
+    "WSTG-APIT-04",
+    "WSTG-APIT-99",
+    "WSTG-ATHN-01",
+    "WSTG-ATHN-02",
+    "WSTG-ATHN-03",
+    "WSTG-ATHN-04",
+    "WSTG-ATHN-05",
+    "WSTG-ATHN-06",
+    "WSTG-ATHN-07",
+    "WSTG-ATHN-08",
+    "WSTG-ATHN-09",
+    "WSTG-ATHN-10",
+    "WSTG-ATHN-11",
+    "WSTG-ATHZ-01",
+    "WSTG-ATHZ-02",
+    "WSTG-ATHZ-03",
+    "WSTG-ATHZ-04",
+    "WSTG-ATHZ-05",
+    "WSTG-BUSL-01",
+    "WSTG-BUSL-02",
+    "WSTG-BUSL-03",
+    "WSTG-BUSL-04",
+    "WSTG-BUSL-05",
+    "WSTG-BUSL-06",
+    "WSTG-BUSL-07",
+    "WSTG-BUSL-08",
+    "WSTG-BUSL-09",
+    "WSTG-BUSL-10",
+    "WSTG-CLNT-01",
+    "WSTG-CLNT-02",
+    "WSTG-CLNT-03",
+    "WSTG-CLNT-04",
+    "WSTG-CLNT-05",
+    "WSTG-CLNT-06",
+    "WSTG-CLNT-07",
+    "WSTG-CLNT-09",
+    "WSTG-CLNT-10",
+    "WSTG-CLNT-11",
+    "WSTG-CLNT-12",
+    "WSTG-CLNT-13",
+    "WSTG-CLNT-14",
+    "WSTG-CLNT-15",
+    "WSTG-CONF-01",
+    "WSTG-CONF-02",
+    "WSTG-CONF-03",
+    "WSTG-CONF-04",
+    "WSTG-CONF-05",
+    "WSTG-CONF-06",
+    "WSTG-CONF-07",
+    "WSTG-CONF-09",
+    "WSTG-CONF-10",
+    "WSTG-CONF-11",
+    "WSTG-CONF-12",
+    "WSTG-CONF-13",
+    "WSTG-CONF-14",
+    "WSTG-CONF-15",
+    "WSTG-CRYP-01",
+    "WSTG-CRYP-02",
+    "WSTG-CRYP-03",
+    "WSTG-CRYP-04",
+    "WSTG-ERRH-01",
+    "WSTG-ERRH-02",
+    "WSTG-IDNT-01",
+    "WSTG-IDNT-02",
+    "WSTG-IDNT-03",
+    "WSTG-IDNT-04",
+    "WSTG-IDNT-05",
+    "WSTG-INFO-01",
+    "WSTG-INFO-02",
+    "WSTG-INFO-03",
+    "WSTG-INFO-04",
+    "WSTG-INFO-05",
+    "WSTG-INFO-06",
+    "WSTG-INFO-07",
+    "WSTG-INFO-08",
+    "WSTG-INFO-09",
+    "WSTG-INFO-10",
+    "WSTG-INJT-01",
+    "WSTG-INJT-02",
+    "WSTG-INJT-03",
+    "WSTG-INJT-04",
+    "WSTG-INJT-05",
+    "WSTG-INJT-06",
+    "WSTG-INJT-07",
+    "WSTG-INJT-08",
+    "WSTG-INJT-09",
+    "WSTG-INJT-10",
+    "WSTG-INJT-11",
+    "WSTG-INJT-12",
+    "WSTG-INJT-13",
+    "WSTG-INJT-14",
+    "WSTG-INJT-15",
+    "WSTG-INJT-16",
+    "WSTG-INJT-17",
+    "WSTG-INJT-18",
+    "WSTG-INJT-19",
+    "WSTG-INJT-20",
+    "WSTG-INJT-21",
+    "WSTG-INJT-22",
+    "WSTG-INJT-23",
+    "WSTG-SESS-01",
+    "WSTG-SESS-02",
+    "WSTG-SESS-03",
+    "WSTG-SESS-04",
+    "WSTG-SESS-05",
+    "WSTG-SESS-06",
+    "WSTG-SESS-07",
+    "WSTG-SESS-08",
+    "WSTG-SESS-09",
+    "WSTG-SESS-10",
+    "WSTG-SESS-11",
+    "WSTG-WASM-01"
+  ],
+  "safety_constraints": {},
+  "conventions": {},
+  "pending": {}
+}

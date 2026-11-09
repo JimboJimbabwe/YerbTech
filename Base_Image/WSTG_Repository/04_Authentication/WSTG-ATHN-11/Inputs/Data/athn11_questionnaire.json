@@ -1,0 +1,78 @@
+{
+  "wstg_id": "WSTG-ATHN-11",
+  "title": "Testing Multi-Factor Authentication",
+  "comment": "STILL DO THIS, COMMENT ON 10172026",
+  "description": "MFA assessment questionnaire. Verdict: Not Compromised if >=2 factors are confirmed present and tested. Compromised if MFA is absent or only one factor is present.",
+  "mfa_test_results": {
+    "survey": {
+      "findings": null,
+      "factors": [],
+      "technology_mfa": "",
+      "endpoints": [],
+      "xml_file": ""
+    }
+  },
+  "factor_catalog": [
+    {
+      "id": "totp",
+      "name": "TOTP / Authenticator App",
+      "category": "Something You Have",
+      "example": "Google Authenticator, Authy, Microsoft Authenticator — time-based one-time password"
+    },
+    {
+      "id": "hardware_key",
+      "name": "Hardware Security Key",
+      "category": "Something You Have",
+      "example": "YubiKey, FIDO2/WebAuthn token, SmartCard"
+    },
+    {
+      "id": "push_notification",
+      "name": "Push Notification Approval",
+      "category": "Something You Have",
+      "example": "Duo Push, Okta Verify — approve/deny via mobile app"
+    },
+    {
+      "id": "sms_otp",
+      "name": "SMS OTP",
+      "category": "Something You Have",
+      "example": "One-time code sent by text message (NIST RESTRICTED — SIM-swap risk)",
+      "nist_note": "NIST SP 800-63B §5.1.3.3 — RESTRICTED authenticator"
+    },
+    {
+      "id": "email_otp",
+      "name": "Email OTP",
+      "category": "Something You Have",
+      "example": "One-time code or magic link sent to registered email address"
+    },
+    {
+      "id": "biometric",
+      "name": "Biometric",
+      "category": "Something You Are",
+      "example": "Fingerprint, Face ID, iris scan — typically device-local"
+    },
+    {
+      "id": "voice_call",
+      "name": "Voice Call OTP",
+      "category": "Something You Have",
+      "example": "Automated phone call reads a one-time code"
+    },
+    {
+      "id": "backup_codes",
+      "name": "Backup / Recovery Codes",
+      "category": "Something You Have",
+      "example": "Pre-generated single-use recovery codes — not a standalone second factor"
+    },
+    {
+      "id": "password",
+      "name": "Password / PIN",
+      "category": "Something You Know",
+      "example": "Standard memorised secret — always present as factor 1"
+    },
+    {
+      "id": "security_question",
+      "name": "Security Question",
+      "category": "Something You Know",
+      "example": "Knowledge-based authentication (KBA) — weak, see ATHN-08"
+    }
+  ]
+}

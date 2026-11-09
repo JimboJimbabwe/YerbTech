@@ -1,0 +1,472 @@
+WSTG-BUSL-01\UTILITIES\PYTHON
+
+Title of python file: business_logic_validation.py
+Commentary: WSTG-BUSL-01 — Business Logic Validation
+    Script 1: business_logic_validation.py
+    
+    Reads a Burp Suite XML export, identifies endpoints that contain
+    parameter values consisting exclusively of alphabetic characters
+    OR exclusively of numeric characters, records them to EP_SFCS.json,
+    and generates a per-endpoint wordlist for Burp Intruder testing.
+    
+    The wordlist tests the hypothesis: "does this field enforce its
+    apparent data type?" — i.e. does an alpha-only field reject numbers,
+    unicode lookalikes, injections, etc.?
+    
+    Wordlist categories (alpha-only parameters):
+      A1  Unicode full confusion   — every substitutable char replaced
+      A2  Unicode partial confusion — vowels only replaced
+      A3  Hex encoding             — full string as hex bytes
+      A4  Decimal encoding         — full string as decimal bytes (space-sep)
+      A5  Binary encoding          — full string as binary bytes (space-sep)
+      A6  Random word variants     — A1-A5 applied to a random substitute word
+      A7  Special / painful chars  — 2-3 lines of brutal special chars
+      A8  Integer-only lines       — 2-3 integer values
+      A9  Negative numbers         — 2-3 negative integer values
+      A10 Template injection       — 2 SSTI/client-side template payloads
+      A11 JavaScript injection     — 2 JS execution payloads
+    
+    Wordlist categories (numeric-only parameters):
+      N1  Unicode digit confusion  — fullwidth / superscript digit lookalikes
+      N2  Hex representation       — number as 0x hex
+      N3  Octal representation     — number as 0o octal
+      N4  Binary representation    — number as 0b binary
+      N5  Negative version         — negated value
+      N6  Random number variants   — N1-N5 applied to a random integer
+      N7  Special / painful chars  — 2-3 lines of brutal special chars
+      N8  Alpha-only strings       — 2-3 pure alphabet strings
+      N9  Template injection       — 2 SSTI/client-side template payloads
+      N10 JavaScript injection     — 2 JS execution payloads
+    
+    All categories emit 2-3 entries maximum per parameter value.
+    
+    Inputs:
+      WSTG-BUSL-01/inputs/xml/busl_01.xml
+    
+    Outputs:
+      WSTG-BUSL-01/outputs/test_outputs/EP_SFCS.json
+      WSTG-BUSL-01/inputs/wordlist/EP_<INDEX>.txt   (one per qualifying endpoint)
+    
+    Usage:
+      python3 WSTG-BUSL-01/utilities/python/business_logic_validation.py \
+          [--xml WSTG-BUSL-01/inputs/xml/busl_01.xml]
+
+Title of python file: busl01_validation.py
+Commentary: WSTG-BUSL-01 — Business Logic Validation
+    Script 2: busl01_validation.py
+    
+    Reads a Burp Intruder results XML export and identifies responses
+    that indicate a business logic validation failure — i.e. the server
+    accepted a payload it should have rejected.
+    
+    Alert logic:
+      ┌─────────────────────────────────────────────────────────────┐
+      │  Response code   │  Body bytes    │  Decision               │
+      ├─────────────────────────────────────────────────────────────┤
+      │  404             │  any           │  SKIP — not found        │
+      │  403             │  < min_bytes   │  SKIP — bare forbidden   │
+      │  500             │  < min_bytes   │  SKIP — bare error       │
+      │  403             │  ≥ min_bytes   │  ALERT — app responded   │
+      │  500             │  ≥ min_bytes   │  ALERT — verbose error   │
+      │  200             │  any           │  ALERT (severity: HIGH)  │
+      │  302 / 301       │  any           │  ALERT (severity: MED)   │
+      │  202             │  any           │  ALERT (severity: MED)   │
+      │  other 2xx/3xx   │  any           │  ALERT (severity: LOW)   │
+      └─────────────────────────────────────────────────────────────┘
+    
+      Default min_bytes: 500  (configurable via --min-bytes)
+    
+    Alert severity order (for sorting):
+      1. 200 OK       — server fully accepted the malicious payload
+      2. 302 Found    — redirect after acceptance (login-like flow)
+      3. 202 Accepted — async acceptance
+      4. 301 Moved    — redirect (lower confidence than 302)
+      5. 403/500 ≥N   — verbose error (information disclosure)
+      6. Other 2xx/3xx
+    
+    Outputs:
+      WSTG-BUSL-01/inputs/json/intruder_alerts.json
+    
+    Usage:
+      python3 WSTG-BUSL-01/utilities/python/busl01_validation.py \
+          --intruder WSTG-BUSL-01/inputs/xml/intruder_test.xml \
+          [--min-bytes 500]
+
+WSTG-BUSL-03\UTILITIES\PYTHON
+
+Title of python file: busl_03.py
+Commentary: WSTG-BUSL-03 — Integrity Checks
+    Script 1: busl_03.py
+    
+    Reads a Burp Suite XML export of requests that move, store, create,
+    or gate data (save, create, read-own, logged-in-only actions).
+    Extracts all URL and body parameters, classifies their data types,
+    generates per-endpoint Burp Intruder wordlists, and writes a sitrep
+    report summarising what will be tested.
+    
+    Data type classification:
+      alpha        — value contains only letters (a-z, A-Z)
+      numeric      — value contains only digits / decimal number
+      alphanumeric — value contains both letters and digits (mixed)
+    
+    Wordlist strategy:
+      alpha        → alpha-only category tests (unicode confusion, encoding, injections)
+      numeric      → numeric-only category tests (hex, octal, binary, negative, injections)
+      alphanumeric → both alpha AND numeric tests, PLUS boundary tests:
+                       pure-alpha substitute, pure-numeric substitute,
+                       reversed, truncated half
+    
+    Log-adjacent parameter warning:
+      Parameters or paths matching keywords: log, audit, event, trace,
+      debug, activity, record, track — flagged in sitrep for manual
+      review before sending Intruder payloads.
+    
+    Inputs:
+      WSTG-BUSL-03/inputs/xml/busl_03.xml
+    
+    Outputs:
+      WSTG-BUSL-03/inputs/json/xml_assessment.json
+      WSTG-BUSL-03/inputs/wordlist/EP_<INDEX>.txt   (one per endpoint)
+      WSTG-BUSL-03/outputs/test_outputs/sitrep.md
+    
+    Usage:
+      python3 WSTG-BUSL-03/utilities/python/busl_03.py \
+          [--xml WSTG-BUSL-03/inputs/xml/busl_03.xml]
+
+Title of python file: verdict_busl_03.py
+Commentary: WSTG-BUSL-03 — Integrity Checks
+    Script 2: verdict_busl_03.py
+    
+    Reads a Burp Intruder XML export of integrity-check probe results,
+    classifies each response by status code and body size, and emits
+    structured alerts for interesting findings.
+    
+    Alert logic (identical to busl01_validation.py):
+      200                          → HIGH   (request accepted — possible logic bypass)
+      302 / 202 / 301              → MEDIUM (redirect/queued — worth investigating)
+      403 / 500  ≥ --min-bytes     → LOW    (verbose error leaks info)
+      403 / 500  <  --min-bytes    → SKIP   (bare error, noise)
+      404                          → SKIP   (always)
+      other 2xx/3xx                → LOW
+      everything else              → SKIP
+    
+    Inputs:
+      WSTG-BUSL-03/inputs/xml/intruder_tests.xml
+    
+    Outputs:
+      WSTG-BUSL-03/inputs/json/intruder_alerts.json
+    
+    Usage:
+      python3 WSTG-BUSL-03/utilities/python/verdict_busl_03.py \
+          [--intruder WSTG-BUSL-03/inputs/xml/intruder_tests.xml] \
+          [--min-bytes 500]
+
+WSTG-BUSL-04\UTILITIES\PYTHON
+
+Title of python file: busl_04_prep.py
+Commentary: WSTG-BUSL-04 — Process Timing / TOCTOU Prep
+    =============================================
+    Reads Burp Suite proxy history XML exports from Inputs/XML/, samples 3
+    endpoints per category file, parses each request into curl components,
+    and writes a structured JSON ready for the race-condition runner.
+    
+    Same multi-file pattern as hpp_04 — drop authentication.xml and
+    authorization.xml (or any targeted exports) into Inputs/XML/.
+    
+    Outputs
+    -------
+        Outputs/test_outputs/<category>.json     — selected endpoints + curl data
+    
+    Usage
+    -----
+        python busl_04_prep.py                       # process all XMLs, pick 3 each
+        python busl_04_prep.py -n 5                  # pick 5 per file
+        python busl_04_prep.py --only authentication  # single category
+        python busl_04_prep.py --seed 42             # reproducible sampling
+
+Title of python file: busl_04_runner.py
+Commentary: WSTG-BUSL-04 — Process Timing / TOCTOU Race Runner
+    ====================================================
+    Reads the staged endpoint JSON produced by busl_04_prep.py, fires each
+    curl command TWICE simultaneously (concurrent threads — the TOCTOU race),
+    records both status codes, and classifies the result.
+    
+    Classification
+    --------------
+        200        → FINDING     potential race condition / unrestricted access
+        403        → INVESTIGATE access control present but worth probing further
+        404 / 500  → NOT_FINDING endpoint not found / server error
+        other      → INVESTIGATE review manually
+    
+    Outputs
+    -------
+        Outputs/test_outputs/<category>_results.json
+    
+    Usage
+    -----
+        python busl_04_runner.py                        # all staged JSONs
+        python busl_04_runner.py --only authentication  # single category
+        python busl_04_runner.py --race-count 3         # fire 3 concurrent requests
+        python busl_04_runner.py --timeout 15           # per-request timeout (s)
+
+WSTG-BUSL-05\UTILITIES\PYTHON
+
+Title of python file: busl_05_analyze.py
+Commentary: WSTG-BUSL-05 Analyze — Intruder Result Scanner
+    ===============================================
+    Reads a Burp Suite Intruder results XML export, groups responses by endpoint
+    path, counts the longest run of consecutive HTTP 200 OK responses, and flags
+    any endpoint where that run exceeds the threshold (default > 3).
+    
+    A run > 3 means the application returned 200 at least 4 times in a row with
+    no rate-limit or block response — indicative of missing function-use limits.
+    
+    Output
+    ------
+    Writes findings to  Outputs/test_outputs/findings.json
+    
+    Usage
+    -----
+        python busl_05_analyze.py
+        python busl_05_analyze.py -x /path/to/intruder_test.xml
+        python busl_05_analyze.py --threshold 5    # change the trigger point
+
+Title of python file: busl_05_prep.py
+Commentary: WSTG-BUSL-05 Prep — Function Limit Wordlist Generator
+    ======================================================
+    Reads a Burp Suite proxy history XML export, presents a numbered selection
+    menu of captured requests, and writes one Burp Intruder wordlist per chosen
+    endpoint.
+    
+    Each wordlist (EP_0.txt … EP_4.txt) contains a single extracted parameter
+    value repeated 50 times — ready to drop into Burp Intruder for
+    function-limit / rate-limit testing.
+    
+    Workflow
+    --------
+    1.  Place your Burp proxy export at   Inputs/XML/function_limit.xml
+    2.  Run this script, select 5 endpoints from the menu
+    3.  Load EP_N.txt into Burp Intruder (Sniper / Battering Ram)
+    4.  Run the attack and export results to  Inputs/XML/intruder_test.xml
+    5.  Run busl_05_analyze.py to check for successive 200 OKs
+    
+    Usage
+    -----
+        python busl_05_prep.py                        # interactive menu
+        python busl_05_prep.py --auto                 # auto-pick first 5
+        python busl_05_prep.py --indices 0,2,4,7,12   # explicit selection
+        python busl_05_prep.py -x /path/to/export.xml
+
+WSTG-BUSL-06\UTILITIES\PYTHON
+
+Title of python file: busl_06_gui.py
+Commentary: WSTG-BUSL-06 — Circumvention of Workflows
+    Script: busl_06_gui.py
+    
+    Tkinter GUI for grouping Burp proxy history requests into workflow groups
+    and generating the curl commands needed to test each workflow's final step
+    in isolation.
+    
+    Workflow:
+      1. Load proxy history XML from WSTG-BUSL-06/inputs/xml/file_here.xml
+      2. Browse all requests in the left panel (index, method, path, status)
+      3. Select N requests with click / Shift-click / Ctrl-click
+      4. Name the group and press "Push to Group"
+      5. Review groups in the right panel; remove individual requests or whole groups
+      6. "Save & Report" writes:
+           - WSTG-BUSL-06/inputs/json/workflows_groups.json
+           - WSTG-BUSL-06/outputs/test_outputs/sitrep.md    (appended)
+         and prints per-group operator instructions to the terminal.
+    
+    XML → curl:
+      Reconstructs a curl command from the captured Burp request.
+      Cookie and Authorization header values are replaced with §SESSION§
+      so the operator can substitute their own session before running.
+    
+    Usage:
+      python3 WSTG-BUSL-06/utilities/python/busl_06_gui.py \
+          [--xml  WSTG-BUSL-06/inputs/xml/file_here.xml]
+
+Title of python file: curl_tester.py
+Commentary: WSTG-BUSL-06 — Circumvention of Workflows
+    Script: curl_tester.py
+    
+    Reads workflows_groups.json produced by busl_06_gui.py, executes the
+    Curl_to_launch command for every workflow group, and records whether
+    the endpoint was reachable (HTTP 200).
+    
+    A 200 OK means the final workflow step was accessible directly —
+    without completing the preceding steps — which is the vulnerability.
+    
+    Note on §SESSION§:
+      The curl commands contain a §SESSION§ placeholder for cookies and
+      auth headers. Before running this script, edit workflows_groups.json
+      and replace §SESSION§ with a real (or empty) session value, OR pass
+      --session-token to have this script substitute it automatically.
+    
+    Usage:
+      python3 WSTG-BUSL-06/utilities/python/curl_tester.py \
+          [--groups   WSTG-BUSL-06/inputs/json/workflows_groups.json] \
+          [--session-token "sessionid=abc123"] \
+          [--timeout  15]
+    
+    Outputs:
+      WSTG-BUSL-06/outputs/test_outputs/workflow_findings.json
+      WSTG-BUSL-06/outputs/test_outputs/workflow_findings.md
+
+WSTG-BUSL-08\UTILITIES\PYTHON
+
+Title of python file: busl_08_questionnaire.py
+Commentary: WSTG-BUSL-08 — Upload of Unexpected File Types
+    Questionnaire Script: busl_08_questionnaire.py
+    
+    Interactive pre-test operator questionnaire. Run BEFORE Script 1
+    (busl_08_wordlist.py). Captures operator context and reconnaissance
+    findings, then writes them to the sitrep.
+    
+    Outputs:
+      WSTG-BUSL-08/outputs/test_outputs/sitrep.md  (created/overwritten)
+    
+    Usage:
+      python3 WSTG-BUSL-08/utilities/python/busl_08_questionnaire.py
+
+Title of python file: busl_08_verdict.py
+Commentary: WSTG-BUSL-08 — Upload of Unexpected File Types
+    Script 2: busl_08_verdict.py
+    
+    Reads a Burp Intruder XML export of upload-path probe results and
+    classifies each response into one of three alert categories:
+    
+      INDEXING      — payload was an indexing/traversal string AND response
+                      was 200 or contained directory-listing indicators
+                      (e.g. "Index of", "Parent Directory", autoindex)
+      EXPOSED PATH  — a path with NO extension returned 200/302 (directory
+                      or resource exists — unexpected)
+      EXT 200/302   — a path WITH a file extension returned 200 or 302
+                      (check immediately — file may be accessible / writable)
+    
+    Status logic (identical threshold to other BUSL scripts):
+      200                     → alert (HIGH for ext, MEDIUM for raw path)
+      302 / 301               → alert (MEDIUM)
+      403 / 500 ≥ min_bytes  → LOW (verbose error)
+      404 / 403 < min_bytes  → SKIP
+    
+    For each alert the operator is given:
+      - The probed path
+      - Status code + body size
+      - Category
+      - curl verification command
+    
+    Appends findings to WSTG-BUSL-08/outputs/test_outputs/sitrep.md
+    (creating the file if questionnaire has not been run yet).
+    
+    Inputs:
+      WSTG-BUSL-08/inputs/xml/intruder_test.xml
+    
+    Outputs:
+      WSTG-BUSL-08/outputs/test_outputs/sitrep.md  (appended)
+      WSTG-BUSL-08/inputs/json/intruder_alerts.json
+    
+    Usage:
+      python3 WSTG-BUSL-08/utilities/python/busl_08_verdict.py \
+          [--intruder WSTG-BUSL-08/inputs/xml/intruder_test.xml] \
+          [--target   https://app.example.com] \
+          [--min-bytes 500]
+
+Title of python file: busl_08_wordlist.py
+Commentary: WSTG-BUSL-08 — Upload of Unexpected File Types
+    Script 1: busl_08_wordlist.py
+    
+    Generates a Burp Intruder wordlist of paths to probe for unexpected
+    upload endpoints. Combines:
+    
+      1. Paths extracted from the Burp XML proxy capture (file_input.xml)
+      2. Service-catalogue paths from svc_repo.json (secondary service repo)
+         — pulls CommonEndpoints + UndesirableEndpoints from every service
+         entry across all ports after deduplication
+      3. MISSING LOGIC stub for primary service repo (returns [])
+      4. Upload-specific path expansions (common upload subdirectory variants)
+      5. Extension-appended variants of all collected paths:
+           Unexpected: .txt .csv .xml .html .svg .pdf .zip .tar.gz
+           Malicious:  .php .asp .aspx .jsp .py .rb .sh
+         (BUSL-08 focus = unexpected; extension list kept broad for discovery)
+      6. Indexing / directory-traversal strings that may trigger directory
+         listing or path disclosure
+    
+    Outputs:
+      WSTG-BUSL-08/inputs/wordlist/upload_paths.txt
+      WSTG-BUSL-08/inputs/json/path_assessment.json
+    
+    Usage:
+      python3 WSTG-BUSL-08/utilities/python/busl_08_wordlist.py \
+          [--xml  WSTG-BUSL-08/inputs/xml/file_input.xml] \
+          [--repo WSTG-BUSL-08/inputs/json/svc_repo.json] \
+          [--out  WSTG-BUSL-08/inputs/wordlist/upload_paths.txt]
+
+WSTG-BUSL-09\UTILITIES\PYTHON
+
+Title of python file: busl_09_questionnaire.py
+Commentary: WSTG-BUSL-09 — Upload of Malicious Files
+    Questionnaire Script: busl_09_questionnaire.py
+    
+    Interactive pre-test operator questionnaire. Run BEFORE the intruder
+    scan. Captures operator context specifically around malicious file upload
+    testing — executable types (.exe, .bat, .bin, .py, .php, etc.) that could
+    lead to remote code execution or server-side execution if accepted.
+    
+    The line between BUSL-08 (unexpected) and BUSL-09 (malicious):
+      BUSL-08 → unexpected types (.txt, .xml, .svg, .pdf, .zip …)
+      BUSL-09 → malicious types  (.exe, .bat, .bin, .py, .php, .asp, .sh …)
+      Overlap is intentional — a path that accepts .php is both unexpected AND
+      potentially malicious.
+    
+    Outputs:
+      WSTG-BUSL-09/outputs/test_outputs/sitrep.md  (created/overwritten)
+    
+    Usage:
+      python3 WSTG-BUSL-09/utilities/python/busl_09_questionnaire.py
+
+Title of python file: busl_09_verdict.py
+Commentary: WSTG-BUSL-09 — Upload of Malicious Files
+    Script 2: busl_09_verdict.py
+    
+    Reads a Burp Intruder XML export of malicious file upload probe results.
+    Adapted from busl_08_verdict.py with one critical distinction:
+    
+      BUSL-08 — unexpected file types (non-executable: .txt, .pdf, .zip …)
+      BUSL-09 — malicious file types  (executable/script: .exe, .bat, .bin,
+                 .py, .php, .asp, .jsp, .sh, .rb, .pl …)
+    
+    Alert categories (BUSL-09 specific):
+    
+      RCE RISK     — server-side script extension (.php, .asp, .jsp, .py, .rb,
+                     .pl, .sh, .cgi, .cfm) returned 200 or 302.
+                     ⚠ Attempt to GET the upload URL and look for execution.
+      EXEC RISK    — client-executable extension (.exe, .bat, .bin, .cmd)
+                     returned 200.
+                     File is downloadable — social-engineering / client-side risk.
+      UNEXPECTED   — extension from the unexpected (non-executable) set returned
+                     200/302 — BUSL-08 finding surfacing in BUSL-09 run.
+      EXPOSED PATH — path with no extension returned 200/302.
+      INDEXING     — indexing/traversal payload produced listing response.
+    
+    Status logic (same thresholds as all other BUSL scripts):
+      200                     → HIGH for RCE/EXEC, MEDIUM for raw/unexpected
+      302 / 301               → MEDIUM
+      403 / 500 ≥ min_bytes  → LOW (verbose error)
+      404 / bare 403/500      → SKIP
+    
+    Appends findings to WSTG-BUSL-09/outputs/test_outputs/sitrep.md.
+    
+    Inputs:
+      WSTG-BUSL-09/inputs/xml/intruder_test.xml
+    
+    Outputs:
+      WSTG-BUSL-09/outputs/test_outputs/sitrep.md  (appended)
+      WSTG-BUSL-09/inputs/json/intruder_alerts.json
+    
+    Usage:
+      python3 WSTG-BUSL-09/utilities/python/busl_09_verdict.py \
+          [--intruder WSTG-BUSL-09/inputs/xml/intruder_test.xml] \
+          [--target   https://app.example.com] \
+          [--min-bytes 500]

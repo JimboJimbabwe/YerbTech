@@ -1,0 +1,45 @@
+{
+  "wstg_id": "WSTG-ATHN-07",
+  "title": "Weak Password Policy",
+  "description": "Six-question password policy assessment. A 'False' verdict on any question indicates the policy does not meet that control. Accumulation of False verdicts determines overall vulnerability.",
+  "questionnaire": {
+    "questions": {
+      "Q1_entropy": {
+        "actual_question": "Does the password policy enforce sufficient entropy (minimum length + character complexity: uppercase, lowercase, numbers, symbols)?",
+        "verdict": null,
+        "tester_note": ""
+      },
+      "Q2_history_bypass": {
+        "actual_question": "Can password history be bypassed? (e.g. cycle through N passwords so the Nth+1 reuse of the original is accepted)",
+        "verdict": null,
+        "tester_note": ""
+      },
+      "Q3_nist_expiry": {
+        "actual_question": "Does the password expiry policy align with NIST SP 800-63B? (NIST recommends NO mandatory periodic expiry unless compromise is suspected)",
+        "verdict": null,
+        "tester_note": "",
+        "reference": "https://pages.nist.gov/800-63-3/sp800-63b.html#sec5"
+      },
+      "Q4_history_maintained": {
+        "actual_question": "Does the application maintain a history of the user's previous passwords to prevent reuse?",
+        "verdict": null,
+        "tester_note": ""
+      },
+      "Q5_personal_info_rejected": {
+        "actual_question": "Does the policy reject passwords containing the user's first name, last name, or username?",
+        "verdict": null,
+        "tester_note": ""
+      },
+      "Q6_common_passwords_blocked": {
+        "actual_question": "Does the policy reject common/dictionary passwords? (Test with a set of common passwords)",
+        "verdict": null,
+        "tester_note": ""
+      }
+    },
+    "findings": {
+      "verdict": null,
+      "failed_questions": [],
+      "timestamp": null
+    }
+  }
+}

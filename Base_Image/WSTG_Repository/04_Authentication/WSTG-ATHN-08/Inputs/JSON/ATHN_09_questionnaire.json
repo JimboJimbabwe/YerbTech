@@ -1,0 +1,197 @@
+{
+  "wstg_id": "WSTG-ATHN-09",
+  "title": "Testing for Weak Password Change or Reset Functionalities",
+  "description": "Nested categorical questionnaire for ATHN-09 password reset assessment. Categories a-g map to the primary reset mechanisms and their sub-controls. Some categories ARE the question; others have multiple sub-questions.",
+  "questions_categories": [
+    {
+      "category": "a",
+      "name": "Rate Limiting",
+      "is_leaf": true,
+      "questions": [
+        {
+          "question": "Is the password reset endpoint protected against rate limiting?",
+          "verdict": null,
+          "reasoning": ""
+        }
+      ]
+    },
+    {
+      "category": "b",
+      "name": "SQL Injection",
+      "is_leaf": true,
+      "questions": [
+        {
+          "question": "Is the password reset flow vulnerable to SQL Injection?",
+          "verdict": null,
+          "reasoning": ""
+        }
+      ]
+    },
+    {
+      "category": "c",
+      "name": "MFA on Password Reset",
+      "is_leaf": true,
+      "questions": [
+        {
+          "question": "Does the password reset flow lack MFA?",
+          "verdict": null,
+          "reasoning": ""
+        }
+      ]
+    },
+    {
+      "category": "d",
+      "name": "MFA on Login",
+      "is_leaf": true,
+      "questions": [
+        {
+          "question": "Does the login flow lack MFA?",
+          "verdict": null,
+          "reasoning": ""
+        }
+      ]
+    },
+    {
+      "category": "e",
+      "name": "New Password Sent by Email",
+      "is_leaf": false,
+      "questions": [
+        {
+          "question": "Does the user get sent a new password by email?",
+          "verdict": null,
+          "reasoning": "",
+          "note": "If Yes, this is likely compromised — review sub-questions"
+        },
+        {
+          "question": "Is the user forced to change the password on initial login?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "e.1 == Flawed"
+        },
+        {
+          "question": "Is the password securely generated (sufficient entropy)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "e.1 == Flawed"
+        },
+        {
+          "question": "Is the user's EXISTING password sent to them (plaintext storage indicator)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "e.1 == Flawed"
+        },
+        {
+          "question": "Are the reset emails sent from a domain with anti-spoofing protection (SPF, DKIM, DMARC)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "e.1 == Flawed"
+        },
+        {
+          "question": "Is email considered a sufficiently secure channel for credential delivery?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "e.1 == Flawed"
+        }
+      ]
+    },
+    {
+      "category": "f",
+      "name": "Password Reset Link Sent by Email",
+      "is_leaf": false,
+      "questions": [
+        {
+          "question": "Does the user get an email with a password reset link?",
+          "verdict": null,
+          "reasoning": "",
+          "note": "If Yes, assess sub-questions"
+        },
+        {
+          "question": "Does the reset link use HTTPS?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Can the reset link be used multiple times?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Does the reset link expire if it remains unused?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Is the reset token sufficiently long and random (high entropy)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Does the reset link contain a User ID (leaks account enumeration)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Does a Google dork expose the reset link (indexed by search engines)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        },
+        {
+          "question": "Are reset emails sent from a domain with anti-spoofing protection (SPF, DKIM, DMARC)?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "f.1 == Flawed"
+        }
+      ]
+    },
+    {
+      "category": "g",
+      "name": "Reset Token Sent by SMS",
+      "is_leaf": false,
+      "questions": [
+        {
+          "question": "Does the user get a reset token / link over SMS?",
+          "verdict": null,
+          "reasoning": "",
+          "note": "If Yes, assess sub-questions"
+        },
+        {
+          "question": "Is the SMS token sufficiently long and random?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "g.1 == Flawed"
+        },
+        {
+          "question": "Can the SMS token be used multiple times?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "g.1 == Flawed"
+        },
+        {
+          "question": "Does the SMS token expire if it remains unused?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "g.1 == Flawed"
+        },
+        {
+          "question": "Are rate limits in place for the SMS token endpoint?",
+          "verdict": null,
+          "reasoning": "",
+          "parent_condition": "g.1 == Flawed"
+        },
+        {
+          "question": "Is SMS considered a sufficiently secure channel for authentication?",
+          "verdict": null,
+          "reasoning": "",
+          "note": "SMS is vulnerable to SIM-swapping and SS7 attacks. NIST 800-63B designates it RESTRICTED.",
+          "parent_condition": "g.1 == Flawed"
+        }
+      ]
+    }
+  ]
+}

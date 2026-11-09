@@ -1,0 +1,1506 @@
+{
+  "categories": {
+    "Information Gathering": {
+      "id": "WSTG-INFO",
+      "tests": [
+        {
+          "name": "Conduct Search Engine Reconnaissance for Information Leakage",
+          "id": "WSTG-INFO-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/01-Conduct_Search_Engine_Reconnaissance_for_Information_Leakage",
+          "reporting": [
+            {
+              "What": "Uses search engines and third-party indexing services to find sensitive design, configuration, or internal information about the application or organization that has been exposed publicly.",
+              "Why": "Leaked data such as credentials, internal paths, or architecture details gives attackers a head start and can be found without ever touching the target directly."
+            }
+          ]
+        },
+        {
+          "name": "Fingerprint Web Server",
+          "id": "WSTG-INFO-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server",
+          "reporting": [
+            {
+              "What": "Determines the type and version of the web server through banners, response headers, and behavioral differences.",
+              "Why": "Knowing the exact server and version lets an attacker look up and target known vulnerabilities, so exposed version details increase risk."
+            }
+          ]
+        },
+        {
+          "name": "Review Webserver Metafiles for Information Leakage",
+          "id": "WSTG-INFO-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage",
+          "reporting": [
+            {
+              "What": "Analyzes metadata files such as robots.txt, sitemap.xml, and security.txt to uncover hidden paths, functionality, and other details about the system.",
+              "Why": "These files often list sensitive or unlinked locations that were meant to be hidden, which effectively hands attackers a map of areas worth probing."
+            }
+          ]
+        },
+        {
+          "name": "Attack Surface Identification",
+          "id": "WSTG-INFO-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification",
+          "reporting": [
+            {
+              "What": "Enumerates all in-scope web applications, domains, subdomains, and virtual hosts using passive and active DNS techniques and certificate transparency logs.",
+              "Why": "Forgotten or unmanaged hosts are frequently the weakest entry points, and you cannot secure or test assets you have not discovered."
+            }
+          ]
+        },
+        {
+          "name": "Review Web Page Content for Information Leakage",
+          "id": "WSTG-INFO-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Web_Page_Content_for_Information_Leakage",
+          "reporting": [
+            {
+              "What": "Reviews page comments, metadata, redirect bodies, JavaScript files, and source maps for sensitive information or debug artifacts.",
+              "Why": "Developers often leave secrets, internal endpoints, or logic hints in client-delivered code, and source maps can expose the original source in full."
+            }
+          ]
+        },
+        {
+          "name": "Identify Application Entry Points",
+          "id": "WSTG-INFO-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/06-Identify_Application_Entry_Points",
+          "reporting": [
+            {
+              "What": "Analyzes requests and responses to catalog every place the application accepts input, including parameters, headers, and cookies.",
+              "Why": "Every input is a potential injection point, so a complete list is required to test the application thoroughly."
+            }
+          ]
+        },
+        {
+          "name": "Map Execution Paths Through Application",
+          "id": "WSTG-INFO-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/07-Map_Execution_Paths_Through_Application",
+          "reporting": [
+            {
+              "What": "Maps the application's principal workflows and the paths a user can take through it.",
+              "Why": "Understanding intended flows makes it possible to spot where they can be skipped, reordered, or abused, and ensures testing coverage."
+            }
+          ]
+        },
+        {
+          "name": "Fingerprint Web Application Framework",
+          "id": "WSTG-INFO-08",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework",
+          "reporting": [
+            {
+              "What": "Identifies the frameworks and components used by the web application through headers, cookies, file structures, and page markup.",
+              "Why": "Knowing the framework reveals known vulnerabilities, default files, and common misconfigurations that can be targeted."
+            }
+          ]
+        },
+        {
+          "name": "Fingerprint Web Application",
+          "id": "WSTG-INFO-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/09-Fingerprint_Web_Application",
+          "reporting": [
+            {
+              "What": "Identifies the specific off-the-shelf application or CMS in use (for example, a particular wiki, blog, or e-commerce platform) and its version.",
+              "Why": "Popular applications have publicly documented exploits and default settings, so identifying one quickly narrows down likely weaknesses."
+            }
+          ]
+        },
+        {
+          "name": "Map Application Architecture",
+          "id": "WSTG-INFO-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture",
+          "reporting": [
+            {
+              "What": "Documents the architecture of the application and the technologies in use, such as proxies, load balancers, databases, and third-party services.",
+              "Why": "Each layer can introduce its own weaknesses and trust boundaries, and an accurate picture guides where to focus deeper testing."
+            }
+          ]
+        }
+      ]
+    },
+    "Configuration and Deployment Management": {
+      "id": "WSTG-CONF",
+      "tests": [
+        {
+          "name": "Network Infrastructure Configuration",
+          "id": "WSTG-CONF-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/01-Network_Infrastructure_Configuration",
+          "reporting": [
+            {
+              "What": "Reviews network-level configuration of the systems supporting the application, including frameworks, default settings, and cloud or container isolation controls like security groups and network policies.",
+              "Why": "Unpatched software, default credentials, or overly permissive network rules can expose the application regardless of how secure its own code is."
+            }
+          ]
+        },
+        {
+          "name": "Application Platform Configuration",
+          "id": "WSTG-CONF-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/02-Application_Platform_Configuration",
+          "reporting": [
+            {
+              "What": "Checks that default and sample files are removed, debug features are disabled, logging is safe, and production hardening is applied on the platform, container, or serverless package.",
+              "Why": "Leftover defaults and debug functionality are easy targets and can leak sensitive data or provide unintended access."
+            }
+          ],
+          "cre_ids": [
+            "843-841",
+            "402-706"
+          ]
+        },
+        {
+          "name": "File Extensions Handling for Sensitive Information",
+          "id": "WSTG-CONF-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/03-File_Extensions_Handling_for_Sensitive_Information",
+          "reporting": [
+            {
+              "What": "Tests how the server handles requests for files with sensitive or risky extensions (such as .bak, .inc, .config) and whether their contents are served or executed.",
+              "Why": "Misconfigured extension handling can reveal source code, credentials, or configuration data directly to anyone who requests the file."
+            }
+          ],
+          "cre_ids": [
+            "615-744"
+          ]
+        },
+        {
+          "name": "Review Old Backup and Unreferenced Files for Sensitive Information",
+          "id": "WSTG-CONF-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information",
+          "reporting": [
+            {
+              "What": "Searches for old, backup, and unreferenced files, including leftover cloud storage objects, and verifies that rules blocking access to them cannot be bypassed.",
+              "Why": "Forgotten files often contain source code, credentials, or data that the live application was never intended to expose."
+            }
+          ],
+          "cre_ids": [
+            "462-245"
+          ]
+        },
+        {
+          "name": "Enumerate Infrastructure and Application Admin Interfaces",
+          "id": "WSTG-CONF-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces",
+          "reporting": [
+            {
+              "What": "Discovers hidden administrative interfaces, including cloud, orchestration, API-management, and CI/CD consoles, and checks them for weak credentials and excessive exposure.",
+              "Why": "Admin interfaces grant high privileges, so any that are discoverable, weakly protected, or reachable by the wrong audience are a direct route to full compromise."
+            }
+          ]
+        },
+        {
+          "name": "HTTP Methods",
+          "id": "WSTG-CONF-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/06-HTTP_Methods",
+          "reporting": [
+            {
+              "What": "Enumerates which HTTP methods the server supports and tests for access control bypass and method-override techniques.",
+              "Why": "Unexpected methods like PUT or DELETE, or overrides that evade restrictions, can allow unauthorized changes or bypass security controls."
+            }
+          ],
+          "cre_ids": [
+            "483-715"
+          ]
+        },
+        {
+          "name": "HTTP Strict Transport Security",
+          "id": "WSTG-CONF-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/07-HTTP_Strict_Transport_Security",
+          "reporting": [
+            {
+              "What": "Reviews the HSTS header, its directives, preload status, and consistency across the domain and subdomains.",
+              "Why": "Without a correct HSTS policy, users can be downgraded to unencrypted HTTP and have their traffic intercepted."
+            }
+          ],
+          "cre_ids": [
+            "036-147"
+          ]
+        },
+        {
+          "name": "File Permissions",
+          "id": "WSTG-CONF-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/09-File_Permissions",
+          "reporting": [
+            {
+              "What": "Reviews file permissions on hosts, container images, cloud storage objects, and Kubernetes mounts, and checks how secrets are stored and who can read them.",
+              "Why": "Overly broad permissions let attackers or low-privileged users read secrets or modify files, enabling data theft or privilege escalation."
+            }
+          ]
+        },
+        {
+          "name": "Subdomain Takeover",
+          "id": "WSTG-CONF-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/10-Subdomain_Takeover",
+          "reporting": [
+            {
+              "What": "Identifies dangling DNS records pointing to unclaimed external services and assesses whether the parent application trusts the affected subdomain through cookies, CORS, OAuth, or CSP.",
+              "Why": "An attacker who claims an abandoned subdomain can serve malicious content from a trusted domain and abuse any trust the main application extends to it."
+            }
+          ],
+          "cre_ids": [
+            "336-512"
+          ]
+        },
+        {
+          "name": "Cloud Storage",
+          "id": "WSTG-CONF-11",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/11-Cloud_Storage",
+          "reporting": [
+            {
+              "What": "Assesses access control on cloud storage buckets and containers, the scoping of presigned URLs, and whether versioning or lifecycle settings retain old sensitive data.",
+              "Why": "Misconfigured storage is a common cause of large data breaches because exposed objects can be read or modified by anyone."
+            }
+          ]
+        },
+        {
+          "name": "Content Security Policy",
+          "id": "WSTG-CONF-12",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/12-Content_Security_Policy",
+          "reporting": [
+            {
+              "What": "Reviews the Content-Security-Policy header or meta element for misconfigurations such as overly permissive sources or unsafe directives.",
+              "Why": "A weak CSP fails to limit the impact of injection flaws like XSS, removing an important layer of defense."
+            }
+          ]
+        },
+        {
+          "name": "Path Confusion",
+          "id": "WSTG-CONF-13",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/13-Path_Confusion",
+          "reporting": [
+            {
+              "What": "Checks whether the application, proxy, cache, CDN, and WAF interpret and normalize URL paths consistently, including trailing slashes, case, and encoding.",
+              "Why": "Inconsistent path handling can let attackers bypass access rules or poison caches by making one component treat a request differently than another."
+            }
+          ]
+        },
+        {
+          "name": "Other HTTP Security Header Misconfigurations",
+          "id": "WSTG-CONF-14",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/14-Other_HTTP_Security_Header_Misconfigurations",
+          "reporting": [
+            {
+              "What": "Identifies missing or incorrectly configured security headers such as X-Content-Type-Options, Referrer-Policy, and Permissions-Policy, and assesses their impact.",
+              "Why": "These headers provide inexpensive browser-enforced protections, and misconfiguration leaves users exposed to attacks the headers are meant to prevent."
+            }
+          ]
+        },
+        {
+          "name": "Feature Flag Security Bypass",
+          "id": "WSTG-CONF-15",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/15-Feature_Flag_Security_Bypass",
+          "reporting": [
+            {
+              "What": "Tests whether feature flags and kill-switches that govern security functionality can be manipulated by clients, are enforced server-side, behave safely on failure, and avoid exposing sensitive data or stale code paths.",
+              "Why": "If flag state can be tampered with or security checks depend on it, attackers can switch off protections or reach deprecated, unpatched functionality."
+            }
+          ]
+        }
+      ]
+    },
+    "Identity Management": {
+      "id": "WSTG-IDNT",
+      "tests": [
+        {
+          "name": "Role Definitions",
+          "id": "WSTG-IDNT-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management/01-Role_Definitions",
+          "reporting": [
+            {
+              "What": "Identifies and documents the roles in the application, attempts to switch to or access other roles, and reviews whether permissions are appropriately granular.",
+              "Why": "Poorly defined or overly broad roles lead to users holding more access than needed and make privilege escalation easier."
+            }
+          ],
+          "cre_ids": [
+            "817-808",
+            "368-633"
+          ]
+        },
+        {
+          "name": "User Registration Process",
+          "id": "WSTG-IDNT-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management/02-User_Registration_Process",
+          "reporting": [
+            {
+              "What": "Verifies that registration identity requirements match business and security needs and that the process cannot be abused.",
+              "Why": "A weak registration process allows fake, duplicate, or unauthorized accounts that can be used for fraud or to gain unintended access."
+            }
+          ]
+        },
+        {
+          "name": "Account Provisioning Process",
+          "id": "WSTG-IDNT-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management/03-Account_Provisioning_Process",
+          "reporting": [
+            {
+              "What": "Verifies which accounts are allowed to create other accounts and of what type or privilege level.",
+              "Why": "If low-privileged users can provision accounts or elevated roles, attackers can create their own privileged access."
+            }
+          ]
+        },
+        {
+          "name": "Account Enumeration and Guessable User Account",
+          "id": "WSTG-IDNT-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management/04-Account_Enumeration_and_Guessable_User_Account",
+          "reporting": [
+            {
+              "What": "Examines registration, login, and reset flows to see whether differences in responses reveal which usernames or accounts exist.",
+              "Why": "Confirming valid accounts narrows the target list for brute-force, credential stuffing, and phishing attacks."
+            }
+          ]
+        },
+        {
+          "name": "Weak or Unenforced Username Policy",
+          "id": "WSTG-IDNT-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management/05-Weak_or_Unenforced_Username_Policy",
+          "reporting": [
+            {
+              "What": "Evaluates whether usernames follow a predictable structure or whether the application enforces any username rules.",
+              "Why": "Guessable or poorly controlled usernames make enumeration and targeted attacks easier and can enable impersonation."
+            }
+          ]
+        }
+      ]
+    },
+    "Authentication": {
+      "id": "WSTG-ATHN",
+      "tests": [
+        {
+          "name": "Credentials Transported over an Encrypted Channel",
+          "id": "WSTG-ATHN-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/01-Credentials_Transported_over_an_Encrypted_Channel",
+          "reporting": [
+            {
+              "What": "Verifies that login credentials and authentication data are only sent over encrypted channels such as HTTPS.",
+              "Why": "Credentials sent in cleartext can be intercepted by anyone on the network path, leading directly to account takeover."
+            }
+          ],
+          "cre_ids": [
+            "270-634"
+          ]
+        },
+        {
+          "name": "Default Credentials",
+          "id": "WSTG-ATHN-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/02-Default_Credentials",
+          "reporting": [
+            {
+              "What": "Checks whether the application or its components ship with default accounts and passwords, and whether new accounts get weak or predictable passwords.",
+              "Why": "Default credentials are publicly documented and are among the first things attackers try, giving trivial access."
+            }
+          ],
+          "cre_ids": [
+            "235-658"
+          ]
+        },
+        {
+          "name": "Weak Lock Out Mechanism",
+          "id": "WSTG-ATHN-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/03-Weak_Lock_Out_Mechanism",
+          "reporting": [
+            {
+              "What": "Evaluates whether account lockout or throttling stops brute-force guessing and whether the unlock process can be abused.",
+              "Why": "Without effective lockout, attackers can guess passwords at scale, and a flawed unlock process can enable takeover or denial of service."
+            }
+          ],
+          "cre_ids": [
+            "802-056"
+          ]
+        },
+        {
+          "name": "Bypassing Authentication Schema",
+          "id": "WSTG-ATHN-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/04-Bypassing_Authentication_Schema",
+          "reporting": [
+            {
+              "What": "Tests whether authentication is consistently required on every service and page that should be protected, including via direct requests and parameter tampering.",
+              "Why": "A single unprotected path can give attackers full access without needing valid credentials."
+            }
+          ]
+        },
+        {
+          "name": "Vulnerable Remember Password",
+          "id": "WSTG-ATHN-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/05-Vulnerable_Remember_Password",
+          "reporting": [
+            {
+              "What": "Assesses how remember-me and saved-login features generate and store tokens or credentials.",
+              "Why": "Insecurely implemented persistence can let attackers steal or forge long-lived sessions and gain lasting access to accounts."
+            }
+          ]
+        },
+        {
+          "name": "Browser Cache Weaknesses",
+          "id": "WSTG-ATHN-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/06-Browser_Cache_Weaknesses",
+          "reporting": [
+            {
+              "What": "Checks whether sensitive pages or data are cached by the browser and whether they can be viewed after logout using the back button or cache.",
+              "Why": "Cached sensitive content can be read by the next person using the device, exposing user data without any authentication."
+            }
+          ],
+          "cre_ids": [
+            "473-758"
+          ]
+        },
+        {
+          "name": "Weak Authentication Methods",
+          "id": "WSTG-ATHN-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/07-Weak_Authentication_Methods",
+          "reporting": [
+            {
+              "What": "Evaluates password policy strength, including length, complexity, reuse, and aging requirements, and resistance to dictionary-based guessing.",
+              "Why": "Weak password rules make accounts easy to compromise through guessing or credential stuffing."
+            }
+          ],
+          "cre_ids": [
+            "630-577",
+            "487-305",
+            "455-885",
+            "327-505",
+            "751-176"
+          ]
+        },
+        {
+          "name": "Weak Security Question Answer",
+          "id": "WSTG-ATHN-08",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/08-Weak_Security_Question_Answer",
+          "reporting": [
+            {
+              "What": "Assesses how guessable security questions are and whether their answers can be researched or brute-forced.",
+              "Why": "Answers are often public or easy to guess, giving attackers a way around the password through account recovery."
+            }
+          ],
+          "cre_ids": [
+            "772-358"
+          ]
+        },
+        {
+          "name": "Weak Password Change or Reset Functionalities",
+          "id": "WSTG-ATHN-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/09-Weak_Password_Change_or_Reset_Functionalities",
+          "reporting": [
+            {
+              "What": "Tests the password change and reset flows for weaknesses like predictable tokens, missing verification, or leakage of reset links.",
+              "Why": "Reset functionality is a common takeover route, so flaws let attackers compromise accounts without knowing the password."
+            }
+          ],
+          "cre_ids": [
+            "581-525"
+          ]
+        },
+        {
+          "name": "Weaker Authentication in Alternative Channel",
+          "id": "WSTG-ATHN-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/10-Weaker_Authentication_in_Alternative_Channel",
+          "reporting": [
+            {
+              "What": "Identifies alternative ways to authenticate, such as mobile apps, APIs, or phone support, and tests whether they have weaker protections than the main site.",
+              "Why": "Attackers will choose the weakest channel, so a less-protected alternative undermines the strength of the primary login."
+            }
+          ]
+        },
+        {
+          "name": "Multi-Factor Authentication (MFA)",
+          "id": "WSTG-ATHN-11",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication/11-Multi-Factor_Authentication",
+          "reporting": [
+            {
+              "What": "Identifies the MFA type in use, evaluates the strength of its implementation, and attempts to bypass it.",
+              "Why": "MFA is meant to protect accounts even when passwords are stolen, so any bypass or weakness removes that safeguard."
+            }
+          ]
+        }
+      ]
+    },
+    "Authorization": {
+      "id": "WSTG-ATHZ",
+      "tests": [
+        {
+          "name": "Directory Traversal File Include",
+          "id": "WSTG-ATHZ-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization/01-Directory_Traversal_File_Include",
+          "reporting": [
+            {
+              "What": "Tests inputs that reference files or paths to see whether an attacker can read or include files outside the intended directory, and whether filters can be bypassed.",
+              "Why": "Path traversal can expose configuration files, credentials, and source code, and may lead to code execution through file inclusion."
+            }
+          ],
+          "cre_ids": [
+            "737-086",
+            "742-056",
+            "675-168"
+          ]
+        },
+        {
+          "name": "Bypassing Authorization Schema",
+          "id": "WSTG-ATHZ-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization/02-Bypassing_Authorization_Schema",
+          "reporting": [
+            {
+              "What": "Assesses whether unauthenticated users, or users of the same or lower privilege, can reach resources and functions reserved for others.",
+              "Why": "Broken access control lets attackers view or change data and functions they should never reach."
+            }
+          ],
+          "cre_ids": [
+            "152-725",
+            "524-603",
+            "650-560"
+          ]
+        },
+        {
+          "name": "Privilege Escalation",
+          "id": "WSTG-ATHZ-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization/03-Privilege_Escalation",
+          "reporting": [
+            {
+              "What": "Looks for inputs that control privileges or roles and attempts to manipulate them to gain higher access.",
+              "Why": "Successful escalation turns a low-privileged account into an administrative one, greatly increasing the impact of any compromise."
+            }
+          ],
+          "cre_ids": [
+            "713-683"
+          ]
+        },
+        {
+          "name": "Insecure Direct Object References",
+          "id": "WSTG-ATHZ-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization/04-Insecure_Direct_Object_References",
+          "reporting": [
+            {
+              "What": "Identifies places where objects are referenced by identifiers and tests whether changing them gives access to other users' data.",
+              "Why": "IDOR flaws allow attackers to read or modify other users' records simply by altering an ID, often at large scale."
+            }
+          ],
+          "cre_ids": [
+            "304-667"
+          ]
+        },
+        {
+          "name": "OAuth Weaknesses",
+          "id": "WSTG-ATHZ-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization/05-OAuth_Weaknesses",
+          "reporting": [
+            {
+              "What": "Tests the OAuth 2.0 implementation for known flaws and for use of deprecated or custom flows.",
+              "Why": "OAuth mistakes can lead to stolen tokens, account takeover, or unauthorized access to user data via third-party integrations."
+            }
+          ]
+        }
+      ]
+    },
+    "Session Management": {
+      "id": "WSTG-SESS",
+      "tests": [
+        {
+          "name": "Session Management Schema",
+          "id": "WSTG-SESS-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/01-Session_Management_Schema",
+          "reporting": [
+            {
+              "What": "Collects and analyzes session tokens for randomness and tamper resistance, and checks whether unsigned cookies carry modifiable data.",
+              "Why": "Predictable or modifiable tokens allow attackers to forge sessions and impersonate other users."
+            }
+          ],
+          "cre_ids": [
+            "582-541",
+            "618-403",
+            "551-054",
+            "704-530",
+            "727-043"
+          ]
+        },
+        {
+          "name": "Cookies Attributes",
+          "id": "WSTG-SESS-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/02-Cookies_Attributes",
+          "reporting": [
+            {
+              "What": "Checks that cookies carry proper security attributes such as Secure, HttpOnly, SameSite, Domain, Path, and expiry.",
+              "Why": "Missing attributes make cookies easier to steal through XSS or network interception and easier to abuse in cross-site attacks."
+            }
+          ],
+          "cre_ids": [
+            "232-034",
+            "342-055",
+            "688-081",
+            "804-220",
+            "705-182",
+            "455-358"
+          ]
+        },
+        {
+          "name": "Session Fixation",
+          "id": "WSTG-SESS-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/03-Session_Fixation",
+          "reporting": [
+            {
+              "What": "Analyzes the login flow to see whether the application issues a new session identifier on authentication or accepts one supplied by an attacker.",
+              "Why": "If an attacker can set a victim's session ID before login, they can use it afterward to take over the authenticated session."
+            }
+          ],
+          "cre_ids": [
+            "002-630"
+          ]
+        },
+        {
+          "name": "Exposed Session Variables",
+          "id": "WSTG-SESS-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/04-Exposed_Session_Variables",
+          "reporting": [
+            {
+              "What": "Examines how session identifiers and related data are transmitted, cached, and protected through encryption and secure methods.",
+              "Why": "Exposed session data in URLs, logs, caches, or cleartext traffic can be harvested and reused to hijack sessions."
+            }
+          ],
+          "cre_ids": [
+            "333-888",
+            "402-133"
+          ]
+        },
+        {
+          "name": "Cross Site Request Forgery",
+          "id": "WSTG-SESS-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/05-Cross_Site_Request_Forgery",
+          "reporting": [
+            {
+              "What": "Tests whether state-changing requests can be triggered on a logged-in user's behalf from another site without their knowledge.",
+              "Why": "CSRF lets attackers make victims perform unwanted actions like changing settings or transferring funds using their own authenticated session."
+            }
+          ],
+          "cre_ids": [
+            "464-084",
+            "060-472"
+          ]
+        },
+        {
+          "name": "Logout Functionality",
+          "id": "WSTG-SESS-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/06-Logout_Functionality",
+          "reporting": [
+            {
+              "What": "Assesses the logout interface and verifies the session is properly invalidated on the server after logout.",
+              "Why": "If sessions remain valid after logout, stolen or shared-device sessions can still be used by someone else."
+            }
+          ],
+          "cre_ids": [
+            "673-736",
+            "238-346",
+            "457-165"
+          ]
+        },
+        {
+          "name": "Session Timeout",
+          "id": "WSTG-SESS-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/07-Session_Timeout",
+          "reporting": [
+            {
+              "What": "Validates that sessions expire after a defined period, including a hard maximum lifetime.",
+              "Why": "Long-lived sessions widen the window in which a stolen token or an unattended device can be abused."
+            }
+          ],
+          "cre_ids": [
+            "065-782"
+          ]
+        },
+        {
+          "name": "Session Puzzling",
+          "id": "WSTG-SESS-08",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/08-Session_Puzzling",
+          "reporting": [
+            {
+              "What": "Identifies all session variables and tests whether the logical flow that sets them can be broken or manipulated, for example via reused variables across flows.",
+              "Why": "Flaws in how session state is built can let attackers bypass authentication or authorization checks without stealing a token."
+            }
+          ]
+        },
+        {
+          "name": "Session Hijacking",
+          "id": "WSTG-SESS-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/09-Session_Hijacking",
+          "reporting": [
+            {
+              "What": "Identifies session cookies that are vulnerable to capture and attempts to hijack them to assess the risk.",
+              "Why": "A hijacked session gives an attacker the full access of the legitimate user without needing their credentials."
+            }
+          ]
+        },
+        {
+          "name": "JSON Web Tokens",
+          "id": "WSTG-SESS-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/10-JSON_Web_Tokens",
+          "reporting": [
+            {
+              "What": "Examines JWTs for sensitive data exposure and tests whether they can be tampered with, such as through weak signing or algorithm confusion.",
+              "Why": "Forgeable or leaky tokens allow attackers to impersonate users or escalate privileges and may reveal data meant to stay private."
+            }
+          ]
+        },
+        {
+          "name": "Concurrent Sessions",
+          "id": "WSTG-SESS-11",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management/11-Concurrent_Sessions",
+          "reporting": [
+            {
+              "What": "Evaluates how the application handles multiple simultaneous active sessions for a single account.",
+              "Why": "Unrestricted concurrent sessions can hide account misuse or credential sharing and make it harder to detect or terminate a compromised session."
+            }
+          ]
+        }
+      ]
+    },
+    "Injection": {
+      "id": "WSTG-INJT",
+      "tests": [
+        {
+          "name": "Reflected Cross Site Scripting",
+          "id": "WSTG-INJT-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/01-Reflected_Cross_Site_Scripting",
+          "reporting": [
+            {
+              "What": "Identifies input that is reflected in responses and tests whether it is accepted without proper output encoding, allowing script execution in the victim's browser.",
+              "Why": "Reflected XSS can be used to steal sessions, perform actions as the victim, or deliver malicious content through crafted links."
+            }
+          ]
+        },
+        {
+          "name": "Stored Cross Site Scripting",
+          "id": "WSTG-INJT-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/02-Stored_Cross_Site_Scripting",
+          "reporting": [
+            {
+              "What": "Finds stored user input that is later rendered to other users and tests whether it is properly encoded.",
+              "Why": "Stored XSS executes automatically for every viewer, so it can compromise many users, including administrators, without any interaction beyond visiting the page."
+            }
+          ]
+        },
+        {
+          "name": "HTTP Verb Tampering",
+          "id": "WSTG-INJT-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/03-HTTP_Verb_Tampering",
+          "reporting": [
+            {
+              "What": "Sends requests with unexpected or alternative HTTP verbs to see whether access controls or filters are applied inconsistently.",
+              "Why": "Controls that only cover certain methods can be bypassed simply by switching the verb."
+            }
+          ]
+        },
+        {
+          "name": "HTTP Parameter Pollution",
+          "id": "WSTG-INJT-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/04-HTTP_Parameter_Pollution",
+          "reporting": [
+            {
+              "What": "Tests how the backend handles duplicate parameters with the same name and whether this can be used to bypass input filters or change behavior.",
+              "Why": "Different components may interpret repeated parameters differently, letting attackers smuggle values past validation or alter application logic."
+            }
+          ]
+        },
+        {
+          "name": "SQL Injection",
+          "id": "WSTG-INJT-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/05-SQL_Injection",
+          "reporting": [
+            {
+              "What": "Identifies inputs that reach database queries unsafely and assesses what data or access an attacker could obtain through them.",
+              "Why": "SQL injection can lead to theft or modification of the entire database and sometimes full server compromise."
+            }
+          ]
+        },
+        {
+          "name": "LDAP Injection",
+          "id": "WSTG-INJT-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/06-LDAP_Injection",
+          "reporting": [
+            {
+              "What": "Tests inputs used in LDAP queries for injection that could alter the query's logic.",
+              "Why": "A successful attack can bypass authentication or expose directory data such as users and credentials."
+            }
+          ]
+        },
+        {
+          "name": "XML Injection",
+          "id": "WSTG-INJT-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/07-XML_Injection",
+          "reporting": [
+            {
+              "What": "Identifies where user input is placed into XML and tests for injection and related attacks such as external entity processing.",
+              "Why": "XML injection can alter application logic, expose local files, or trigger server-side requests depending on the parser configuration."
+            }
+          ]
+        },
+        {
+          "name": "SSI Injection",
+          "id": "WSTG-INJT-08",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/08-SSI_Injection",
+          "reporting": [
+            {
+              "What": "Tests whether user input can inject Server-Side Include directives that the web server will execute.",
+              "Why": "SSI injection can disclose files and may allow command execution on the server."
+            }
+          ]
+        },
+        {
+          "name": "XPath Injection",
+          "id": "WSTG-INJT-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection",
+          "reporting": [
+            {
+              "What": "Tests inputs that are used to build XPath queries against XML data for injection.",
+              "Why": "XPath injection can bypass authentication or extract data from XML stores, often without any access control on the data."
+            }
+          ]
+        },
+        {
+          "name": "IMAP SMTP Injection",
+          "id": "WSTG-INJT-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/10-IMAP_SMTP_Injection",
+          "reporting": [
+            {
+              "What": "Tests mail-related features for injection of IMAP or SMTP commands through user-supplied fields.",
+              "Why": "Attackers can abuse mail functionality to send spam or phishing from trusted servers or to access mailbox data."
+            }
+          ]
+        },
+        {
+          "name": "Code Injection",
+          "id": "WSTG-INJT-11",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/11-Code_Injection",
+          "reporting": [
+            {
+              "What": "Identifies inputs that are evaluated or included as code by the application and assesses the severity.",
+              "Why": "Code injection can give an attacker arbitrary code execution within the application, usually leading to full compromise."
+            }
+          ]
+        },
+        {
+          "name": "Command Injection",
+          "id": "WSTG-INJT-12",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/12-Command_Injection",
+          "reporting": [
+            {
+              "What": "Tests inputs passed to operating system commands for injection and whether special-character or command filters can be bypassed.",
+              "Why": "Command injection lets attackers run OS commands on the server, which commonly results in complete system takeover."
+            }
+          ]
+        },
+        {
+          "name": "Format String Injection",
+          "id": "WSTG-INJT-13",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/13-Format_String_Injection",
+          "reporting": [
+            {
+              "What": "Injects format string specifiers into user-controlled fields to see whether they cause unexpected behavior.",
+              "Why": "Format string flaws can crash the application, leak memory contents, or in some cases enable code execution."
+            }
+          ]
+        },
+        {
+          "name": "Incubated Vulnerability",
+          "id": "WSTG-INJT-14",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/14-Incubated_Vulnerability",
+          "reporting": [
+            {
+              "What": "Finds injections that are stored and only trigger later when another process or user recalls the stored data, and sets up listeners or triggers for that recall.",
+              "Why": "These delayed attacks are easy to miss during normal testing but can affect other users or back-end systems once activated."
+            }
+          ]
+        },
+        {
+          "name": "HTTP Response Splitting",
+          "id": "WSTG-INJT-15",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/15-HTTP_Response_Splitting",
+          "reporting": [
+            {
+              "What": "Tests whether user input reflected into response headers allows injection of CR and LF characters to alter the response.",
+              "Why": "Successful splitting can enable cache poisoning, cross-site scripting, and other client-side attacks."
+            }
+          ]
+        },
+        {
+          "name": "HTTP Request Smuggling",
+          "id": "WSTG-INJT-16",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/16-HTTP_Request_Smuggling",
+          "reporting": [
+            {
+              "What": "Looks for inconsistencies in how frontend and backend components determine request boundaries, including CL/TE desync and HTTP/2 downgrade issues.",
+              "Why": "Smuggling lets attackers bypass front-end security controls, hijack other users' requests, and poison backend queues."
+            }
+          ]
+        },
+        {
+          "name": "Host Header Injection",
+          "id": "WSTG-INJT-17",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/17-Host_Header_Injection",
+          "reporting": [
+            {
+              "What": "Tests whether the application trusts and dynamically uses the Host header, and whether controls relying on it can be bypassed.",
+              "Why": "Abuse of the Host header can enable password reset poisoning, cache poisoning, and access to internal virtual hosts."
+            }
+          ]
+        },
+        {
+          "name": "Server-side Template Injection",
+          "id": "WSTG-INJT-18",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/18-Server-side_Template_Injection",
+          "reporting": [
+            {
+              "What": "Detects points where user input is processed by a server-side template engine, identifies the engine, and assesses exploitability.",
+              "Why": "SSTI often leads to remote code execution on the server."
+            }
+          ]
+        },
+        {
+          "name": "Server-Side Request Forgery",
+          "id": "WSTG-INJT-19",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/19-Server-Side_Request_Forgery",
+          "reporting": [
+            {
+              "What": "Identifies features that make server-side requests to user-supplied destinations and tests whether they can be directed to internal or unintended targets.",
+              "Why": "SSRF can expose internal services and cloud metadata credentials that are otherwise unreachable from outside."
+            }
+          ]
+        },
+        {
+          "name": "Mass Assignment",
+          "id": "WSTG-INJT-20",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/20-Mass_Assignment",
+          "reporting": [
+            {
+              "What": "Identifies requests that update objects and tests whether extra fields, such as role or price, can be set that were never meant to be client-modifiable.",
+              "Why": "Mass assignment can allow privilege escalation or tampering with protected data by simply adding unexpected fields to a request."
+            }
+          ]
+        },
+        {
+          "name": "CSV Injection",
+          "id": "WSTG-INJT-21",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/21-CSV_Injection",
+          "reporting": [
+            {
+              "What": "Tests spreadsheet and CSV export features to see whether untrusted values are interpreted as formulas when opened in spreadsheet software, and whether mitigations hold.",
+              "Why": "Malicious formulas can exfiltrate data or run commands on the machine of whoever opens the export, such as an administrator."
+            }
+          ]
+        },
+        {
+          "name": "Prototype Pollution",
+          "id": "WSTG-INJT-22",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/22-Prototype_Pollution",
+          "reporting": [
+            {
+              "What": "Identifies code that merges or clones user-controlled properties and tests whether input can modify Object.prototype and reach exploitable gadgets.",
+              "Why": "Polluting the prototype can change application behavior globally, leading to XSS, authorization bypass, or remote code execution."
+            }
+          ]
+        },
+        {
+          "name": "Insecure Deserialization",
+          "id": "WSTG-INJT-23",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Injection/23-Insecure_Deserialization",
+          "reporting": [
+            {
+              "What": "Finds entry points that accept serialized objects from untrusted sources, determines the format, and tests whether manipulated data causes unsafe behavior.",
+              "Why": "Unsafe deserialization can allow attackers to tamper with application state or achieve remote code execution."
+            }
+          ]
+        }
+      ]
+    },
+    "Error Handling": {
+      "id": "WSTG-ERRH",
+      "tests": [
+        {
+          "name": "Improper Error Handling",
+          "id": "WSTG-ERRH-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/08-Error_Handling/01-Improper_Error_Handling",
+          "reporting": [
+            {
+              "What": "Triggers errors and analyzes the output returned to see whether it reveals internal details or behaves inconsistently.",
+              "Why": "Verbose or inconsistent errors leak information about the technology and logic that helps attackers refine their attacks."
+            }
+          ],
+          "cre_ids": [
+            "166-151"
+          ]
+        },
+        {
+          "name": "Stack Traces",
+          "id": "WSTG-ERRH-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/08-Error_Handling/02-Stack_Traces",
+          "reporting": [
+            {
+              "What": "Checks whether the application exposes stack traces or debug output to users when failures occur.",
+              "Why": "Stack traces reveal file paths, framework versions, and code structure that significantly aid targeted exploitation."
+            }
+          ],
+          "cre_ids": [
+            "513-183"
+          ]
+        }
+      ]
+    },
+    "Weak Cryptography": {
+      "id": "WSTG-CRYP",
+      "tests": [
+        {
+          "name": "Weak Transport Layer Security",
+          "id": "WSTG-CRYP-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Weak_Cryptography/01-Weak_Transport_Layer_Security",
+          "reporting": [
+            {
+              "What": "Reviews TLS configuration, protocol versions, cipher suites, and certificate strength and validity, and checks that TLS cannot be bypassed.",
+              "Why": "Weak or misconfigured TLS allows traffic to be intercepted or downgraded, exposing sensitive data in transit."
+            }
+          ],
+          "cre_ids": [
+            "248-646",
+            "745-045",
+            "767-701"
+          ]
+        },
+        {
+          "name": "Padding Oracle",
+          "id": "WSTG-CRYP-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Weak_Cryptography/02-Padding_Oracle",
+          "reporting": [
+            {
+              "What": "Identifies encrypted messages that use padding and tests whether error responses reveal enough to decrypt or forge them.",
+              "Why": "A padding oracle can let attackers decrypt protected data or craft valid encrypted values without knowing the key."
+            }
+          ],
+          "cre_ids": [
+            "036-810"
+          ]
+        },
+        {
+          "name": "Sensitive Information Sent via Unencrypted Channels",
+          "id": "WSTG-CRYP-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Weak_Cryptography/03-Sensitive_Information_Sent_via_Unencrypted_Channels",
+          "reporting": [
+            {
+              "What": "Identifies sensitive data transmitted over any channel and assesses whether those channels are encrypted and private.",
+              "Why": "Data sent in cleartext through any channel can be captured and read by anyone able to observe the traffic."
+            }
+          ],
+          "cre_ids": [
+            "186-540"
+          ]
+        },
+        {
+          "name": "Weak Cryptographic Primitives",
+          "id": "WSTG-CRYP-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Weak_Cryptography/04-Weak_Cryptographic_Primitives",
+          "reporting": [
+            {
+              "What": "Identifies the use of weak, outdated, or incorrectly implemented encryption and hashing algorithms.",
+              "Why": "Broken primitives can be reversed or brute-forced, undermining the confidentiality and integrity of passwords and data."
+            }
+          ],
+          "cre_ids": [
+            "170-772",
+            "786-224",
+            "742-431",
+            "433-122",
+            "674-425",
+            "441-132",
+            "267-468",
+            "224-321",
+            "482-866",
+            "027-210",
+            "664-571",
+            "542-488",
+            "483-883"
+          ]
+        }
+      ]
+    },
+    "Business Logic": {
+      "id": "WSTG-BUSL",
+      "tests": [
+        {
+          "name": "Business Logic Data Validation",
+          "id": "WSTG-BUSL-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/01-Business_Logic_Data_Validation",
+          "reporting": [
+            {
+              "What": "Tests whether data checks are enforced on the server, including type, range, allowed values, and relationships that the frontend restricts.",
+              "Why": "Client-side validation is easily bypassed, so missing server-side checks let attackers submit invalid data that breaks business rules."
+            }
+          ]
+        },
+        {
+          "name": "Ability to Forge Requests",
+          "id": "WSTG-BUSL-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/02-Ability_to_Forge_Requests",
+          "reporting": [
+            {
+              "What": "Looks for guessable, predictable, or hidden fields and functionality and submits logically valid data to bypass the normal workflow.",
+              "Why": "Forged requests can skip intended steps or trigger functions the interface does not expose, enabling abuse of business processes."
+            }
+          ]
+        },
+        {
+          "name": "Integrity Checks",
+          "id": "WSTG-BUSL-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/03-Integrity_Checks",
+          "reporting": [
+            {
+              "What": "Reviews components that move, store, or handle data and attempts to insert, change, or delete values that should be disallowed by the business logic.",
+              "Why": "Weak integrity controls allow unauthorized tampering with data, leading to fraud, corruption, or incorrect system behavior."
+            }
+          ],
+          "cre_ids": [
+            "048-612"
+          ]
+        },
+        {
+          "name": "Process Timing",
+          "id": "WSTG-BUSL-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/04-Process_Timing",
+          "reporting": [
+            {
+              "What": "Examines functionality that is affected by timing and develops misuse cases, such as race conditions or time-based information leaks.",
+              "Why": "Timing weaknesses can reveal information or allow actions to be repeated or reordered in ways that break business rules."
+            }
+          ]
+        },
+        {
+          "name": "Number of Times a Function Can Be Used Limits",
+          "id": "WSTG-BUSL-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/05-Number_of_Times_a_Function_Can_Be_Used_Limits",
+          "reporting": [
+            {
+              "What": "Identifies functions that should be limited in how often they can be used, such as coupons or votes, and checks the limits are enforced.",
+              "Why": "Missing or bypassable limits allow abuse like repeated redemptions, resource exhaustion, or financial loss."
+            }
+          ]
+        },
+        {
+          "name": "Circumvention of Work Flows",
+          "id": "WSTG-BUSL-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/06-Circumvention_of_Work_Flows",
+          "reporting": [
+            {
+              "What": "Attempts to skip steps or perform them out of order in multi-step processes and checks whether the application enforces the intended sequence.",
+              "Why": "Users who bypass required steps, such as payment or approval, can obtain goods or access they were not entitled to."
+            }
+          ]
+        },
+        {
+          "name": "Defenses Against Application Misuse",
+          "id": "WSTG-BUSL-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/07-Defenses_Against_Application_Misuse",
+          "reporting": [
+            {
+              "What": "Reviews results of earlier tests to see how the application reacts to aggressive input and whether its detection and response defenses are adequate.",
+              "Why": "Without effective monitoring and response to attacks, malicious activity goes unnoticed and attackers can probe freely."
+            }
+          ]
+        },
+        {
+          "name": "Upload of Unexpected File Types",
+          "id": "WSTG-BUSL-08",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/08-Upload_of_Unexpected_File_Types",
+          "reporting": [
+            {
+              "What": "Tests whether file types that the system should reject are properly blocked and handled safely, including via batch uploads.",
+              "Why": "Accepting unexpected file types can lead to stored malicious content, resource abuse, or processing errors."
+            }
+          ],
+          "cre_ids": [
+            "314-701"
+          ]
+        },
+        {
+          "name": "Upload of Malicious Files",
+          "id": "WSTG-BUSL-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/09-Upload_of_Malicious_Files",
+          "reporting": [
+            {
+              "What": "Attempts to upload potentially dangerous files, such as web shells or malware-bearing documents, and determines whether they are accepted and processed.",
+              "Why": "Malicious uploads can lead to code execution on the server or attacks against other users who download the files."
+            }
+          ],
+          "cre_ids": [
+            "814-322",
+            "545-243",
+            "307-111",
+            "112-273",
+            "660-052"
+          ]
+        },
+        {
+          "name": "Payment Functionality",
+          "id": "WSTG-BUSL-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic/10-Payment_Functionality",
+          "reporting": [
+            {
+              "What": "Examines how the payment flow works and tests its logic and security, including price, quantity, and transaction manipulation.",
+              "Why": "Flaws in payment logic lead directly to financial loss and fraud, and may expose cardholder data."
+            }
+          ]
+        }
+      ]
+    },
+    "Client-side": {
+      "id": "WSTG-CLNT",
+      "tests": [
+        {
+          "name": "DOM-Based Cross Site Scripting",
+          "id": "WSTG-CLNT-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/01-DOM-based_Cross_Site_Scripting",
+          "reporting": [
+            {
+              "What": "Identifies DOM sinks in client-side code and builds payloads for each sink type to see whether attacker-controlled data reaches them.",
+              "Why": "DOM XSS happens entirely in the browser, can evade server-side defenses, and allows script execution in the victim's session."
+            }
+          ],
+          "cre_ids": [
+            "257-668",
+            "065-388",
+            "607-671"
+          ]
+        },
+        {
+          "name": "JavaScript Execution",
+          "id": "WSTG-CLNT-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/02-JavaScript_Execution",
+          "reporting": [
+            {
+              "What": "Identifies sinks and injection points where user-controlled data can be executed as JavaScript in the browser.",
+              "Why": "Arbitrary script execution allows theft of data and sessions and actions performed on behalf of the user."
+            }
+          ],
+          "cre_ids": [
+            "387-848",
+            "317-743"
+          ]
+        },
+        {
+          "name": "HTML Injection",
+          "id": "WSTG-CLNT-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/03-HTML_Injection",
+          "reporting": [
+            {
+              "What": "Finds points where user input is rendered as HTML and assesses the severity of content that can be injected.",
+              "Why": "Injected HTML can be used for phishing, fake login forms, or defacement within a trusted site."
+            }
+          ],
+          "cre_ids": [
+            "542-445"
+          ]
+        },
+        {
+          "name": "Client-side URL Redirect",
+          "id": "WSTG-CLNT-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/04-Client-side_URL_Redirect",
+          "reporting": [
+            {
+              "What": "Identifies inputs that control client-side redirects or URL handling and assesses where users can be sent.",
+              "Why": "Open redirects let attackers send victims to malicious sites from a trusted domain, supporting phishing and token theft."
+            }
+          ],
+          "cre_ids": [
+            "232-217"
+          ]
+        },
+        {
+          "name": "CSS Injection",
+          "id": "WSTG-CLNT-05",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/05-CSS_Injection",
+          "reporting": [
+            {
+              "What": "Identifies places where user input is placed into stylesheets and assesses the impact of injected CSS.",
+              "Why": "Injected CSS can alter the page to deceive users or extract sensitive page data through style-based techniques."
+            }
+          ],
+          "cre_ids": [
+            "646-462"
+          ]
+        },
+        {
+          "name": "Client-side Resource Manipulation",
+          "id": "WSTG-CLNT-06",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/06-Client-side_Resource_Manipulation",
+          "reporting": [
+            {
+              "What": "Finds client-side code that builds resource paths from user input, such as script, frame, or request sources, with weak validation.",
+              "Why": "Attackers can make the page load or request attacker-chosen resources, leading to script injection or unintended requests."
+            }
+          ]
+        },
+        {
+          "name": "Cross Origin Resource Sharing",
+          "id": "WSTG-CLNT-07",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/07-Cross_Origin_Resource_Sharing",
+          "reporting": [
+            {
+              "What": "Identifies endpoints implementing CORS and tests whether the policy allows untrusted origins to read responses, especially with credentials.",
+              "Why": "A permissive CORS policy lets malicious sites read sensitive data from the application using a victim's browser."
+            }
+          ],
+          "cre_ids": [
+            "316-272"
+          ]
+        },
+        {
+          "name": "Clickjacking",
+          "id": "WSTG-CLNT-09",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/09-Clickjacking",
+          "reporting": [
+            {
+              "What": "Tests whether the application can be embedded in a frame on another site so users can be tricked into clicking hidden elements.",
+              "Why": "Clickjacking can trick users into performing sensitive actions without realizing it."
+            }
+          ],
+          "cre_ids": [
+            "480-071"
+          ]
+        },
+        {
+          "name": "WebSockets",
+          "id": "WSTG-CLNT-10",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/10-WebSockets",
+          "reporting": [
+            {
+              "What": "Identifies WebSocket use and applies the same tests as for normal HTTP, such as origin checks, authentication, authorization, and input validation.",
+              "Why": "WebSockets often lack the protections applied to regular requests, leaving a real-time channel open to hijacking and injection."
+            }
+          ]
+        },
+        {
+          "name": "Web Messaging",
+          "id": "WSTG-CLNT-11",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/11-Web_Messaging",
+          "reporting": [
+            {
+              "What": "Assesses the use of postMessage and similar APIs, checking that message origins are verified and received data is validated and handled safely.",
+              "Why": "Unchecked messages from other windows can inject data or script, or leak sensitive information to untrusted origins."
+            }
+          ]
+        },
+        {
+          "name": "Browser Storage",
+          "id": "WSTG-CLNT-12",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/12-Browser_Storage",
+          "reporting": [
+            {
+              "What": "Checks whether sensitive data is stored in localStorage, sessionStorage, or similar, and reviews how stored values are used for injection risks.",
+              "Why": "Data in browser storage is readable by any script on the page, so XSS or local access can expose tokens and personal information."
+            }
+          ],
+          "cre_ids": [
+            "046-257",
+            "617-524",
+            "455-358"
+          ]
+        },
+        {
+          "name": "Cross Site Script Inclusion",
+          "id": "WSTG-CLNT-13",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/13-Cross_Site_Script_Inclusion",
+          "reporting": [
+            {
+              "What": "Locates sensitive data delivered in script-like responses and tests whether another site can include and read it.",
+              "Why": "XSSI can leak private data to attacker-controlled sites through the victim's authenticated browser."
+            }
+          ]
+        },
+        {
+          "name": "Reverse Tabnabbing",
+          "id": "WSTG-CLNT-14",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/14-Reverse_Tabnabbing",
+          "reporting": [
+            {
+              "What": "Checks whether links that open new tabs or windows expose the original page to the opened page through window.opener.",
+              "Why": "A malicious linked page could redirect the original tab to a phishing page, deceiving users who return to it."
+            }
+          ]
+        },
+        {
+          "name": "Client-side Template Injection",
+          "id": "WSTG-CLNT-15",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/11-Client-side/15-Client-Side_Template_Injection",
+          "reporting": [
+            {
+              "What": "Identifies the client-side framework and tests whether user input reflected into the DOM is evaluated by the template engine, enabling script execution.",
+              "Why": "Template syntax injection can give attackers XSS even where normal HTML encoding is in place."
+            }
+          ]
+        }
+      ]
+    },
+    "API Testing": {
+      "id": "WSTG-APIT",
+      "tests": [
+        {
+          "name": "API Reconnaissance",
+          "id": "WSTG-APIT-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/01-API_Reconnaissance",
+          "reporting": [
+            {
+              "What": "Discovers all API endpoints and parameters, documented or not, including those revealed in client-side HTML and JavaScript.",
+              "Why": "Undocumented endpoints and parameters are often less protected and cannot be tested unless they are found."
+            }
+          ]
+        },
+        {
+          "name": "API Broken Object Level Authorization",
+          "id": "WSTG-APIT-02",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/02-API_Broken_Object_Level_Authorization",
+          "reporting": [
+            {
+              "What": "Tests whether the API verifies, for every object request, that the caller is authorized to access that specific object.",
+              "Why": "Missing object-level checks let users read or modify other users' data and are among the most common and damaging API flaws."
+            }
+          ]
+        },
+        {
+          "name": "Excessive Data Exposure",
+          "id": "WSTG-APIT-03",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/03-Excessive_Data_Exposure",
+          "reporting": [
+            {
+              "What": "Identifies API responses that return more data than the client needs, such as hashes, tokens, PII, or internal details, relying on the client to filter it.",
+              "Why": "Anyone can read raw API responses, so over-shared fields leak sensitive data regardless of what the interface displays."
+            }
+          ]
+        },
+        {
+          "name": "API Broken Function Level Authorization",
+          "id": "WSTG-APIT-04",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/04-API_Broken_Function_Level_Authorization",
+          "reporting": [
+            {
+              "What": "Tests whether the API restricts privileged functions, such as admin operations, to users with the right role or privilege.",
+              "Why": "Without function-level checks, ordinary users can call administrative endpoints and perform actions beyond their rights."
+            }
+          ]
+        },
+        {
+          "name": "GraphQL",
+          "id": "WSTG-APIT-99",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/99-GraphQL",
+          "reporting": [
+            {
+              "What": "Assesses GraphQL deployments for production-ready configuration, input validation against common attacks, and proper access controls.",
+              "Why": "GraphQL features like introspection, deep queries, and flexible fields can expose schema details, enable denial of service, and bypass authorization when misconfigured."
+            }
+          ]
+        }
+      ]
+    },
+    "WebAssembly Testing": {
+      "id": "WSTG-WASM",
+      "tests": [
+        {
+          "name": "WebAssembly Reconnaissance",
+          "id": "WSTG-WASM-01",
+          "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/13-WebAssembly_Testing/01-WebAssembly_Reconnaissance",
+          "reporting": [
+            {
+              "What": "Finds all WebAssembly modules the application loads, identifies the toolchain and source language, and looks for debug artifacts and embedded URLs, endpoints, or hostnames.",
+              "Why": "Wasm modules can hide logic and secrets or expose debug information and infrastructure details, and they must be located before they can be assessed."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

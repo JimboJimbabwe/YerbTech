@@ -1,0 +1,39 @@
+{
+  "_comment": "ATHN-08 optional personal identifiers. Populate before running script_ATHN08.py. Each field has a value and optional reasoning note.",
+  "first_name": {
+    "value": "",
+    "note": "Target's first name — combined with security question keywords in dork strings"
+  },
+  "last_name": {
+    "value": "",
+    "note": "Target's last name — used for name-based dork combinations"
+  },
+  "email": {
+    "value": "",
+    "note": "Full email address — used verbatim in quoted dork strings"
+  },
+  "email_prefix": {
+    "value": "",
+    "note": "Username portion of email (before @) — often matches login username"
+  },
+  "username": {
+    "value": "",
+    "note": "Known username on the target application (also set via --username CLI arg)"
+  },
+  "url": {
+    "value": "",
+    "note": "Target application URL — used with site: operator and inurl: dorks"
+  },
+  "organisation": {
+    "value": "",
+    "note": "Target's employer or organisation — useful for LinkedIn/breach dorks"
+  },
+  "location": {
+    "value": "",
+    "note": "City or region — adds geographic specificity to dork strings"
+  },
+  "phone": {
+    "value": "",
+    "note": "Phone number — useful for pastebin/breach dump dork searches"
+  }
+}

@@ -1,0 +1,57 @@
+# ATHN-08 — Infrastructure / Site Operator Keywords
+# One keyword or operator snippet per line (comments start with #)
+# These are combined with personal info and security question terms to build
+# Google dork strings targeting specific sites, file types, or data sources.
+
+# Paste / breach / leak sites
+site:pastebin.com
+site:pastebin.pl
+site:ghostbin.com
+site:controlc.com
+site:hastebin.com
+site:rentry.co
+site:justpaste.it
+site:dpaste.org
+site:paste.ee
+
+# File type operators
+filetype:txt
+filetype:csv
+filetype:xls
+filetype:xlsx
+filetype:sql
+filetype:log
+filetype:json
+
+# Breach / OSINT aggregators
+site:haveibeenpwned.com
+site:dehashed.com
+site:intelx.io
+site:leakcheck.io
+
+# Social / professional
+site:linkedin.com
+site:twitter.com
+site:facebook.com
+site:reddit.com
+
+# Generic leak / forum terms
+"leaked"
+"database dump"
+"credential dump"
+"breach"
+"combo list"
+"account dump"
+"password dump"
+
+# URL / login path operators
+inurl:login
+inurl:signin
+inurl:account
+inurl:profile
+inurl:reset
+inurl:forgot
+
+# Index / directory listing
+intitle:"index of"
+intitle:"parent directory"

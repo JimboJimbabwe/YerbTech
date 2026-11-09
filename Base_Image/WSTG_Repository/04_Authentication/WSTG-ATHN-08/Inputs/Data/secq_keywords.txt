@@ -1,0 +1,52 @@
+# ATHN-08 — Security Question Keywords
+# One keyword or phrase per line (comments start with #)
+# These are common security question topics — used as dork terms to find
+# leaked answers via OSINT / Google dorks.
+
+mother's maiden name
+maiden name
+first pet
+pet name
+childhood best friend
+best friend growing up
+elementary school
+first school
+first car
+make of first car
+model of first car
+childhood nickname
+nickname
+hometown
+city of birth
+birthplace
+street grew up on
+street you grew up on
+favourite teacher
+favorite teacher
+first job
+first employer
+father's middle name
+mother's middle name
+grandfather's name
+grandmother's name
+high school
+secondary school
+college
+university
+sports team
+favourite team
+favorite team
+first concert
+first movie
+childhood hero
+stuffed animal
+imaginary friend
+wedding anniversary
+met spouse
+met partner
+first vacation
+dream job
+favourite food
+favorite food
+favourite colour
+favorite color

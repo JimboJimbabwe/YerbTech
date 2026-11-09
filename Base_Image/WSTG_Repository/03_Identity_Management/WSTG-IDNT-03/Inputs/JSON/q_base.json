@@ -1,0 +1,119 @@
+{
+  "wstg_id": "WSTG-IDNT-03",
+  "title": "Account Provisioning Process",
+  "description": "Assessment questions for the IDNT-03 account provisioning test case. Each question maps to one or more how-to guides that describe specific test techniques.",
+  "questions": [
+    {
+      "id": "IDNT03-Q-01",
+      "text": "Is there any authorisation required before an account is provisioned?",
+      "applicable_how_tos": [
+        {
+          "name": "Verify provisioning authorisation gate",
+          "id": "HT-IDNT03-AUTH-GATE",
+          "url": ""
+        },
+        {
+          "name": "Enumerate provisioning workflow endpoints",
+          "id": "HT-IDNT03-ENUM-PROV",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-02",
+      "text": "Can accounts be provisioned with excessive privileges?",
+      "applicable_how_tos": [
+        {
+          "name": "Test role assignment during provisioning",
+          "id": "HT-IDNT03-ROLE-ASSIGN",
+          "url": ""
+        },
+        {
+          "name": "Attempt to assign admin role via API",
+          "id": "HT-IDNT03-ADMIN-ROLE",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-03",
+      "text": "Can one user provision an account for another user without oversight?",
+      "applicable_how_tos": [
+        {
+          "name": "Test separation of duties in provisioning",
+          "id": "HT-IDNT03-SOD",
+          "url": ""
+        },
+        {
+          "name": "Attempt self-approval of provisioning request",
+          "id": "HT-IDNT03-SELF-APPROVE",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-04",
+      "text": "Are provisioned accounts tied to a verified identity?",
+      "applicable_how_tos": [
+        {
+          "name": "Test identity verification bypass during provisioning",
+          "id": "HT-IDNT03-IDENTITY-VERIFY",
+          "url": ""
+        },
+        {
+          "name": "Provision account for non-existent or unverified identity",
+          "id": "HT-IDNT03-FAKE-IDENTITY",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-05",
+      "text": "Is the provisioning process logged and auditable?",
+      "applicable_how_tos": [
+        {
+          "name": "Review provisioning audit log coverage",
+          "id": "HT-IDNT03-AUDIT-LOG",
+          "url": ""
+        },
+        {
+          "name": "Check log retention and tamper protection",
+          "id": "HT-IDNT03-LOG-RETENTION",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-06",
+      "text": "Is there a de-provisioning (offboarding) process, and is it enforced?",
+      "applicable_how_tos": [
+        {
+          "name": "Check for orphaned / former-employee accounts",
+          "id": "HT-IDNT03-ORPHAN-ACCOUNTS",
+          "url": ""
+        },
+        {
+          "name": "Verify de-provisioning trigger on HR event",
+          "id": "HT-IDNT03-DEPROV-TRIGGER",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "IDNT03-Q-07",
+      "text": "Are provisioning requests validated before execution?",
+      "applicable_how_tos": [
+        {
+          "name": "Test parameter tampering on provisioning API",
+          "id": "HT-IDNT03-PARAM-TAMPER",
+          "url": ""
+        },
+        {
+          "name": "Test mass assignment in provisioning endpoint",
+          "id": "HT-IDNT03-MASS-ASSIGN",
+          "url": ""
+        }
+      ]
+    }
+  ]
+}

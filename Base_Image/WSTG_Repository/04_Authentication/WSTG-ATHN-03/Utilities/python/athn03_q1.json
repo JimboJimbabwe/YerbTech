@@ -1,0 +1,26 @@
+{
+  "wstg_id": "WSTG-ATHN-03",
+  "title": "Weak Lockout Mechanism",
+  "description": "Three-question branching assessment of account lockout controls. Item_1 gates the rest: if brute force is not possible, OTP guessing is eliminated. Item_2 and Item_3 are both evaluated when brute force is allowed.",
+  "questionnaire": {
+    "Item_1": {
+      "question": "Does the endpoint allow brute force? (No lockout / rate limiting observed after repeated failed attempts)",
+      "verdict": null
+    },
+    "Item_2": {
+      "question": "Are security questions easy to guess? (Weak, common, or user-enumerable answers accepted)",
+      "verdict": null,
+      "note": "Evaluated regardless of Item_1 verdict. Y = indicator of compromise."
+    },
+    "Item_3": {
+      "question": "If brute force is allowed, is OTP code guessing present? (OTP endpoint lacks lockout)",
+      "verdict": null,
+      "options": ["Y", "N", "No OTP Code found"],
+      "note": "Only applicable when Item_1 verdict is true. Set to null and skip if Item_1 is false."
+    },
+    "findings": {
+      "verdict": null,
+      "reasons": []
+    }
+  }
+}
